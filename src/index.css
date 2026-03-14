@@ -23,6 +23,26 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --hero-tagline:        rgba(168,216,240,0.50);
   --hero-divider:        rgba(0,212,255,0.30);
   --scroll-indicator:    rgba(0,212,255,0.70);
+  /* Projects */
+  --section-eyebrow:     rgba(0,212,255,0.45);
+  --section-heading:     rgba(168,216,240,0.92);
+  --section-rule:        rgba(0,212,255,0.18);
+  --card-bg:             rgba(2,12,38,0.60);
+  --card-border:         rgba(0,212,255,0.13);
+  --card-border-hover:   rgba(0,212,255,0.38);
+  --card-shadow:         0 4px 28px rgba(0,0,0,0.55);
+  --card-shadow-hover:   0 18px 52px rgba(0,0,0,0.65), 0 0 0 1px rgba(0,212,255,0.30);
+  --card-title:          rgba(168,216,240,0.96);
+  --card-body:           rgba(140,192,225,0.58);
+  --card-link:           rgba(0,212,255,0.60);
+  --card-link-hover:     rgba(0,212,255,0.95);
+  --pill-bg:             rgba(0,212,255,0.09);
+  --pill-border:         rgba(0,212,255,0.22);
+  --pill-text:           rgba(0,212,255,0.82);
+  --badge-bg:            rgba(0,212,255,0.10);
+  --badge-text:          #00d4ff;
+  --stat-text:           rgba(0,212,255,0.68);
+  --shimmer:             rgba(0,212,255,0.07);
   /* Depth overlay (two fixed divs cross-fade) */
   --overlay-deep-op:     1;
   --overlay-reef-op:     0;
@@ -51,6 +71,26 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --hero-tagline:        rgba(255,248,240,0.58);
   --hero-divider:        rgba(255,248,240,0.40);
   --scroll-indicator:    rgba(255,248,240,0.75);
+  /* Projects */
+  --section-eyebrow:     rgba(10,60,100,0.55);
+  --section-heading:     rgba(5,28,50,0.92);
+  --section-rule:        rgba(0,100,160,0.20);
+  --card-bg:             rgba(255,255,255,0.22);
+  --card-border:         rgba(0,120,180,0.18);
+  --card-border-hover:   rgba(255,110,60,0.45);
+  --card-shadow:         0 4px 28px rgba(0,60,100,0.18);
+  --card-shadow-hover:   0 18px 52px rgba(0,60,100,0.30), 0 0 0 1px rgba(255,110,60,0.35);
+  --card-title:          rgba(5,28,50,0.96);
+  --card-body:           rgba(5,28,50,0.60);
+  --card-link:           rgba(0,100,160,0.68);
+  --card-link-hover:     rgba(0,80,140,0.95);
+  --pill-bg:             rgba(255,100,50,0.10);
+  --pill-border:         rgba(255,100,50,0.26);
+  --pill-text:           rgba(170,55,15,0.90);
+  --badge-bg:            rgba(255,140,60,0.14);
+  --badge-text:          #b83800;
+  --stat-text:           rgba(170,80,20,0.78);
+  --shimmer:             rgba(255,210,120,0.11);
   --overlay-deep-op:     0;
   --overlay-reef-op:     1;
   --marine-snow-op:      0;
@@ -137,9 +177,10 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 
 /* Disable expensive backdrop-filter during transition */
 .toggle-backdrop { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.theme-transitioning .toggle-backdrop {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+.theme-transitioning .toggle-backdrop,
+.theme-transitioning .project-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -172,6 +213,108 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 /* Creature SVG groups — opacity driven by CSS variable, no React re-render */
 .creature-deep { opacity: var(--creature-deep-op); transition: opacity 0.8s ease; }
 .creature-reef { opacity: var(--creature-reef-op); transition: opacity 0.8s ease; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   PROJECTS
+   ═══════════════════════════════════════════════════════════════════ */
+
+.section-eyebrow {
+  color: var(--section-eyebrow);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.section-heading {
+  color: var(--section-heading);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.section-rule {
+  background-color: var(--section-rule);
+  transition: background-color var(--theme-dur) var(--theme-ease);
+}
+
+/* Card base */
+.project-card {
+  background:           var(--card-bg);
+  border:               1px solid var(--card-border);
+  box-shadow:           var(--card-shadow);
+  backdrop-filter:      blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius:        14px;
+  padding:              1.6rem;
+  position:             relative;
+  overflow:             hidden;
+  /* slow restore; mouse-move overrides this inline during hover */
+  transition:
+    box-shadow       0.5s ease,
+    border-color     0.5s ease,
+    background-color var(--theme-dur) var(--theme-ease);
+}
+
+.card-title {
+  color: var(--card-title);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.card-body {
+  color: var(--card-body);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.card-link {
+  color: var(--card-link);
+  transition: color 0.2s ease;
+}
+.card-link:hover { color: var(--card-link-hover); }
+
+.card-pill {
+  background:   var(--pill-bg);
+  border:       1px solid var(--pill-border);
+  color:        var(--pill-text);
+  transition:
+    background-color var(--theme-dur) var(--theme-ease),
+    border-color     var(--theme-dur) var(--theme-ease),
+    color            var(--theme-dur) var(--theme-ease);
+}
+.card-badge {
+  background: var(--badge-bg);
+  color:      var(--badge-text);
+  transition:
+    background-color var(--theme-dur) var(--theme-ease),
+    color            var(--theme-dur) var(--theme-ease);
+}
+.card-stat {
+  color: var(--stat-text);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+/* Hover state — JS overrides transform inline, CSS controls shadow + border */
+.project-card:hover {
+  box-shadow:   var(--card-shadow-hover);
+  border-color: var(--card-border-hover);
+}
+
+/* Featured card shimmer sweep */
+@keyframes shimmer-pass {
+  0%        { transform: translateX(-130%) skewX(-18deg); opacity: 0;   }
+  6%        { opacity: 1; }
+  48%, 100% { transform: translateX(160%)  skewX(-18deg); opacity: 0;   }
+}
+
+.project-card--featured::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    var(--shimmer) 45%,
+    var(--shimmer) 55%,
+    transparent 100%
+  );
+  animation: shimmer-pass 5s ease-in-out infinite;
+  animation-delay: 2s;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+  transition: background var(--theme-dur) var(--theme-ease);
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    JELLYFISH BELL PULSE
