@@ -1,36 +1,23 @@
-import { motion } from 'framer-motion'
-
-// Each blob has its own animation class for independent timing/path
 const BLOBS = [
-  { className: 'caustic-1', style: { width: 520, height: 420, top: '-80px', left: '5%' } },
-  { className: 'caustic-2', style: { width: 380, height: 460, top: '10%', left: '40%' } },
-  { className: 'caustic-3', style: { width: 440, height: 350, top: '25%', left: '65%' } },
-  { className: 'caustic-4', style: { width: 300, height: 500, top: '50%', left: '15%' } },
-  { className: 'caustic-5', style: { width: 460, height: 400, top: '45%', left: '55%' } },
-  { className: 'caustic-6', style: { width: 350, height: 380, top: '70%', left: '30%' } },
+  { cls: 'caustic-1', w: 520, h: 420, top: '-80px', left: '5%'  },
+  { cls: 'caustic-2', w: 380, h: 460, top: '10%',   left: '40%' },
+  { cls: 'caustic-3', w: 440, h: 350, top: '25%',   left: '65%' },
+  { cls: 'caustic-4', w: 300, h: 500, top: '50%',   left: '15%' },
+  { cls: 'caustic-5', w: 460, h: 400, top: '45%',   left: '55%' },
+  { cls: 'caustic-6', w: 350, h: 380, top: '70%',   left: '30%' },
 ]
 
-export function CausticLight({ visible }) {
+// Opacity controlled by CSS variable --caustic-op via .caustic-light class
+export function CausticLight() {
   return (
-    <motion.div
-      className="fixed inset-0 pointer-events-none overflow-hidden"
-      style={{ zIndex: 1 }}
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.9 }}
-    >
-      {BLOBS.map(({ className, style }) => (
+    <div className="caustic-light fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
+      {BLOBS.map(({ cls, w, h, top, left }) => (
         <div
-          key={className}
-          className={`caustic-blob ${className}`}
-          style={{
-            position: 'absolute',
-            width: style.width,
-            height: style.height,
-            top: style.top,
-            left: style.left,
-          }}
+          key={cls}
+          className={`caustic-blob ${cls}`}
+          style={{ position: 'absolute', width: w, height: h, top, left }}
         />
       ))}
-    </motion.div>
+    </div>
   )
 }

@@ -1,24 +1,22 @@
-import { useTheme } from '../../context/ThemeContext'
 import { Fish } from './Fish'
 import { DeepCreature } from './DeepCreature'
 
+// No theme prop — fish use CSS variables, DeepCreature reads theme internally
 export function CreatureLayer() {
-  const { theme } = useTheme()
-
   return (
     <div
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 3,          // above bg effects (1-2), below content (10+)
+        zIndex: 3,
         pointerEvents: 'none',
         overflow: 'hidden',
       }}
     >
-      <Fish index={0} theme={theme} />
-      <Fish index={1} theme={theme} />
-      <Fish index={2} theme={theme} />
-      <DeepCreature theme={theme} />
+      <Fish index={0} />
+      <Fish index={1} />
+      <Fish index={2} />
+      <DeepCreature />
     </div>
   )
 }

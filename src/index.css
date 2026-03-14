@@ -1,17 +1,144 @@
 @import "tailwindcss";
 
-*, *::before, *::after {
-  box-sizing: border-box;
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   THEME CSS VARIABLES
+   One data-theme attribute change cascades everywhere — zero JS per frame
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --theme-dur:  0.72s;
+  --theme-ease: ease;
 }
 
-html, body, #root {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100%;
+:root[data-theme="deep-sea"] {
+  /* Page */
+  --bg:                  #020818;
+  --text:                #a8d8f0;
+  --text-shadow:         0 0 40px rgba(0,180,255,0.4), 0 0 80px rgba(0,80,200,0.2);
+  /* Depth overlay (two fixed divs cross-fade) */
+  --overlay-deep-op:     1;
+  --overlay-reef-op:     0;
+  /* Background layers */
+  --marine-snow-op:      1;
+  --caustic-op:          0;
+  /* Toggle */
+  --toggle-border:       rgba(0,212,255,0.45);
+  --toggle-bg:           rgba(2,8,24,0.72);
+  --toggle-glow:         0 0 16px rgba(0,212,255,0.18), inset 0 0 12px rgba(0,212,255,0.06);
+  --toggle-depth-color:  rgba(0,212,255,0.55);
+  --toggle-mode-color:   rgba(0,212,255,0.40);
+  --icon-sun:            rgba(0,212,255,0.35);
+  --icon-abyss:          #00d4ff;
+  /* Creatures */
+  --creature-deep-op:    1;
+  --creature-reef-op:    0;
 }
 
-/* ─── Jellyfish bell pulse ────────────────────────────────────────── */
+:root[data-theme="shallow-reef"] {
+  --bg:                  #0096c7;
+  --text:                #fff8f0;
+  --text-shadow:         0 2px 24px rgba(255,200,80,0.45), 0 0 60px rgba(255,140,60,0.2);
+  --overlay-deep-op:     0;
+  --overlay-reef-op:     1;
+  --marine-snow-op:      0;
+  --caustic-op:          1;
+  --toggle-border:       rgba(220,80,60,0.45);
+  --toggle-bg:           rgba(255,255,255,0.52);
+  --toggle-glow:         0 0 16px rgba(255,140,60,0.18), inset 0 0 12px rgba(255,200,80,0.06);
+  --toggle-depth-color:  rgba(220,80,60,0.70);
+  --toggle-mode-color:   rgba(220,80,60,0.55);
+  --icon-sun:            #ff7c4d;
+  --icon-abyss:          rgba(100,80,140,0.40);
+  --creature-deep-op:    0;
+  --creature-reef-op:    1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   THEMED ELEMENTS — CSS transitions, no JS per frame
+   ═══════════════════════════════════════════════════════════════════ */
+
+.theme-bg {
+  background-color: var(--bg);
+  transition: background-color var(--theme-dur) var(--theme-ease);
+}
+
+.site-title {
+  color: var(--text);
+  text-shadow: var(--text-shadow);
+  transition: color var(--theme-dur) var(--theme-ease),
+              text-shadow var(--theme-dur) var(--theme-ease);
+}
+
+/* Overlay gradients — two persistent divs, opacity-only cross-fade (compositor) */
+.overlay-deep,
+.overlay-reef {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity var(--theme-dur) var(--theme-ease);
+}
+.overlay-deep {
+  background: radial-gradient(ellipse at 50% 60%, rgba(0,40,120,0.35) 0%, transparent 70%);
+  opacity: var(--overlay-deep-op);
+}
+.overlay-reef {
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,240,180,0.25) 0%, transparent 65%);
+  opacity: var(--overlay-reef-op);
+}
+
+/* Background effects */
+.marine-snow {
+  opacity: var(--marine-snow-op);
+  transition: opacity var(--theme-dur) var(--theme-ease);
+}
+.caustic-light {
+  opacity: var(--caustic-op);
+  transition: opacity var(--theme-dur) var(--theme-ease);
+}
+
+/* Toggle pill */
+.toggle-pill {
+  border-color:     var(--toggle-border);
+  background-color: var(--toggle-bg);
+  box-shadow:       var(--toggle-glow);
+  transition:
+    border-color     var(--theme-dur) var(--theme-ease),
+    background-color var(--theme-dur) var(--theme-ease),
+    box-shadow       var(--theme-dur) var(--theme-ease),
+    transform        0.15s ease;
+}
+.toggle-pill:hover  { transform: scale(1.06); }
+.toggle-pill:active { transform: scale(0.94); }
+
+.toggle-depth-label {
+  color: var(--toggle-depth-color);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.toggle-mode-label {
+  color: var(--toggle-mode-color);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.toggle-icon-sun   { color: var(--icon-sun);   transition: color 0.6s ease; }
+.toggle-icon-abyss { color: var(--icon-abyss); transition: color 0.6s ease; }
+
+/* Disable expensive backdrop-filter during transition */
+.toggle-backdrop { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.theme-transitioning .toggle-backdrop {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Creature SVG groups — opacity driven by CSS variable, no React re-render */
+.creature-deep { opacity: var(--creature-deep-op); transition: opacity 0.8s ease; }
+.creature-reef { opacity: var(--creature-reef-op); transition: opacity 0.8s ease; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   JELLYFISH BELL PULSE
+   ═══════════════════════════════════════════════════════════════════ */
 
 @keyframes jelly-pulse {
   0%, 100% { transform: scaleY(1)    scaleX(1);    }
@@ -25,7 +152,9 @@ html, body, #root {
   transform-box: fill-box;
 }
 
-/* ─── Caustic light blobs ─────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════════════
+   CAUSTIC LIGHT BLOBS
+   ═══════════════════════════════════════════════════════════════════ */
 
 .caustic-blob {
   position: absolute;
@@ -67,61 +196,22 @@ html, body, #root {
 }
 
 @keyframes caustic-a {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  }
-  30% {
-    transform: translate(6vw, 4vh) scale(1.12) rotate(6deg);
-    border-radius: 55% 45% 35% 65% / 55% 40% 60% 45%;
-  }
-  65% {
-    transform: translate(-4vw, 9vh) scale(0.92) rotate(-4deg);
-    border-radius: 65% 35% 50% 50% / 30% 65% 35% 70%;
-  }
+  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+  30%       { transform: translate(6vw,4vh) scale(1.12) rotate(6deg); border-radius: 55% 45% 35% 65% / 55% 40% 60% 45%; }
+  65%       { transform: translate(-4vw,9vh) scale(0.92) rotate(-4deg); border-radius: 65% 35% 50% 50% / 30% 65% 35% 70%; }
 }
-
 @keyframes caustic-b {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    border-radius: 55% 45% 40% 60% / 50% 55% 45% 50%;
-  }
-  25% {
-    transform: translate(-5vw, 6vh) scale(1.08) rotate(-5deg);
-    border-radius: 40% 60% 65% 35% / 60% 40% 55% 45%;
-  }
-  70% {
-    transform: translate(7vw, -3vh) scale(1.15) rotate(8deg);
-    border-radius: 60% 40% 30% 70% / 45% 60% 40% 55%;
-  }
+  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); border-radius: 55% 45% 40% 60% / 50% 55% 45% 50%; }
+  25%       { transform: translate(-5vw,6vh) scale(1.08) rotate(-5deg); border-radius: 40% 60% 65% 35% / 60% 40% 55% 45%; }
+  70%       { transform: translate(7vw,-3vh) scale(1.15) rotate(8deg); border-radius: 60% 40% 30% 70% / 45% 60% 40% 55%; }
 }
-
 @keyframes caustic-c {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    border-radius: 60% 40% 50% 50% / 45% 55% 45% 55%;
-  }
-  40% {
-    transform: translate(4vw, -5vh) scale(0.9) rotate(10deg);
-    border-radius: 35% 65% 60% 40% / 55% 40% 60% 45%;
-  }
-  75% {
-    transform: translate(-6vw, 5vh) scale(1.1) rotate(-6deg);
-    border-radius: 50% 50% 40% 60% / 65% 35% 55% 45%;
-  }
+  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); border-radius: 60% 40% 50% 50% / 45% 55% 45% 55%; }
+  40%       { transform: translate(4vw,-5vh) scale(0.9) rotate(10deg); border-radius: 35% 65% 60% 40% / 55% 40% 60% 45%; }
+  75%       { transform: translate(-6vw,5vh) scale(1.1) rotate(-6deg); border-radius: 50% 50% 40% 60% / 65% 35% 55% 45%; }
 }
-
 @keyframes caustic-d {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%;
-  }
-  35% {
-    transform: translate(-3vw, -4vh) scale(1.14) rotate(-7deg);
-    border-radius: 60% 40% 45% 55% / 40% 60% 40% 60%;
-  }
-  70% {
-    transform: translate(5vw, 7vh) scale(0.88) rotate(4deg);
-    border-radius: 30% 70% 55% 45% / 60% 35% 65% 40%;
-  }
+  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); border-radius: 45% 55% 60% 40% / 55% 45% 55% 45%; }
+  35%       { transform: translate(-3vw,-4vh) scale(1.14) rotate(-7deg); border-radius: 60% 40% 45% 55% / 40% 60% 40% 60%; }
+  70%       { transform: translate(5vw,7vh) scale(0.88) rotate(4deg); border-radius: 30% 70% 55% 45% / 60% 35% 65% 40%; }
 }
