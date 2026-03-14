@@ -18,6 +18,11 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --bg:                  #020818;
   --text:                #a8d8f0;
   --text-shadow:         0 0 40px rgba(0,180,255,0.4), 0 0 80px rgba(0,80,200,0.2);
+  /* Hero */
+  --hero-subtitle:       rgba(168,216,240,0.65);
+  --hero-tagline:        rgba(168,216,240,0.50);
+  --hero-divider:        rgba(0,212,255,0.30);
+  --scroll-indicator:    rgba(0,212,255,0.70);
   /* Depth overlay (two fixed divs cross-fade) */
   --overlay-deep-op:     1;
   --overlay-reef-op:     0;
@@ -41,6 +46,11 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --bg:                  #0096c7;
   --text:                #fff8f0;
   --text-shadow:         0 2px 24px rgba(255,200,80,0.45), 0 0 60px rgba(255,140,60,0.2);
+  /* Hero */
+  --hero-subtitle:       rgba(255,248,240,0.72);
+  --hero-tagline:        rgba(255,248,240,0.58);
+  --hero-divider:        rgba(255,248,240,0.40);
+  --scroll-indicator:    rgba(255,248,240,0.75);
   --overlay-deep-op:     0;
   --overlay-reef-op:     1;
   --marine-snow-op:      0;
@@ -130,6 +140,33 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 .theme-transitioning .toggle-backdrop {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════════════════════════════ */
+
+.hero-subtitle {
+  color: var(--hero-subtitle);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.hero-tagline {
+  color: var(--hero-tagline);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+.hero-divider {
+  background-color: var(--hero-divider);
+  transition: background-color var(--theme-dur) var(--theme-ease);
+}
+.hero-scroll-dot {
+  background-color: var(--scroll-indicator);
+  box-shadow: 0 0 8px var(--scroll-indicator);
+  transition: background-color var(--theme-dur) var(--theme-ease),
+              box-shadow        var(--theme-dur) var(--theme-ease);
+}
+.hero-scroll-label {
+  color: var(--scroll-indicator);
+  transition: color var(--theme-dur) var(--theme-ease);
 }
 
 /* Creature SVG groups — opacity driven by CSS variable, no React re-render */

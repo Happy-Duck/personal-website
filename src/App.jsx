@@ -2,10 +2,11 @@ import { MarineSnow } from './components/MarineSnow'
 import { CausticLight } from './components/CausticLight'
 import { ThemeToggle } from './components/ThemeToggle'
 import { CreatureLayer } from './components/creatures/CreatureLayer'
+import { Hero } from './components/Hero'
 
 export default function App() {
   return (
-    <div className="theme-bg relative min-h-screen overflow-hidden">
+    <div className="theme-bg relative overflow-hidden">
 
       {/* Background effects */}
       <MarineSnow />
@@ -21,12 +22,8 @@ export default function App() {
       {/* Toggle */}
       <ThemeToggle />
 
-      {/* Content */}
-      <div className="relative min-h-screen flex items-center justify-center" style={{ zIndex: 10 }}>
-        <h1 className="site-title text-6xl font-bold tracking-tight select-none">
-          Rishi Garhyan
-        </h1>
-      </div>
+      {/* Hero */}
+      <Hero />
 
     </div>
   )
