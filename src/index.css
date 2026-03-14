@@ -11,6 +11,20 @@ html, body, #root {
   min-height: 100%;
 }
 
+/* ─── Jellyfish bell pulse ────────────────────────────────────────── */
+
+@keyframes jelly-pulse {
+  0%, 100% { transform: scaleY(1)    scaleX(1);    }
+  45%       { transform: scaleY(0.76) scaleX(1.16); }
+  55%       { transform: scaleY(0.80) scaleX(1.13); }
+}
+
+.jelly-bell {
+  animation: jelly-pulse 2.6s ease-in-out infinite;
+  transform-origin: center bottom;
+  transform-box: fill-box;
+}
+
 /* ─── Caustic light blobs ─────────────────────────────────────────── */
 
 .caustic-blob {

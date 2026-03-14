@@ -3,6 +3,7 @@ import { useTheme } from './context/ThemeContext'
 import { MarineSnow } from './components/MarineSnow'
 import { CausticLight } from './components/CausticLight'
 import { ThemeToggle } from './components/ThemeToggle'
+import { CreatureLayer } from './components/creatures/CreatureLayer'
 
 const THEMES = {
   'deep-sea': {
@@ -43,6 +44,9 @@ export default function App() {
         }}
         transition={{ duration: 0.85 }}
       />
+
+      {/* Sea creatures — behind all UI */}
+      <CreatureLayer />
 
       {/* Toggle */}
       <ThemeToggle />
