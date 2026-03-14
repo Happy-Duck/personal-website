@@ -42,6 +42,12 @@ export function MarineSnow() {
     window.addEventListener('resize', resize, { passive: true })
 
     const animate = () => {
+      // Skip drawing when marine snow is invisible (shallow reef mode)
+      if (document.documentElement.getAttribute('data-theme') !== 'deep-sea') {
+        rafId = requestAnimationFrame(animate)
+        return
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       for (const p of particles) {

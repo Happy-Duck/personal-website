@@ -1,16 +1,36 @@
-# React + Vite
+# Rishi Garhyan — Personal Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**[happy-duck.github.io/personal-website](https://happy-duck.github.io/personal-website)**
 
-Currently, two official plugins are available:
+A deep-sea themed personal portfolio built with React, Vite, and Tailwind CSS. Toggle between **deep sea** (dark) and **shallow reef** (light) modes — bioluminescent marine snow, caustic light ripples, and roaming sea creatures included.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Dual ocean themes** — deep sea / shallow reef with instant CSS variable transitions and no flash on load
+- **Animated background** — marine snow particle canvas, caustic light blobs, depth overlays
+- **Interactive creatures** — three reef fish and a jellyfish/turtle that drift across the screen and flee the cursor
+- **Projects section** — featured Pelagos card with shimmer effect, mouse-tracking parallax on all cards, scroll-triggered entrance animations
+- **Framer Motion** — Hero stagger fade-in, Projects scroll reveal, theme toggle spring
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the ESLint configuration
+- [React 19](https://react.dev) + [Vite 8](https://vite.dev)
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [Framer Motion](https://www.framer.com/motion/)
+- [shadcn/ui](https://ui.shadcn.com)
+- Deployed via [gh-pages](https://github.com/tschaub/gh-pages) to GitHub Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Deploy
+
+```bash
+npm run deploy
+```
+
+Builds to `dist/` and pushes to the `gh-pages` branch.
