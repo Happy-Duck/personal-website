@@ -2,7 +2,6 @@
 // Static chimney at bottom of viewport. CSS particle plume rising.
 // Only visible when depth > 0.80.
 import { useMemo } from 'react'
-import { useOceanDepthContext } from '../../context/OceanDepthContext'
 
 const PARTICLE_COUNT = 14
 
@@ -78,25 +77,14 @@ function VentParticles({ count }) {
 }
 
 export function HydrothermalVent() {
-  const { depthRef } = useOceanDepthContext()
-
-  // Inline opacity transition driven by CSS var (no re-render)
   return (
     <div
+      className="hydrothermal-vent"
       style={{
-        position:   'fixed',
-        bottom:     0,
-        left:       '22%',
-        zIndex:     3,
-        pointerEvents: 'none',
         opacity:    'var(--vent-op, 0)',
         transition: 'opacity 1s ease',
       }}
     >
-      {/* Vent opacity is driven by a CSS var set in OceanDepthContext — but
-          since HydrothermalVent is always mounted, we use the depth context
-          to set a local CSS var on this element via a className binding.
-          Simpler: just use inline style with a CSS var that the depth provider sets. */}
       <div style={{ position: 'relative' }}>
         <VentParticles count={PARTICLE_COUNT} />
         <VentSVG />

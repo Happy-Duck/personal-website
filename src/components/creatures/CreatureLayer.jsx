@@ -9,8 +9,6 @@ import { DeepSeaFish      } from './DeepSeaFish'
 import { GiantSquid       } from './GiantSquid'
 import { AbyssalJellyfish } from './AbyssalJellyfish'
 import { SnailFish        } from './SnailFish'
-import { HydrothermalVent } from './HydrothermalVent'
-
 export function CreatureLayer() {
   return (
     <div
@@ -40,9 +38,6 @@ export function CreatureLayer() {
 
       {/* Hadal Zone (0.82–1.00) */}
       <SnailFish />
-
-      {/* Hadal — static vent (footer area) */}
-      <HydrothermalVent />
     </div>
   )
 }

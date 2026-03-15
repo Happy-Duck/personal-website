@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useMouse } from '../context/MouseContext'
+import { HydrothermalVent } from './creatures/HydrothermalVent'
 
 // ── Dimensions ─────────────────────────────────────────────────────────
 
@@ -167,6 +168,9 @@ export function Footer() {
 
   return (
     <footer className="footer-wrap" style={{ zIndex: 10, position: 'relative' }}>
+
+      {/* Hydrothermal vent — sits on top of the ocean floor */}
+      <HydrothermalVent />
 
       {/* Ocean floor — sandy/rocky texture, crab + credits live here */}
       <div className="footer-floor">

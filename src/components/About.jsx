@@ -16,13 +16,6 @@ const CURRENTLY = [
   { key: 'building', value: 'ESA Comet Interceptor VR module' },
 ]
 
-const STATUS_COLORS = {
-  online:  '#43b581',
-  idle:    '#faa61a',
-  dnd:     '#f04747',
-  offline: '#747f8d',
-}
-
 const FALLBACK = 'Probably fishing or in class'
 
 // ── Animation variants ─────────────────────────────────────────────────
@@ -59,10 +52,23 @@ const currRow = {
 
 // ── Discord presence card ──────────────────────────────────────────────
 
-function PresenceCard() {
-  const { status, activity, spotify, customStatus, loading, error } = useLanyard()
+function resolveActivityImage(activity) {
+  if (!activity) return null
+  const assets = activity.assets
+  const appId  = activity.application_id
+  // Try large_image first, then small_image
+  const img = assets?.large_image || assets?.small_image
+  if (!img) return null
+  if (img.startsWith('mp:external/'))
+    return `https://media.discordapp.net/external/${img.slice(12)}`
+  if (appId)
+    return `https://cdn.discordapp.com/app-assets/${appId}/${img}.png`
+  return null
+}
 
-  // Determine what to show
+function PresenceCard() {
+  const { activity, spotify, customStatus, loading, error } = useLanyard()
+
   let thumb = null
   let line  = null
 
@@ -71,23 +77,15 @@ function PresenceCard() {
       line  = `Listening to ${spotify.song} by ${spotify.artist}`
       thumb = spotify.album_art_url
     } else if (activity) {
-      line = `Playing ${activity.name}`
-      if (activity.assets?.large_image) {
-        const img = activity.assets.large_image
-        thumb = img.startsWith('mp:external/')
-          ? `https://media.discordapp.net/external/${img.slice(12)}`
-          : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`
-      }
+      line  = `Playing ${activity.name}`
+      thumb = resolveActivityImage(activity)
     }
   }
 
-  const showFallback = error || (!loading && !line && status === 'offline')
-  const dotColor     = STATUS_COLORS[status] || STATUS_COLORS.offline
-  const isOnline     = status === 'online'
+  const showFallback = error || (!loading && !line)
 
   return (
     <div className="presence-card">
-      {/* Thumbnail — album art or game image */}
       {thumb && (
         <img
           src={thumb}
@@ -98,22 +96,14 @@ function PresenceCard() {
       )}
 
       <div className="presence-content">
-        {/* Status dot + label */}
-        <div className="presence-status-row">
-          <span
-            className={`presence-dot${isOnline ? ' presence-dot--online' : ''}`}
-            style={{ background: dotColor }}
-          />
-          {loading ? (
-            <span className="presence-shimmer" />
-          ) : (
-            <span className="presence-line">
-              {showFallback ? FALLBACK : (line || FALLBACK)}
-            </span>
-          )}
-        </div>
+        {loading ? (
+          <span className="presence-shimmer" />
+        ) : (
+          <span className="presence-line">
+            {showFallback ? FALLBACK : line}
+          </span>
+        )}
 
-        {/* Custom status (if set) */}
         {!loading && customStatus?.state && (
           <p className="presence-custom">{customStatus.state}</p>
         )}

@@ -986,8 +986,9 @@ html::-webkit-scrollbar { display: none; }
    ═══════════════════════════════════════════════════════════════════ */
 
 .footer-wrap {
-  width:    100%;
-  overflow: hidden;
+  width:      100%;
+  overflow-x: hidden;
+  position:   relative;
 }
 
 /* Sandy / rocky floor texture */
@@ -1008,6 +1009,15 @@ html::-webkit-scrollbar { display: none; }
     ),
     linear-gradient(to bottom, var(--floor-top) 0%, var(--floor-bg) 100%);
   transition: background var(--theme-dur) var(--theme-ease);
+}
+
+/* Hydrothermal vent — anchored above the ocean floor */
+.hydrothermal-vent {
+  position:       absolute;
+  bottom:         100px;
+  left:           22%;
+  z-index:        1;
+  pointer-events: none;
 }
 
 /* Credits text — sits on the ocean floor */
