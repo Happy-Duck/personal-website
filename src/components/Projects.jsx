@@ -34,7 +34,7 @@ const PROJECTS = [
   },
   {
     title:       'Tide Toss',
-    description: 'Physics-based "Tosser" game built in 48 hours for a game jam. Combination of 2D art, 3D physics, and 1D gameplay',
+    description: 'Physics-based "Tosser" game built in 48 hours for the Game Builders Game Jam. Combination of 2D art, 3D physics, and 1D gameplay',
     stack:       ['Unity', 'C#', 'Espresso'],
     link:        'https://happy-ducky.itch.io/tide-toss',
   },
