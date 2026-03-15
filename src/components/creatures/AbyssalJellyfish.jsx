@@ -38,12 +38,18 @@ export function AbyssalJellyfish() {
         p.y = VH * 0.75
       }
 
+      // Parallax — compute early so reset uses rendered position
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
+
       // Drift upward very slowly
       p.y -= 0.16 + p.driftBoost
       p.driftBoost *= 0.94
       p.x += Math.sin(p.y * 0.008) * 0.25
-      if (p.y < -H - 20) {
-        p.y = VH + H + 10
+
+      // Reset to bottom (use rendered position so parallax can't strand them)
+      if (p.y - scrollOffset < -H - 20) {
+        p.y = VH + H + 10 + scrollOffset
         p.x = (0.3 + Math.random() * 0.5) * VW
       }
 
@@ -62,8 +68,6 @@ export function AbyssalJellyfish() {
       p.dodgeX *= 0.96
       p.dodgeX = Math.max(-80, Math.min(80, p.dodgeX))
 
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x + p.dodgeX))
       const ny = p.y - scrollOffset
 

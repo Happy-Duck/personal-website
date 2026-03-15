@@ -51,9 +51,13 @@ function SingleJelly({ cfg, idx, peers }) {
       p.driftBoost *= 0.94
       p.x += Math.sin(p.y * 0.012 + idx * 1.4) * 0.35
 
-      // Reset to bottom
-      if (p.y < -sh - 20) {
-        p.y = VH + sh
+      // Parallax — compute early so reset uses rendered position
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
+
+      // Reset to bottom (use rendered position so parallax can't strand them)
+      if (p.y - scrollOffset < -sh - 20) {
+        p.y = VH + sh + scrollOffset
         p.x = (0.15 + Math.random() * 0.7) * VW
       }
 
@@ -87,8 +91,6 @@ function SingleJelly({ cfg, idx, peers }) {
         }
       }
 
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = Math.max(sw / 2, Math.min(VW - sw / 2, p.x + p.dodgeX))
       const ny = p.y - scrollOffset
 

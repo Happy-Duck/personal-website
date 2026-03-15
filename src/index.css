@@ -924,8 +924,10 @@ html::-webkit-scrollbar { display: none; }
 
 .log-meta {
   display:         flex;
-  flex-direction:  column;
-  gap:             0.2rem;
+  flex-wrap:       wrap;
+  justify-content: space-between;
+  align-items:     baseline;
+  gap:             0.2rem 1rem;
 }
 
 .log-meta-line {
