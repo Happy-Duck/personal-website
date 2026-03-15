@@ -1297,6 +1297,15 @@ html::-webkit-scrollbar { display: none; }
   animation: lure-pulse 1.6s ease-in-out infinite;
 }
 
+/* Anglerfish lure glow (image-based) */
+@keyframes angler-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.3); }
+}
+.angler-lure {
+  animation: angler-glow 2.2s ease-in-out infinite;
+}
+
 /* Hydrothermal vent particle rise */
 @keyframes vent-rise {
   0%   { transform: translateY(0)     scale(1);    opacity: 0.85; }

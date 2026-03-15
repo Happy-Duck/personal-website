@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { useCreatureAI } from '../../hooks/useCreatureAI'
 
-const W = 120, H = 50
+const W = 150, H = 63
 
 const CONFIGS = [
   { centerYFrac: 0.32, speed: 0.55, amplitude: 38, freq: 0.007, dir:  1 },

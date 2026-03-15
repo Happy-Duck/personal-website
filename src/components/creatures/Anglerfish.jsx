@@ -82,7 +82,21 @@ export function Anglerfish() {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <img src="/creatures/Anglerfish.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
+      <div style={{ position: 'relative', width: W, height: H }}>
+        <img src="/creatures/Anglerfish.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
+        {/* Lure glow — positioned at the esca bulb (top-right after flip) */}
+        <div className="angler-lure" style={{
+          position: 'absolute',
+          top: '4%',
+          right: '12%',
+          width: 18,
+          height: 18,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(100,220,255,0.9) 0%, rgba(60,180,255,0.4) 40%, transparent 70%)',
+          boxShadow: '0 0 12px 6px rgba(80,200,255,0.5), 0 0 30px 14px rgba(60,160,255,0.25)',
+          pointerEvents: 'none',
+        }} />
+      </div>
     </div>
   )
 }
