@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useLanyard } from '../hooks/useLanyard'
 
 // ── Data ───────────────────────────────────────────────────────────────
 
@@ -11,10 +12,18 @@ const NOTES = [
 ]
 
 const CURRENTLY = [
-  { key: 'at',       value: 'UIUC, Champaign IL'                  },
-  { key: 'building', value: 'ESA Comet Interceptor VR module'      },
-  { key: 'playing',  value: null /* placeholder — fill in later */ },
+  { key: 'at',       value: 'UIUC, Champaign IL'             },
+  { key: 'building', value: 'ESA Comet Interceptor VR module' },
 ]
+
+const STATUS_COLORS = {
+  online:  '#43b581',
+  idle:    '#faa61a',
+  dnd:     '#f04747',
+  offline: '#747f8d',
+}
+
+const FALLBACK = 'Probably fishing or in class'
 
 // ── Animation variants ─────────────────────────────────────────────────
 
@@ -46,6 +55,71 @@ const currStagger = {
 const currRow = {
   hidden: { opacity: 0, y: 10 },
   show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+}
+
+// ── Discord presence card ──────────────────────────────────────────────
+
+function PresenceCard() {
+  const { status, activity, spotify, customStatus, loading, error } = useLanyard()
+
+  // Determine what to show
+  let thumb = null
+  let line  = null
+
+  if (!loading && !error) {
+    if (spotify) {
+      line  = `Listening to ${spotify.song} by ${spotify.artist}`
+      thumb = spotify.album_art_url
+    } else if (activity) {
+      line = `Playing ${activity.name}`
+      if (activity.assets?.large_image) {
+        const img = activity.assets.large_image
+        thumb = img.startsWith('mp:external/')
+          ? `https://media.discordapp.net/external/${img.slice(12)}`
+          : `https://cdn.discordapp.com/app-assets/${activity.application_id}/${img}.png`
+      }
+    }
+  }
+
+  const showFallback = error || (!loading && !line && status === 'offline')
+  const dotColor     = STATUS_COLORS[status] || STATUS_COLORS.offline
+  const isOnline     = status === 'online'
+
+  return (
+    <div className="presence-card">
+      {/* Thumbnail — album art or game image */}
+      {thumb && (
+        <img
+          src={thumb}
+          alt=""
+          className="presence-thumb"
+          loading="lazy"
+        />
+      )}
+
+      <div className="presence-content">
+        {/* Status dot + label */}
+        <div className="presence-status-row">
+          <span
+            className={`presence-dot${isOnline ? ' presence-dot--online' : ''}`}
+            style={{ background: dotColor }}
+          />
+          {loading ? (
+            <span className="presence-shimmer" />
+          ) : (
+            <span className="presence-line">
+              {showFallback ? FALLBACK : (line || FALLBACK)}
+            </span>
+          )}
+        </div>
+
+        {/* Custom status (if set) */}
+        {!loading && customStatus?.state && (
+          <p className="presence-custom">{customStatus.state}</p>
+        )}
+      </div>
+    </div>
+  )
 }
 
 // ── Section ────────────────────────────────────────────────────────────
@@ -117,13 +191,15 @@ export function About() {
             <motion.div key={key} className="about-curr-row" variants={currRow}>
               <dt className="about-curr-key">{key}</dt>
               <span className="about-curr-sep" aria-hidden="true">·</span>
-              {value
-                ? <dd className="about-curr-val">{value}</dd>
-                : <dd className="about-curr-val about-curr-blank">···</dd>
-              }
+              <dd className="about-curr-val">{value}</dd>
             </motion.div>
           ))}
         </motion.dl>
+
+        {/* ── Live presence ── */}
+        <div className="about-divider about-divider--spaced" />
+        <p className="about-section-label">Right Now</p>
+        <PresenceCard />
 
       </motion.div>
     </section>
