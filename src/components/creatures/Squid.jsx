@@ -5,60 +5,8 @@ import { useMouse } from '../../context/MouseContext'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 64, H = 28
+const W = 40, H = 55
 const DEPTH_RANGE = { enter: 0.15, exit: 0.37 }
-
-function SquidSVG({ filterId }) {
-  return (
-    <svg width={W} height={H} viewBox="0 0 64 28"
-      overflow="visible" style={{ display: 'block' }}>
-      <defs>
-        <filter id={filterId} x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="1.5" result="blur" />
-          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-      </defs>
-
-      {/* Trailing tentacles — 8 short */}
-      {[0,1,2,3,4,5,6,7].map(i => {
-        const baseX = 2 + i * 1.2
-        const baseY = 10 + (i % 3) * 2.5
-        return (
-          <path key={i}
-            d={`M${baseX},${baseY} Q${baseX - 6},${baseY + 4 + i} ${baseX - 10},${baseY + 2}`}
-            fill="none" stroke="rgba(180,220,255,0.45)" strokeWidth="0.8"
-            className="jelly-tentacle"
-            style={{ animationDelay: `${-i * 0.22}s` }} />
-        )
-      })}
-      {/* Two long tentacles */}
-      <path d="M3,13 Q-8,20 -18,16" fill="none" stroke="rgba(150,200,255,0.55)" strokeWidth="1"
-        className="jelly-tentacle" style={{ animationDelay: '-1s' }} />
-      <path d="M3,15 Q-8,10 -18,12" fill="none" stroke="rgba(150,200,255,0.55)" strokeWidth="1"
-        className="jelly-tentacle" style={{ animationDelay: '-2s' }} />
-
-      {/* Mantle / body */}
-      <ellipse cx="38" cy="14" rx="24" ry="9.5" fill="#1a3050" />
-      {/* Mantle highlight */}
-      <ellipse cx="36" cy="12" rx="16" ry="5" fill="rgba(60,100,160,0.35)" />
-
-      {/* Fins */}
-      <path d="M52,14 L62,8 L62,20 Z" fill="#162840" />
-
-      {/* Bioluminescent dots along body */}
-      {[20,28,36,44,50].map((cx, i) => (
-        <circle key={cx} cx={cx} cy="13" r="1.4"
-          fill="#00d4ff" filter={`url(#${filterId})`}
-          className="bio-pulse"
-          style={{ animationDelay: `${i * -0.4}s` }} />
-      ))}
-
-      {/* Eyes */}
-      <circle cx="58" cy="12" r="3" fill="#0a1830" />
-      <circle cx="58.8" cy="11.3" r="1.2" fill="#00aaff" opacity="0.8" />
-    </svg>
-  )
-}
 
 export function Squid() {
   const wrapperRef = useRef(null)
@@ -131,7 +79,7 @@ export function Squid() {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <SquidSVG filterId="squid-glow" />
+      <img src="/creatures/squid.jpg" alt="" width={W} height={H} style={{ display: 'block' }} draggable={false} />
     </div>
   )
 }
