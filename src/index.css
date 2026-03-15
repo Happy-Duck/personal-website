@@ -442,14 +442,14 @@ html::-webkit-scrollbar { display: none; }
   min-width:       44px;
   min-height:      44px;
   flex-shrink:     0;
-  color:           var(--icon-color);
+  color:           var(--card-link);
   text-decoration: none;
   transition:      color 0.2s ease, transform 0.15s ease, filter 0.2s ease;
   border-radius:   8px;
 }
 .card-link-btn:hover {
-  color:     var(--icon-color);
-  filter:    brightness(1.3);
+  color:     var(--card-link-hover);
+  filter:    brightness(1.1);
   transform: scale(1.05);
 }
 
