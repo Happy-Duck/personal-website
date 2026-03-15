@@ -108,9 +108,8 @@ function SignalNode({ signal }) {
     ? { type: 'button', onClick: handleClick }
     : {
         href: signal.href,
-        target: isResume ? '_self' : '_blank',
+        target: '_blank',
         rel: 'noopener noreferrer',
-        download: isResume ? true : undefined,
       }
 
   return (
