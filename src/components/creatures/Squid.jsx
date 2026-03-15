@@ -26,6 +26,8 @@ function SingleSquid({ cfg, idx, peers }) {
     dodgeY: 0,
     dartPhase: 0,       // 0 = glide, 1 = dart
     dartTimer: cfg.dartOffset,
+    glideLen: 100 + Math.random() * 60,   // randomized glide duration
+    dartLen:  18 + Math.random() * 15,     // randomized dart duration
   })
 
   useEffect(() => {
@@ -48,10 +50,16 @@ function SingleSquid({ cfg, idx, peers }) {
         p.pathRawX = p.x
       }
 
-      // Dart / glide cycle
+      // Dart / glide cycle with randomized intervals
       p.dartTimer++
-      if (p.dartTimer > 120 && p.dartPhase === 0) { p.dartPhase = 1; p.dartTimer = 0 }
-      if (p.dartTimer > 25  && p.dartPhase === 1) { p.dartPhase = 0; p.dartTimer = 0 }
+      if (p.dartTimer > p.glideLen && p.dartPhase === 0) {
+        p.dartPhase = 1; p.dartTimer = 0
+        p.dartLen = 18 + Math.random() * 15
+      }
+      if (p.dartTimer > p.dartLen && p.dartPhase === 1) {
+        p.dartPhase = 0; p.dartTimer = 0
+        p.glideLen = 100 + Math.random() * 60
+      }
 
       const baseSpeed = (p.dartPhase === 1 ? 3.5 : 0.45) * cfg.speedMul
       p.t++

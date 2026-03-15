@@ -5,7 +5,7 @@ import { useMouse } from '../../context/MouseContext'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 100, H = 140
+const W = 130, H = 182
 const DEPTH_RANGE = { enter: 0.60, exit: 0.87 }
 
 export function AbyssalJellyfish() {
@@ -77,7 +77,7 @@ export function AbyssalJellyfish() {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <img src="/creatures/deepJellyfish.png" alt="" width={W} height={H} style={{ display: 'block' }} draggable={false} />
+      <img src="/creatures/deepJellyfish.png" alt="" width={W} height={H} style={{ display: 'block', transform: 'rotate(40deg)' }} draggable={false} />
     </div>
   )
 }

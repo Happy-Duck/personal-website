@@ -5,7 +5,7 @@ import { useMouse } from '../../context/MouseContext'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 70, H = 100
+const W = 120, H = 170
 const DEPTH_RANGE = { enter: 0.13, exit: 0.36 }
 
 const CONFIGS = [
@@ -106,7 +106,7 @@ function SingleJelly({ cfg, idx, peers }) {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <img src="/creatures/Jellyfish.png" alt="" width={sw} height={sh} style={{ display: 'block' }} draggable={false} />
+      <img src="/creatures/Jellyfish.png" alt="" width={sw} height={sh} style={{ display: 'block', transform: 'rotate(-40deg)' }} draggable={false} />
     </div>
   )
 }
