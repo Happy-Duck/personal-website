@@ -1157,9 +1157,9 @@ html::-webkit-scrollbar { display: none; }
 
 .footer-wrap {
   width:      100%;
-  overflow-x: clip;
-  overflow-y: visible;
+  overflow:   hidden;
   position:   relative;
+  padding-top: 50px;
 }
 
 /* Sandy / rocky floor texture */
