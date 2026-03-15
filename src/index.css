@@ -164,8 +164,8 @@ html::-webkit-scrollbar { display: none; }
   --card-shadow-hover:   0 18px 52px rgba(0,60,100,0.30), 0 0 0 1px rgba(255,110,60,0.35);
   --card-title:          rgba(5,28,50,0.96);
   --card-body:           rgba(5,28,50,0.72);
-  --card-link:           rgba(6, 27, 40, 0.78);
-  --card-link-hover:     rgba(0,80,140,0.95);
+  --card-link:           rgba(0,80,140,0.95);
+  --card-link-hover:     rgba(6, 27, 40, 0.78);
   --pill-bg:             rgba(255,100,50,0.10);
   --pill-border:         rgba(255,100,50,0.26);
   --pill-text:           rgba(170,55,15,0.90);
@@ -271,11 +271,10 @@ html::-webkit-scrollbar { display: none; }
 }
 
 .site-title {
-  color: var(--text-primary);
-  -webkit-text-stroke: 1.5px var(--text-stroke);
-  paint-order: stroke fill;
+  color: var(--text);
   text-shadow: var(--text-shadow);
-  transition: text-shadow var(--theme-dur) var(--theme-ease);
+  transition: color var(--theme-dur) var(--theme-ease),
+              text-shadow var(--theme-dur) var(--theme-ease);
 }
 
 /* Overlay gradients — two persistent divs, opacity-only cross-fade (compositor) */
