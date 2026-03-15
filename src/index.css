@@ -60,6 +60,61 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   /* Creatures */
   --creature-deep-op:    1;
   --creature-reef-op:    0;
+  /* Experience timeline */
+  --kelp-stroke:         rgba(0,180,200,0.28);
+  --kelp-glow:           rgba(0,220,255,0.65);
+  --kelp-dot-bg:         #00d4ff;
+  --kelp-dot-ring:       rgba(0,212,255,0.30);
+  --exp-card-bg:         rgba(2,12,38,0.60);
+  --exp-card-border:     rgba(0,212,255,0.13);
+  --exp-card-border-h:   rgba(0,212,255,0.32);
+  --exp-card-shadow:     0 4px 28px rgba(0,0,0,0.50);
+  --exp-period:          rgba(0,212,255,0.50);
+  --exp-role:            rgba(168,216,240,0.96);
+  --exp-company:         rgba(0,212,255,0.72);
+  --exp-desc:            rgba(140,192,225,0.58);
+  /* Skills */
+  --skill-group-label:   rgba(0,212,255,0.42);
+  --skill-label:         rgba(140,192,225,0.72);
+  --skill-tooltip-bg:    rgba(2,6,22,0.93);
+  --skill-tooltip-text:  rgba(168,216,240,0.95);
+  --skill-tooltip-arrow: rgba(2,6,22,0.93);
+  /* About */
+  --about-card-bg:       rgba(2,10,34,0.74);
+  --about-card-border:   rgba(0,212,255,0.13);
+  --about-card-shadow:   0 8px 48px rgba(0,0,0,0.55);
+  --about-ruled:         rgba(0,212,255,0.055);
+  --about-label:         rgba(0,212,255,0.65);
+  --about-divider:       rgba(0,212,255,0.12);
+  --about-bullet:        rgba(0,212,255,0.48);
+  --about-body:          rgba(140,192,225,0.72);
+  --about-curr-bg:       rgba(0,6,24,0.55);
+  --about-curr-key:      rgba(0,212,255,0.55);
+  --about-curr-sep:      rgba(0,212,255,0.28);
+  --about-curr-val:      rgba(168,216,240,0.88);
+  --about-curr-blank:    rgba(0,212,255,0.22);
+  /* Contact */
+  --signal-intro:        rgba(0,212,255,0.38);
+  --signal-bg:           rgba(2,10,34,0.65);
+  --signal-border:       rgba(0,212,255,0.18);
+  --signal-icon:         rgba(0,212,255,0.82);
+  --signal-label:        rgba(168,216,240,0.92);
+  --signal-sublabel:     rgba(0,212,255,0.50);
+  --signal-email-glow:   rgba(0,212,255,0.55);
+  --signal-li-glow:      rgba(100,160,255,0.52);
+  --signal-gh-glow:      rgba(160,120,255,0.52);
+  /* Footer */
+  --floor-bg:            #03091e;
+  --floor-top:           #06122e;
+  --floor-ripple:        rgba(0,212,255,0.035);
+  --floor-credits-bg:    rgba(2,6,18,0.92);
+  --floor-credits-text:  rgba(0,212,255,0.32);
+  /* Crab */
+  --crab-body:           #1a3860;
+  --crab-claw:           #112a4a;
+  --crab-leg:            #1a3860;
+  --crab-ridge:          rgba(100,160,220,0.35);
+  --crab-filter:         drop-shadow(0 0 5px rgba(80,160,255,0.45));
 }
 
 :root[data-theme="shallow-reef"] {
@@ -104,6 +159,61 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --icon-abyss:          rgba(100,80,140,0.40);
   --creature-deep-op:    0;
   --creature-reef-op:    1;
+  /* Experience timeline */
+  --kelp-stroke:         rgba(30,100,50,0.38);
+  --kelp-glow:           rgba(60,170,80,0.70);
+  --kelp-dot-bg:         #2a8a42;
+  --kelp-dot-ring:       rgba(40,140,60,0.28);
+  --exp-card-bg:         rgba(255,255,255,0.22);
+  --exp-card-border:     rgba(0,120,60,0.18);
+  --exp-card-border-h:   rgba(0,120,60,0.38);
+  --exp-card-shadow:     0 4px 28px rgba(0,60,30,0.16);
+  --exp-period:          rgba(10,80,40,0.60);
+  --exp-role:            rgba(5,28,15,0.96);
+  --exp-company:         rgba(20,100,50,0.82);
+  --exp-desc:            rgba(5,28,15,0.60);
+  /* Skills */
+  --skill-group-label:   rgba(0,100,50,0.55);
+  --skill-label:         rgba(5,28,15,0.65);
+  --skill-tooltip-bg:    rgba(5,28,15,0.92);
+  --skill-tooltip-text:  rgba(230,250,235,0.96);
+  --skill-tooltip-arrow: rgba(5,28,15,0.92);
+  /* About */
+  --about-card-bg:       rgba(255,252,238,0.86);
+  --about-card-border:   rgba(120,85,30,0.22);
+  --about-card-shadow:   0 6px 32px rgba(0,50,80,0.13), 4px 4px 0 rgba(180,145,80,0.14), 7px 7px 0 rgba(180,145,80,0.07);
+  --about-ruled:         rgba(100,72,20,0.065);
+  --about-label:         rgba(18,90,45,0.80);
+  --about-divider:       rgba(100,72,20,0.16);
+  --about-bullet:        rgba(18,110,50,0.55);
+  --about-body:          rgba(20,36,20,0.74);
+  --about-curr-bg:       rgba(255,245,215,0.72);
+  --about-curr-key:      rgba(18,90,45,0.70);
+  --about-curr-sep:      rgba(100,72,20,0.35);
+  --about-curr-val:      rgba(20,36,20,0.88);
+  --about-curr-blank:    rgba(100,72,20,0.28);
+  /* Contact */
+  --signal-intro:        rgba(0,100,60,0.50);
+  --signal-bg:           rgba(255,255,255,0.22);
+  --signal-border:       rgba(0,120,60,0.18);
+  --signal-icon:         rgba(180,60,10,0.85);
+  --signal-label:        rgba(5,28,15,0.92);
+  --signal-sublabel:     rgba(0,100,50,0.62);
+  --signal-email-glow:   rgba(255,140,60,0.55);
+  --signal-li-glow:      rgba(255,100,40,0.50);
+  --signal-gh-glow:      rgba(200,70,20,0.50);
+  /* Footer */
+  --floor-bg:            #c4a052;
+  --floor-top:           #d4b468;
+  --floor-ripple:        rgba(255,220,120,0.18);
+  --floor-credits-bg:    rgba(160,110,20,0.85);
+  --floor-credits-text:  rgba(255,245,200,0.75);
+  /* Crab */
+  --crab-body:           #d4691e;
+  --crab-claw:           #b8540e;
+  --crab-leg:            #c45c12;
+  --crab-ridge:          rgba(100,40,0,0.25);
+  --crab-filter:         drop-shadow(0 2px 4px rgba(100,40,0,0.35));
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -399,4 +509,485 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
   35%       { transform: translate(-3vw,-4vh) scale(1.14) rotate(-7deg); }
   70%       { transform: translate(5vw,7vh) scale(0.88) rotate(4deg); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   EXPERIENCE TIMELINE
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Kelp strand paths */
+.kelp-strand {
+  stroke: var(--kelp-stroke);
+  transition: stroke var(--theme-dur) var(--theme-ease);
+}
+
+.kelp-current {
+  stroke: var(--kelp-glow);
+  stroke-dasharray: 3 9;
+  animation: kelp-flow 2.8s linear infinite;
+  transition: stroke var(--theme-dur) var(--theme-ease);
+}
+
+@keyframes kelp-flow {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -12; }
+}
+
+/* Dot on the strand */
+.exp-dot {
+  width:  13px;
+  height: 13px;
+  border-radius: 50%;
+  background:  var(--kelp-dot-bg);
+  box-shadow:  0 0 0 3px var(--kelp-dot-ring), 0 0 10px var(--kelp-glow);
+  transition:
+    background  var(--theme-dur) var(--theme-ease),
+    box-shadow  var(--theme-dur) var(--theme-ease);
+}
+
+/* Experience card */
+.exp-card {
+  background:    var(--exp-card-bg);
+  border:        1px solid var(--exp-card-border);
+  box-shadow:    var(--exp-card-shadow);
+  border-radius: 14px;
+  padding:       1.35rem 1.5rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    border-color var(--theme-dur) var(--theme-ease),
+    box-shadow   var(--theme-dur) var(--theme-ease),
+    background   var(--theme-dur) var(--theme-ease);
+}
+
+.exp-card:hover {
+  border-color: var(--exp-card-border-h);
+}
+
+.theme-transitioning .exp-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Experience typography */
+.exp-period {
+  color: var(--exp-period);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+.exp-role {
+  color: var(--exp-role);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+.exp-company {
+  color: var(--exp-company);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+.exp-desc {
+  color: var(--exp-desc);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SKILLS — collectible ocean items
+   ═══════════════════════════════════════════════════════════════════ */
+
+.skill-group-label {
+  color: var(--skill-group-label);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+/* Each item: gem above, label below */
+.skill-item-wrap {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  gap:            8px;
+  cursor:         default;
+}
+
+/* Outer wrapper: creates the stacking context for tooltip */
+.skill-gem-outer {
+  position: relative;
+}
+
+/* Base gem — shared across all three types */
+.skill-gem {
+  position:  relative;
+  width:     72px;
+  height:    72px;
+  /* shape variants override this */
+  border-radius: 50%;
+  overflow:  visible; /* tooltip escapes */
+}
+
+/* Shape variants */
+.skill-gem--orb   { border-radius: 50%; }
+.skill-gem--shell { border-radius: 62% 38% 68% 32% / 38% 58% 42% 62%; }
+.skill-gem--stone { border-radius: 46% 54% 40% 60% / 58% 42% 58% 42%; }
+
+/* White light-catch in upper-left — fakes a 3D glassy surface */
+.skill-gem-shine {
+  position:      absolute;
+  top:           14%;
+  left:          16%;
+  width:         36%;
+  height:        36%;
+  border-radius: 50%;
+  background:    radial-gradient(circle, rgba(255,255,255,0.70) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Skill name label */
+.skill-label {
+  font-size:      11px;
+  font-family:    ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  white-space:    nowrap;
+  color:          var(--skill-label);
+  transition:     color var(--theme-dur) var(--theme-ease);
+}
+
+/* Tooltip — hidden until .skill-gem-outer:hover */
+.skill-tooltip {
+  position:       absolute;
+  bottom:         calc(100% + 12px);
+  left:           50%;
+  transform:      translateX(-50%) translateY(5px);
+  opacity:        0;
+  pointer-events: none;
+  white-space:    nowrap;
+  background:     var(--skill-tooltip-bg);
+  color:          var(--skill-tooltip-text);
+  font-size:      11px;
+  font-family:    ui-monospace, monospace;
+  letter-spacing: 0.04em;
+  padding:        5px 10px;
+  border-radius:  6px;
+  z-index:        50;
+  transition:
+    opacity   0.18s ease,
+    transform 0.18s ease,
+    background var(--theme-dur) var(--theme-ease),
+    color      var(--theme-dur) var(--theme-ease);
+}
+
+.skill-gem-outer:hover .skill-tooltip {
+  opacity:   1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Downward-pointing arrow on the tooltip */
+.skill-tooltip-arrow {
+  position:     absolute;
+  top:          100%;
+  left:         50%;
+  transform:    translateX(-50%);
+  width:        0;
+  height:       0;
+  border-left:  5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top:   5px solid var(--skill-tooltip-arrow);
+  transition:   border-top-color var(--theme-dur) var(--theme-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ABOUT — diver's field notes
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Card — ruled paper with stacked-pages shadow in reef mode */
+.about-card {
+  position:        relative;
+  background-color: var(--about-card-bg);
+  /* Ruled lines sit on top of the transparent background colour */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent        0px,
+    transparent        27px,
+    var(--about-ruled) 28px
+  );
+  border:          1px solid var(--about-card-border);
+  box-shadow:      var(--about-card-shadow);
+  border-radius:   16px;
+  padding:         2rem 2.25rem 2rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    background-color var(--theme-dur) var(--theme-ease),
+    border-color     var(--theme-dur) var(--theme-ease),
+    box-shadow       var(--theme-dur) var(--theme-ease);
+}
+
+.theme-transitioning .about-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Section label — Caveat handwritten font */
+.about-section-label {
+  font-family:    'Caveat', cursive;
+  font-size:      1.45rem;
+  font-weight:    600;
+  letter-spacing: 0.02em;
+  color:          var(--about-label);
+  line-height:    1;
+  margin-bottom:  0.75rem;
+  transition:     color var(--theme-dur) var(--theme-ease);
+}
+
+.about-divider {
+  height:     1px;
+  background: var(--about-divider);
+  margin:     0 0 1.25rem;
+  transition: background var(--theme-dur) var(--theme-ease);
+}
+
+.about-divider--spaced {
+  margin-top: 1.75rem;
+}
+
+/* Notes list */
+.about-entries {
+  list-style: none;
+  padding:    0;
+  margin:     0;
+  display:    flex;
+  flex-direction: column;
+  gap:        0.65rem;
+}
+
+.about-entry {
+  display:     flex;
+  gap:         0.65rem;
+  align-items: baseline;
+  font-size:   0.9rem;
+  line-height: 1.55;
+  color:       var(--about-body);
+  transition:  color var(--theme-dur) var(--theme-ease);
+}
+
+.about-bullet {
+  flex-shrink: 0;
+  font-size:   1rem;
+  line-height: 1.55;
+  color:       var(--about-bullet);
+  transition:  color var(--theme-dur) var(--theme-ease);
+}
+
+/* Currently section */
+.about-currently {
+  display:        flex;
+  flex-direction: column;
+  gap:            0.55rem;
+  background:     var(--about-curr-bg);
+  border-radius:  10px;
+  padding:        1rem 1.25rem;
+  margin-top:     0.75rem;
+  transition:     background var(--theme-dur) var(--theme-ease);
+}
+
+.about-curr-row {
+  display:     flex;
+  align-items: baseline;
+  gap:         0.6rem;
+  flex-wrap:   wrap;
+}
+
+.about-curr-key {
+  font-family:    'Caveat', cursive;
+  font-size:      1.1rem;
+  font-weight:    600;
+  color:          var(--about-curr-key);
+  min-width:      5.5rem;
+  flex-shrink:    0;
+  transition:     color var(--theme-dur) var(--theme-ease);
+}
+
+.about-curr-sep {
+  color:       var(--about-curr-sep);
+  font-size:   1rem;
+  flex-shrink: 0;
+  transition:  color var(--theme-dur) var(--theme-ease);
+}
+
+.about-curr-val {
+  font-size:  0.875rem;
+  color:      var(--about-curr-val);
+  line-height: 1.5;
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+.about-curr-blank {
+  color:          var(--about-curr-blank);
+  letter-spacing: 0.12em;
+  transition:     color var(--theme-dur) var(--theme-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CONTACT — deep-sea signal nodes
+   ═══════════════════════════════════════════════════════════════════ */
+
+.signal-intro {
+  color:      var(--signal-intro);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+/* Each contact node is an <a> — flex column, centred */
+.signal-node {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             10px;
+  text-decoration: none;
+  cursor:          pointer;
+}
+
+/* Outer ping ring — expands and fades like sonar */
+.signal-ring {
+  position:      absolute;
+  inset:         -6px;
+  border-radius: 50%;
+  border:        1.5px solid currentColor;
+  opacity:       0;
+  pointer-events: none;
+  animation:     signal-ping 2.8s ease-out infinite;
+}
+
+.signal-node--email    { color: var(--signal-email-glow); }
+.signal-node--linkedin { color: var(--signal-li-glow);    animation-delay: 0.9s; }
+.signal-node--github   { color: var(--signal-gh-glow);    animation-delay: 1.8s; }
+
+/* Offset the ping timing per node */
+.signal-node--linkedin .signal-ring { animation-delay: 0.9s; }
+.signal-node--github   .signal-ring { animation-delay: 1.8s; }
+
+@keyframes signal-ping {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(1.7);  opacity: 0; }
+}
+
+/* Glowing orb */
+.signal-orb {
+  position:       relative;
+  width:          82px;
+  height:         82px;
+  border-radius:  50%;
+  display:        flex;
+  align-items:    center;
+  justify-content: center;
+  background:     var(--signal-bg);
+  border:         1px solid var(--signal-border);
+  color:          var(--signal-icon);
+  box-shadow:     0 0 22px currentColor, 0 4px 16px rgba(0,0,0,0.35);
+  animation:      signal-breathe 3s ease-in-out infinite;
+  transition:
+    background   var(--theme-dur) var(--theme-ease),
+    border-color var(--theme-dur) var(--theme-ease),
+    color        var(--theme-dur) var(--theme-ease);
+}
+
+.signal-node--linkedin .signal-orb { animation-delay: 0.9s; }
+.signal-node--github   .signal-orb { animation-delay: 1.8s; }
+
+@keyframes signal-breathe {
+  0%, 100% { box-shadow: 0 0 18px currentColor, 0 4px 16px rgba(0,0,0,0.30); }
+  50%       { box-shadow: 0 0 34px currentColor, 0 4px 22px rgba(0,0,0,0.38); }
+}
+
+/* Hover: intensify glow */
+.signal-node:hover .signal-orb {
+  box-shadow: 0 0 44px currentColor, 0 6px 24px rgba(0,0,0,0.40);
+}
+
+.signal-label {
+  font-size:      0.8rem;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color:          var(--signal-label);
+  transition:     color var(--theme-dur) var(--theme-ease);
+}
+
+.signal-sublabel {
+  font-size:        0.72rem;
+  font-family:      ui-monospace, monospace;
+  letter-spacing:   0.04em;
+  text-align:       center;
+  word-break:       break-all;   /* prevent long emails/URLs overflowing on mobile */
+  max-width:        88px;
+  color:            var(--signal-sublabel);
+  transition:       color var(--theme-dur) var(--theme-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FOOTER — ocean floor
+   ═══════════════════════════════════════════════════════════════════ */
+
+.footer-wrap {
+  width:    100%;
+  overflow: hidden;
+}
+
+/* Sandy / rocky floor texture */
+.footer-floor {
+  position:   relative;
+  height:     110px;
+  width:      100%;
+  overflow:   hidden;
+  background: linear-gradient(to bottom, var(--floor-top) 0%, var(--floor-bg) 100%);
+  background-image:
+    repeating-linear-gradient(
+      78deg,
+      transparent,
+      transparent        10px,
+      var(--floor-ripple) 11px,
+      var(--floor-ripple) 11px,
+      transparent        12px
+    ),
+    linear-gradient(to bottom, var(--floor-top) 0%, var(--floor-bg) 100%);
+  transition: background var(--theme-dur) var(--theme-ease);
+}
+
+/* Credits bar */
+.footer-credits {
+  background:  var(--floor-credits-bg);
+  padding:     10px 24px;
+  text-align:  center;
+  transition:  background var(--theme-dur) var(--theme-ease);
+}
+
+.footer-credit-text {
+  color:      var(--floor-credits-text);
+  transition: color var(--theme-dur) var(--theme-ease);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CRAB
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Scuttle: gentle rock + bob to imply walking */
+@keyframes crab-scuttle {
+  0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+  25%       { transform: rotate(0deg)   translateY(-1.5px); }
+  50%       { transform: rotate(1.5deg) translateY(0); }
+  75%       { transform: rotate(0deg)   translateY(-1.5px); }
+}
+
+.crab-scuttle {
+  animation:        crab-scuttle 0.55s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+/* SVG fill/stroke classes — driven by CSS vars */
+.crab-body  { fill: var(--crab-body); stroke: var(--crab-claw); stroke-width: 1; transition: fill var(--theme-dur) var(--theme-ease), stroke var(--theme-dur) var(--theme-ease); }
+.crab-claw  { fill: var(--crab-claw); stroke: var(--crab-claw); stroke-width: 0.8; transition: fill var(--theme-dur) var(--theme-ease); }
+.crab-leg   { stroke: var(--crab-leg);   transition: stroke var(--theme-dur) var(--theme-ease); }
+.crab-ridge { stroke: var(--crab-ridge); transition: stroke var(--theme-dur) var(--theme-ease); }
+
+.crab-svg {
+  filter:     var(--crab-filter);
+  transition: filter var(--theme-dur) var(--theme-ease);
+  cursor:     pointer;
 }
