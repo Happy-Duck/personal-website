@@ -168,13 +168,9 @@ export function Footer() {
   return (
     <footer className="footer-wrap" style={{ zIndex: 10, position: 'relative' }}>
 
-      {/* Ocean floor — sandy/rocky CSS texture, crab lives here */}
+      {/* Ocean floor — sandy/rocky texture, crab + credits live here */}
       <div className="footer-floor">
         <Crab />
-      </div>
-
-      {/* Credits bar */}
-      <div className="footer-credits">
         <span className="footer-credit-text font-mono text-xs tracking-[0.18em]">
           Built by Rishi Garhyan&ensp;·&ensp;{year}
         </span>

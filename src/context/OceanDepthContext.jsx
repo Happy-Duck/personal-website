@@ -4,8 +4,8 @@ import { getZone } from '../constants/depthZones'
 // ── Color interpolation ────────────────────────────────────────────────
 
 const BG_STOPS = [
-  { d: 0.00, r: 0xb8, g: 0xe8, b: 0xe0 },
-  { d: 0.15, r: 0x1a, g: 0x7a, b: 0x6e },
+  { d: 0.00, r: 0x48, g: 0xb8, b: 0xb0 },
+  { d: 0.15, r: 0x16, g: 0x6a, b: 0x60 },
   { d: 0.35, r: 0x0d, g: 0x3b, b: 0x5e },
   { d: 0.60, r: 0x04, g: 0x0d, b: 0x1a },
   { d: 0.85, r: 0x02, g: 0x08, b: 0x10 },

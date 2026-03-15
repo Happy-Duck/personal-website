@@ -3,6 +3,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 
+/* Hide scrollbar — depth gauge is enough */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+
 /* ═══════════════════════════════════════════════════════════════════
    THEME CSS VARIABLES
    One data-theme attribute change cascades everywhere — zero JS per frame
@@ -13,7 +17,7 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --theme-ease: ease;
 
   /* ── Ocean depth system — set by OceanDepthContext JS each rAF ── */
-  --ocean-bg-color:    #b8e8e0;
+  --ocean-bg-color:    #48b8b0;
   --text-primary:      rgb(30,58,58);
   --ambient-glow:      0;
   --particle-opacity:  0;
@@ -992,17 +996,16 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   transition: background var(--theme-dur) var(--theme-ease);
 }
 
-/* Credits bar */
-.footer-credits {
-  background:  var(--floor-credits-bg);
-  padding:     10px 24px;
-  text-align:  center;
-  transition:  background var(--theme-dur) var(--theme-ease);
-}
-
+/* Credits text — sits on the ocean floor */
 .footer-credit-text {
-  color:      var(--floor-credits-text);
-  transition: color var(--theme-dur) var(--theme-ease);
+  position:      absolute;
+  bottom:        8px;
+  left:          50%;
+  transform:     translateX(-50%);
+  color:         var(--floor-credits-text);
+  opacity:       0.6;
+  white-space:   nowrap;
+  transition:    color var(--theme-dur) var(--theme-ease);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
