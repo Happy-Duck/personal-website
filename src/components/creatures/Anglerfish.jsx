@@ -85,15 +85,16 @@ export function Anglerfish() {
       <div style={{ position: 'relative', width: W, height: H }}>
         <img src="/creatures/Anglerfish.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
         {/* Lure glow — positioned at the esca bulb (top-right after flip) */}
+        {/* Lure glow — adjust top/right to reposition */}
         <div className="angler-lure" style={{
           position: 'absolute',
-          top: '4%',
-          right: '12%',
-          width: 18,
-          height: 18,
+          top: '15%',
+          right: '5%',
+          width: 30,
+          height: 30,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(100,220,255,0.9) 0%, rgba(60,180,255,0.4) 40%, transparent 70%)',
-          boxShadow: '0 0 12px 6px rgba(80,200,255,0.5), 0 0 30px 14px rgba(60,160,255,0.25)',
+          background: 'transparent',
+          boxShadow: '0 0 18px 10px rgba(80,210,255,0.45), 0 0 40px 20px rgba(60,160,255,0.2)',
           pointerEvents: 'none',
         }} />
       </div>
