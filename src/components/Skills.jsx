@@ -26,20 +26,20 @@ const GROUPS = [
   {
     label: 'Languages',
     items: [
-      { name: 'C++',    render: (s) => <CplusplusPlain size={s} color="currentColor" />,       tooltip: 'Systems & engine-level code' },
-      { name: 'C#',     render: (s) => <CsharpPlain size={s} color="currentColor" />,           tooltip: 'Used in Pelagos & VR Lab' },
-      { name: 'Java',   render: (s) => <JavaPlain size={s} color="currentColor" />,             tooltip: 'Algorithms & coursework' },
-      { name: 'Python', render: (s) => <PythonPlain size={s} color="currentColor" />,           tooltip: 'Computer vision research' },
+      { name: 'C++',    render: (s) => <CplusplusPlain size={s} color="currentColor" />,       tooltip: 'Data Structures and Unreal Engine' },
+      { name: 'C#',     render: (s) => <CsharpPlain size={s} color="currentColor" />,           tooltip: 'All of my Unity Scripts' },
+      { name: 'Java',   render: (s) => <JavaPlain size={s} color="currentColor" />,             tooltip: 'Good ol\' CS 124' },
+      { name: 'Python', render: (s) => <PythonPlain size={s} color="currentColor" />,           tooltip: 'Data analysis, Linear algebra, Computer vision research' },
     ],
   },
   {
     label: 'Tools & Frameworks',
     items: [
-      { name: 'Unity',          render: (s) => <UnityPlain size={s} color="currentColor" />,                tooltip: 'Steam-published game' },
-      { name: 'Unreal Engine',  render: (s) => <ForcedColorIcon Icon={UnrealengineOriginal} size={s} />,    tooltip: 'C++ game engine' },
-      { name: 'Blender',        render: (s) => <ForcedColorIcon Icon={BlenderOriginal} size={s} />,         tooltip: '3D modeling for VR Lab' },
-      { name: 'Django',         render: (s) => <DjangoPlain size={s} color="currentColor" />,               tooltip: 'Web backend framework' },
-      { name: 'SQL',            render: (s) => <AzuresqldatabasePlain size={s} color="currentColor" />,     tooltip: 'Database queries & schema' },
+      { name: 'Unity',          render: (s) => <UnityPlain size={s} color="currentColor" />,                tooltip: 'What haven\'t I used Unity for' },
+      { name: 'Unreal Engine',  render: (s) => <ForcedColorIcon Icon={UnrealengineOriginal} size={s} />,    tooltip: 'Game Dev coursework' },
+      { name: 'Blender',        render: (s) => <ForcedColorIcon Icon={BlenderOriginal} size={s} />,         tooltip: 'Asset creation & texturing for the ILL' },
+      { name: 'Django',         render: (s) => <DjangoPlain size={s} color="currentColor" />,               tooltip: 'A web app I built and will not elaborate on' },
+      { name: 'SQL',            render: (s) => <AzuresqldatabasePlain size={s} color="currentColor" />,     tooltip: 'SportsBot\'s backbone' },
     ],
   },
 ]
