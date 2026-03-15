@@ -5,7 +5,7 @@ import { useMouse } from '../../context/MouseContext'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 140, H = 70
+const W = 350, H = 175
 const DEPTH_RANGE = { enter: 0.58, exit: 0.88 }
 const TRAVERSE_SPEED = 0.28
 const PAUSE_FRAMES   = 420  // ~7s at 60fps
@@ -96,7 +96,7 @@ export function GiantSquid() {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <img src="/creatures/jumboSquid.webp" alt="" width={W} height={H} style={{ display: 'block' }} draggable={false} />
+      <img src="/creatures/jumboSquid.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
     </div>
   )
 }

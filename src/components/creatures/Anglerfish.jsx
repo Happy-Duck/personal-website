@@ -5,7 +5,7 @@ import { useMouse } from '../../context/MouseContext'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 90, H = 68
+const W = 225, H = 170
 const DEPTH_RANGE = { enter: 0.33, exit: 0.62 }
 
 export function Anglerfish() {
@@ -73,7 +73,7 @@ export function Anglerfish() {
       ref={wrapperRef}
       style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
-      <img src="/creatures/Anglerfish.webp" alt="" width={W} height={H} style={{ display: 'block' }} draggable={false} />
+      <img src="/creatures/Anglerfish.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
     </div>
   )
 }

@@ -2,7 +2,7 @@
 // Large, slow, majestic. High flee threshold.
 import { useCreatureAI } from '../../hooks/useCreatureAI'
 
-const W = 100, H = 62
+const W = 250, H = 155
 
 const DEPTH_RANGE = { enter: 0.00, exit: 0.14 }
 
@@ -26,7 +26,7 @@ export function SeaTurtle() {
         willChange: 'transform', pointerEvents: 'none',
       }}
     >
-      <img src="/creatures/GreenTurtle.png" alt="" width={W} height={H} style={{ display: 'block' }} draggable={false} />
+      <img src="/creatures/GreenTurtle.png" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />
     </div>
   )
 }
