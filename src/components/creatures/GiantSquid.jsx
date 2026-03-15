@@ -7,8 +7,8 @@ import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 350, H = 175
 const DEPTH_RANGE = { enter: 0.58, exit: 0.88 }
-const TRAVERSE_SPEED = 0.28
-const PAUSE_FRAMES   = 420  // ~7s at 60fps
+const TRAVERSE_SPEED = 0.9
+const PAUSE_FRAMES   = 180  // ~3s at 60fps
 
 export function GiantSquid() {
   const wrapperRef = useRef(null)
@@ -103,7 +103,7 @@ export function GiantSquid() {
   return (
     <div
       ref={wrapperRef}
-      style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
+      style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none', opacity: 0 }}
     >
       <img src="/creatures/jumboSquid.webp" alt="" width={W} height={H} style={{ display: 'block', transform: 'scaleX(-1)', filter: 'brightness(0.55) saturate(0.7)' }} draggable={false} />
     </div>

@@ -32,7 +32,7 @@ function SingleFish({ cfg, idx, peers }) {
       ref={wrapperRef}
       style={{
         position: 'absolute', top: 0, left: 0,
-        willChange: 'transform', pointerEvents: 'none',
+        willChange: 'transform', pointerEvents: 'none', opacity: 0,
       }}
     >
       <img src="/creatures/clownfish.webp" alt="" width={W * cfg.scale} height={H * cfg.scale} style={{ display: 'block', transform: 'scaleX(-1)' }} draggable={false} />

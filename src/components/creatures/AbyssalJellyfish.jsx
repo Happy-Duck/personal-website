@@ -75,7 +75,7 @@ export function AbyssalJellyfish() {
   return (
     <div
       ref={wrapperRef}
-      style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none' }}
+      style={{ position: 'absolute', top: 0, left: 0, willChange: 'transform', pointerEvents: 'none', opacity: 0 }}
     >
       <img src="/creatures/deepJellyfish.png" alt="" width={W} height={H} style={{ display: 'block', transform: 'rotate(40deg)', mixBlendMode: 'screen' }} draggable={false} />
     </div>
