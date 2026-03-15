@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 64, H = 28
-const DEPTH_RANGE = { enter: 0.18, peak: 0.28, exit: 0.45 }
+const DEPTH_RANGE = { enter: 0.15, exit: 0.37 }
 
 function SquidSVG({ filterId }) {
   return (

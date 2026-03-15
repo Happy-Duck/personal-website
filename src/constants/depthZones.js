@@ -24,9 +24,13 @@ export function easeInOut(t) {
 }
 
 // Compute creature opacity from depth + depthRange
+// Creatures stay at full opacity (1) throughout their zone.
+// Only brief fade-in/fade-out at the boundaries (FADE depth units each).
+const FADE = 0.025
 export function creatureOpacity(depth, range) {
-  const { enter, peak, exit } = range
+  const { enter, exit } = range
   if (depth <= enter || depth >= exit) return 0
-  if (depth < peak) return easeInOut((depth - enter) / (peak - enter))
-  return easeInOut(1 - (depth - peak) / (exit - peak))
+  if (depth < enter + FADE) return easeInOut((depth - enter) / FADE)
+  if (depth > exit  - FADE) return easeInOut((exit - depth)  / FADE)
+  return 1
 }

@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 72, H = 30
-const DEPTH_RANGE = { enter: 0.82, peak: 0.92, exit: 1.00 }
+const DEPTH_RANGE = { enter: 0.83, exit: 1.02 }
 
 function SnailFishSVG() {
   return (

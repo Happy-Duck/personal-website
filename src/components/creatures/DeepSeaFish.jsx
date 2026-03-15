@@ -9,7 +9,7 @@ const CONFIGS = [
   { centerYFrac: 0.62, speed: 0.40, amplitude: 28, freq: 0.009, dir: -1 },
 ]
 
-const DEPTH_RANGE = { enter: 0.30, peak: 0.48, exit: 0.65 }
+const DEPTH_RANGE = { enter: 0.30, exit: 0.62 }
 
 function DeepFishSVG({ filterId }) {
   return (

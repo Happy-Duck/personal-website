@@ -10,7 +10,7 @@ const CONFIGS = [
   { centerYFrac: 0.24, speed: 0.55, amplitude: 38, freq: 0.006, dir:  1, scale: 1.10 },
 ]
 
-const DEPTH_RANGE = { enter: 0.00, peak: 0.04, exit: 0.20 }
+const DEPTH_RANGE = { enter: 0.00, exit: 0.16 }
 
 function FishSVG({ scale = 1 }) {
   const s = scale

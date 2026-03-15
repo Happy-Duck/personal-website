@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 80, H = 110
-const DEPTH_RANGE = { enter: 0.58, peak: 0.73, exit: 0.90 }
+const DEPTH_RANGE = { enter: 0.60, exit: 0.87 }
 
 function AbyssJellySVG({ filterId }) {
   return (

@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 130, H = 55
-const DEPTH_RANGE = { enter: 0.55, peak: 0.70, exit: 0.88 }
+const DEPTH_RANGE = { enter: 0.58, exit: 0.88 }
 const TRAVERSE_SPEED = 0.28
 const PAUSE_FRAMES   = 420  // ~7s at 60fps
 

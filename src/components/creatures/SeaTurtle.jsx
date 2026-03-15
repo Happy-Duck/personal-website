@@ -4,7 +4,7 @@ import { useCreatureAI } from '../../hooks/useCreatureAI'
 
 const W = 88, H = 64
 
-const DEPTH_RANGE = { enter: 0.00, peak: 0.03, exit: 0.18 }
+const DEPTH_RANGE = { enter: 0.00, exit: 0.14 }
 
 function TurtleSVG() {
   return (

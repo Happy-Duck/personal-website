@@ -1,5 +1,5 @@
 import { MarineSnow    } from './components/MarineSnow'
-import { BeachScene    } from './components/BeachScene'
+import { WaterSurface  } from './components/WaterSurface'
 import { CreatureLayer } from './components/creatures/CreatureLayer'
 import { DepthGauge    } from './components/DepthGauge'
 import { Hero          } from './components/Hero'
@@ -19,8 +19,8 @@ export default function App() {
 
       <div className="relative overflow-hidden">
 
-        {/* Beach scene — only visible near surface (depth < 0.20) */}
-        <BeachScene />
+        {/* Water surface — underwater perspective, only near surface (depth < 0.20) */}
+        <WaterSurface />
 
         {/* Depth overlay gradients */}
         <div className="overlay-deep" />

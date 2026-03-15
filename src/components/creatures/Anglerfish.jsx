@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 74, H = 62
-const DEPTH_RANGE = { enter: 0.32, peak: 0.45, exit: 0.65 }
+const DEPTH_RANGE = { enter: 0.33, exit: 0.62 }
 
 function AnglerSVG({ filterId }) {
   return (

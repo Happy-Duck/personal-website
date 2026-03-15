@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 52, H = 80
-const DEPTH_RANGE = { enter: 0.12, peak: 0.22, exit: 0.40 }
+const DEPTH_RANGE = { enter: 0.13, exit: 0.36 }
 
 function JellySVG({ filterId, small }) {
   const r = small ? 0.75 : 1

@@ -479,73 +479,48 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BEACH SCENE — shallow reef background
-   CSS only. Animates transform and opacity exclusively.
+   WATER SURFACE — underwater perspective, top of viewport
+   CSS only. Fades as depth increases (--beach-op driven by JS).
    ═══════════════════════════════════════════════════════════════════ */
 
-.beach-scene {
+.water-surface {
   position:       fixed;
-  inset:          0;
+  top:            0;
+  left:           0;
+  right:          0;
+  height:         100px;
   z-index:        1;
   pointer-events: none;
   opacity:        var(--beach-op);
-  /* No transition — JS drives --beach-op directly each rAF frame */
+  /* No transition — JS drives --beach-op per-frame */
 }
 
-/* Sky: warm late-afternoon, blue → peach → golden at horizon */
-.beach-sky {
+/* Sunlight coming from above — bright band fading into the water */
+.water-surface-glow {
   position:   absolute;
-  top: 0; left: 0; right: 0;
-  height:     62%;
+  inset:      0;
   background: linear-gradient(
     to bottom,
-    #6abcd3  0%,
-    #8ecbd8 18%,
-    #b2dce3 36%,
-    #d4e8d8 54%,
-    #e8d4a0 70%,
-    #dcb465 85%,
-    #cc9a40 100%
+    rgba(220, 245, 255, 0.70)  0%,
+    rgba(160, 220, 245, 0.35) 45%,
+    transparent               100%
   );
 }
 
-/* Ocean band: deep turquoise in the middle distance */
-.beach-ocean {
+/* Wave ripples at the very top — seen from below the surface */
+.water-surface-waves {
   position:   absolute;
-  top:        48%;
-  left: 0; right: 0;
-  height:     20%;
-  background: linear-gradient(
-    to bottom,
-    #1a6e8a  0%,
-    #1d8aaa 35%,
-    #20a0bc 68%,
-    #16aaaa 100%
-  );
-}
-
-/* Wave container: clips the translating SVGs, fades edges via CSS mask */
-.beach-wave-zone {
-  position:   absolute;
-  top:        calc(58% - 45px);
-  left: 0; right: 0;
-  height:     90px;
+  top:        0;
+  left:       0;
+  right:      0;
+  height:     100%;
   overflow:   hidden;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%, rgba(0,0,0,0.80) 7%,
-    black 18%, black 80%,
-    rgba(0,0,0,0.65) 93%, transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%, rgba(0,0,0,0.80) 7%,
-    black 18%, black 80%,
-    rgba(0,0,0,0.65) 93%, transparent 100%
-  );
+  /* Fade waves downward so they blend into the water */
+  -webkit-mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+  mask-image:         linear-gradient(to bottom, black 20%, transparent 90%);
 }
 
-/* Each wave: 200% wide SVG translates −50% (= 1 full cycle) for seamless loop */
+/* Reuse beach-wave animation — each SVG is 200% wide, translateX(-50%) = 1 seamless cycle */
 .beach-wave {
   position:    absolute;
   top:         0;
@@ -555,55 +530,27 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   will-change: transform;
 }
 
+/* Underwater surface wave colors — translucent white/cyan seen from below */
 .beach-wave-1 {
-  fill:            rgba(255,255,255,0.62);
+  fill:            rgba(255, 255, 255, 0.55);
   animation:       beach-wave-roll 8s linear infinite;
 }
 .beach-wave-2 {
-  fill:            rgba(188,228,246,0.46);
+  fill:            rgba(180, 235, 255, 0.38);
   animation:       beach-wave-roll 6.2s linear infinite;
   animation-delay: -2.5s;
-  top:             10px;
+  top:             8px;
 }
 .beach-wave-3 {
-  fill:            rgba(255,255,255,0.28);
+  fill:            rgba(255, 255, 255, 0.22);
   animation:       beach-wave-roll 10.5s linear infinite;
   animation-delay: -5.8s;
-  top:             20px;
+  top:             16px;
 }
 
 @keyframes beach-wave-roll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
-}
-
-/* Foam: thin pulse at the break line */
-.beach-foam {
-  position:   absolute;
-  top:        calc(58% + 40px);
-  left: 0; right: 0;
-  height:     5px;
-  background: rgba(255,255,255,0.82);
-  animation:  beach-foam-pulse 2.6s ease-in-out infinite;
-}
-
-@keyframes beach-foam-pulse {
-  0%, 100% { opacity: 0.28; }
-  50%       { opacity: 0.76; }
-}
-
-/* Sand: warm gradient below the break line */
-.beach-sand {
-  position:   absolute;
-  top:        calc(58% + 44px);
-  left: 0; right: 0; bottom: 0;
-  background: linear-gradient(
-    to bottom,
-    #ddb868  0%,
-    #c89e48 32%,
-    #b58432 68%,
-    #a47224 100%
-  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════
