@@ -97,7 +97,7 @@ export function Hero() {
           className="hero-subtitle font-bold tracking-[0.18em] uppercase select-none
                      text-[clamp(0.65rem,1.8vw,0.9rem)]"
         >
-          CS&nbsp;Student&nbsp;@&nbsp;UIUC&ensp;&middot;&ensp;Game&nbsp;Developer&ensp;&middot;&ensp;VR&nbsp;Engineer
+          CS&nbsp;Student&nbsp;@&nbsp;UIUC&ensp;&middot;&ensp;XR&nbsp;Engineer&ensp;&middot;&ensp;Game&nbsp;Developer
         </motion.p>
 
       </div>
