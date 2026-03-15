@@ -102,6 +102,30 @@ function useAppIcon(appId) {
   return iconUrl
 }
 
+function useElapsed(startTimestamp) {
+  const [elapsed, setElapsed] = useState('')
+
+  useEffect(() => {
+    if (!startTimestamp) { setElapsed(''); return }
+
+    function update() {
+      const diff = Math.max(0, Math.floor((Date.now() - startTimestamp) / 1000))
+      const h = Math.floor(diff / 3600)
+      const m = Math.floor((diff % 3600) / 60)
+      const s = diff % 60
+      setElapsed(h > 0
+        ? `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
+        : `${m}:${String(s).padStart(2,'0')}`)
+    }
+
+    update()
+    const id = setInterval(update, 1000)
+    return () => clearInterval(id)
+  }, [startTimestamp])
+
+  return elapsed
+}
+
 function LivePresence() {
   const { activities, spotify, loading, error } = useLanyard()
   const activity = activities?.find(a => a.type !== 4) || null
@@ -109,21 +133,26 @@ function LivePresence() {
   let thumb = null
   let line  = null
   let sub   = null
+  let startTs = null
 
   if (!loading && !error) {
     if (spotify) {
       line  = spotify.song
       sub   = `by ${spotify.artist}`
       thumb = spotify.album_art_url
+      startTs = spotify.timestamps?.start
     } else if (activity) {
       line  = activity.name
       thumb = resolveActivityImage(activity)
+      startTs = activity.timestamps?.start
     }
   }
 
   const needsAppIcon = !thumb && activity?.application_id
   const appIcon = useAppIcon(needsAppIcon ? activity.application_id : null)
   if (!thumb && appIcon) thumb = appIcon
+
+  const elapsed = useElapsed(startTs)
 
   // Nothing active → render nothing
   if (loading || error || !line) return null
@@ -138,6 +167,7 @@ function LivePresence() {
         <div className="log-presence-text">
           <span className="log-presence-main">{line}</span>
           {sub && <span className="log-presence-sub">{sub}</span>}
+          {elapsed && <span className="log-presence-elapsed">{elapsed} elapsed</span>}
         </div>
       </div>
     </div>

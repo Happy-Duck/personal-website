@@ -163,17 +163,12 @@ function Crab() {
 // ── Footer ─────────────────────────────────────────────────────────────
 
 export function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="footer-wrap" style={{ zIndex: 10, position: 'relative' }}>
 
-      {/* Ocean floor — sandy/rocky texture, crab + credits live here */}
+      {/* Ocean floor — sandy/rocky texture */}
       <div className="footer-floor">
         <Crab />
-        <span className="footer-credit-text font-mono text-xs tracking-[0.18em]">
-          Built by Rishi Garhyan&ensp;·&ensp;{year}
-        </span>
       </div>
 
     </footer>

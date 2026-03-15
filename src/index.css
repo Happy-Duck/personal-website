@@ -1008,6 +1008,14 @@ html::-webkit-scrollbar { display: none; }
   text-overflow:  ellipsis;
 }
 
+.log-presence-elapsed {
+  font-size:       clamp(0.6rem, 0.55rem + 0.1vw, 0.7rem);
+  letter-spacing:  0.08em;
+  color:           var(--icon-color);
+  opacity:         0.5;
+  font-variant-numeric: tabular-nums;
+}
+
 .log-presence-sub {
   font-size:      clamp(0.7rem, 0.65rem + 0.12vw, 0.8rem);
   color:          var(--about-body);
