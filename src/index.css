@@ -49,6 +49,7 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   /* Background layers */
   --marine-snow-op:      1;
   --caustic-op:          0;
+  --beach-op:            0;
   /* Toggle */
   --toggle-border:       rgba(0,212,255,0.45);
   --toggle-bg:           rgba(2,8,24,0.72);
@@ -118,19 +119,19 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 }
 
 :root[data-theme="shallow-reef"] {
-  --bg:                  #0096c7;
-  --text:                #fff8f0;
-  --text-shadow:         0 2px 24px rgba(255,200,80,0.45), 0 0 60px rgba(255,140,60,0.2);
+  --bg:                  #7abdd8;
+  --text:                #16304c;
+  --text-shadow:         0 1px 8px rgba(255,220,140,0.30), 0 0 32px rgba(200,160,60,0.12);
   /* Hero */
-  --hero-subtitle:       rgba(255,248,240,0.72);
-  --hero-tagline:        rgba(255,248,240,0.58);
-  --hero-divider:        rgba(255,248,240,0.40);
-  --scroll-indicator:    rgba(255,248,240,0.75);
+  --hero-subtitle:       rgba(22,48,76,0.65);
+  --hero-tagline:        rgba(22,48,76,0.52);
+  --hero-divider:        rgba(22,48,76,0.22);
+  --scroll-indicator:    rgba(22,48,76,0.55);
   /* Projects */
   --section-eyebrow:     rgba(10,60,100,0.55);
   --section-heading:     rgba(5,28,50,0.92);
   --section-rule:        rgba(0,100,160,0.20);
-  --card-bg:             rgba(255,255,255,0.22);
+  --card-bg:             rgba(255,245,218,0.28);
   --card-border:         rgba(0,120,180,0.18);
   --card-border-hover:   rgba(255,110,60,0.45);
   --card-shadow:         0 4px 28px rgba(0,60,100,0.18);
@@ -149,7 +150,8 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --overlay-deep-op:     0;
   --overlay-reef-op:     1;
   --marine-snow-op:      0;
-  --caustic-op:          1;
+  --caustic-op:          0;
+  --beach-op:            1;
   --toggle-border:       rgba(220,80,60,0.45);
   --toggle-bg:           rgba(255,255,255,0.52);
   --toggle-glow:         0 0 16px rgba(255,140,60,0.18), inset 0 0 12px rgba(255,200,80,0.06);
@@ -164,7 +166,7 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   --kelp-glow:           rgba(60,170,80,0.70);
   --kelp-dot-bg:         #2a8a42;
   --kelp-dot-ring:       rgba(40,140,60,0.28);
-  --exp-card-bg:         rgba(255,255,255,0.22);
+  --exp-card-bg:         rgba(255,245,218,0.28);
   --exp-card-border:     rgba(0,120,60,0.18);
   --exp-card-border-h:   rgba(0,120,60,0.38);
   --exp-card-shadow:     0 4px 28px rgba(0,60,30,0.16);
@@ -255,11 +257,6 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   opacity: var(--marine-snow-op);
   transition: opacity var(--theme-dur) var(--theme-ease);
 }
-.caustic-light {
-  opacity: var(--caustic-op);
-  transition: opacity var(--theme-dur) var(--theme-ease);
-}
-
 /* Toggle pill */
 .toggle-pill {
   border-color:     var(--toggle-border);
@@ -443,72 +440,131 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CAUSTIC LIGHT BLOBS
+   BEACH SCENE — shallow reef background
+   CSS only. Animates transform and opacity exclusively.
    ═══════════════════════════════════════════════════════════════════ */
 
-.caustic-blob {
-  position: absolute;
-  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  mix-blend-mode: screen;
-  filter: blur(12px);
-  will-change: transform;
+.beach-scene {
+  position:       fixed;
+  inset:          0;
+  z-index:        1;
   pointer-events: none;
+  opacity:        var(--beach-op);
+  transition:     opacity var(--theme-dur) var(--theme-ease);
 }
 
-/* Pause caustic animations when they're invisible (dark mode) */
-:root[data-theme="deep-sea"] .caustic-blob {
-  animation-play-state: paused;
+/* Sky: warm late-afternoon, blue → peach → golden at horizon */
+.beach-sky {
+  position:   absolute;
+  top: 0; left: 0; right: 0;
+  height:     62%;
+  background: linear-gradient(
+    to bottom,
+    #6abcd3  0%,
+    #8ecbd8 18%,
+    #b2dce3 36%,
+    #d4e8d8 54%,
+    #e8d4a0 70%,
+    #dcb465 85%,
+    #cc9a40 100%
+  );
 }
 
-.caustic-1 {
-  background: radial-gradient(ellipse at 40% 35%, rgba(255,230,120,0.68) 0%, rgba(255,180,50,0.28) 45%, transparent 70%);
-  animation: caustic-a 9s ease-in-out infinite;
-}
-.caustic-2 {
-  background: radial-gradient(ellipse at 55% 60%, rgba(255,255,180,0.55) 0%, rgba(255,210,80,0.22) 50%, transparent 72%);
-  animation: caustic-b 11s ease-in-out infinite;
-  animation-delay: -3s;
-}
-.caustic-3 {
-  background: radial-gradient(ellipse at 35% 50%, rgba(255,200,100,0.5) 0%, rgba(255,160,60,0.2) 48%, transparent 70%);
-  animation: caustic-c 13s ease-in-out infinite;
-  animation-delay: -6s;
-}
-.caustic-4 {
-  background: radial-gradient(ellipse at 50% 40%, rgba(255,240,160,0.45) 0%, rgba(200,230,255,0.15) 50%, transparent 72%);
-  animation: caustic-d 10s ease-in-out infinite;
-  animation-delay: -1.5s;
-}
-.caustic-5 {
-  background: radial-gradient(ellipse at 45% 55%, rgba(255,220,100,0.52) 0%, rgba(255,170,60,0.2) 46%, transparent 68%);
-  animation: caustic-a 14s ease-in-out infinite reverse;
-  animation-delay: -8s;
-}
-.caustic-6 {
-  background: radial-gradient(ellipse at 60% 40%, rgba(255,255,200,0.4) 0%, rgba(240,210,80,0.18) 50%, transparent 72%);
-  animation: caustic-c 12s ease-in-out infinite;
-  animation-delay: -4s;
+/* Ocean band: deep turquoise in the middle distance */
+.beach-ocean {
+  position:   absolute;
+  top:        48%;
+  left: 0; right: 0;
+  height:     20%;
+  background: linear-gradient(
+    to bottom,
+    #1a6e8a  0%,
+    #1d8aaa 35%,
+    #20a0bc 68%,
+    #16aaaa 100%
+  );
 }
 
-@keyframes caustic-a {
-  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
-  30%       { transform: translate(6vw,4vh) scale(1.12) rotate(6deg); }
-  65%       { transform: translate(-4vw,9vh) scale(0.92) rotate(-4deg); }
+/* Wave container: clips the translating SVGs, fades edges via CSS mask */
+.beach-wave-zone {
+  position:   absolute;
+  top:        calc(58% - 45px);
+  left: 0; right: 0;
+  height:     90px;
+  overflow:   hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%, rgba(0,0,0,0.80) 7%,
+    black 18%, black 80%,
+    rgba(0,0,0,0.65) 93%, transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%, rgba(0,0,0,0.80) 7%,
+    black 18%, black 80%,
+    rgba(0,0,0,0.65) 93%, transparent 100%
+  );
 }
-@keyframes caustic-b {
-  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
-  25%       { transform: translate(-5vw,6vh) scale(1.08) rotate(-5deg); }
-  70%       { transform: translate(7vw,-3vh) scale(1.15) rotate(8deg); }
+
+/* Each wave: 200% wide SVG translates −50% (= 1 full cycle) for seamless loop */
+.beach-wave {
+  position:    absolute;
+  top:         0;
+  left:        0;
+  width:       200%;
+  height:      100%;
+  will-change: transform;
 }
-@keyframes caustic-c {
-  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
-  40%       { transform: translate(4vw,-5vh) scale(0.9) rotate(10deg); }
-  75%       { transform: translate(-6vw,5vh) scale(1.1) rotate(-6deg); }
+
+.beach-wave-1 {
+  fill:            rgba(255,255,255,0.62);
+  animation:       beach-wave-roll 8s linear infinite;
 }
-@keyframes caustic-d {
-  0%, 100% { transform: translate(0,0) scale(1) rotate(0deg); }
-  35%       { transform: translate(-3vw,-4vh) scale(1.14) rotate(-7deg); }
-  70%       { transform: translate(5vw,7vh) scale(0.88) rotate(4deg); }
+.beach-wave-2 {
+  fill:            rgba(188,228,246,0.46);
+  animation:       beach-wave-roll 6.2s linear infinite;
+  animation-delay: -2.5s;
+  top:             10px;
+}
+.beach-wave-3 {
+  fill:            rgba(255,255,255,0.28);
+  animation:       beach-wave-roll 10.5s linear infinite;
+  animation-delay: -5.8s;
+  top:             20px;
+}
+
+@keyframes beach-wave-roll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Foam: thin pulse at the break line */
+.beach-foam {
+  position:   absolute;
+  top:        calc(58% + 40px);
+  left: 0; right: 0;
+  height:     5px;
+  background: rgba(255,255,255,0.82);
+  animation:  beach-foam-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes beach-foam-pulse {
+  0%, 100% { opacity: 0.28; }
+  50%       { opacity: 0.76; }
+}
+
+/* Sand: warm gradient below the break line */
+.beach-sand {
+  position:   absolute;
+  top:        calc(58% + 44px);
+  left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    #ddb868  0%,
+    #c89e48 32%,
+    #b58432 68%,
+    #a47224 100%
+  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════

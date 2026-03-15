@@ -1,5 +1,5 @@
 import { MarineSnow } from './components/MarineSnow'
-import { CausticLight } from './components/CausticLight'
+import { BeachScene } from './components/BeachScene'
 import { ThemeToggle } from './components/ThemeToggle'
 import { CreatureLayer } from './components/creatures/CreatureLayer'
 import { Hero } from './components/Hero'
@@ -17,7 +17,7 @@ export default function App() {
 
       {/* Background effects */}
       <MarineSnow />
-      <CausticLight />
+      <BeachScene />
 
       {/* Depth overlay — two persistent divs, opacity cross-fades via CSS var */}
       <div className="overlay-deep" />

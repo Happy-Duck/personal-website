@@ -6,10 +6,12 @@ const H_SVG = 24
 const HW    = W_SVG / 2
 const HH    = H_SVG / 2
 
+// baseYFrac — deep sea swimming lanes (spread across full viewport)
+// reefYFrac — beach mode: all three fish cluster in the ocean band (48–65% vh)
 const CONFIGS = [
-  { baseYFrac: 0.22, speed: 0.55, amplitude: 38, freq: 0.007, dir:  1 },
-  { baseYFrac: 0.50, speed: 0.40, amplitude: 26, freq: 0.009, dir: -1 },
-  { baseYFrac: 0.72, speed: 0.62, amplitude: 42, freq: 0.006, dir:  1 },
+  { baseYFrac: 0.22, reefYFrac: 0.52, speed: 0.55, amplitude: 38, freq: 0.007, dir:  1 },
+  { baseYFrac: 0.50, reefYFrac: 0.58, speed: 0.40, amplitude: 26, freq: 0.009, dir: -1 },
+  { baseYFrac: 0.72, reefYFrac: 0.64, speed: 0.62, amplitude: 42, freq: 0.006, dir:  1 },
 ]
 
 // ── SVG shapes ────────────────────────────────────────────────────────
@@ -108,6 +110,12 @@ export function Fish({ index }) {
       p.t += 1
       p.pathRawX += cfg.speed * cfg.dir
       p.pathX     = ((p.pathRawX % W) + W) % W
+
+      // Lerp baseY toward the correct band for the current theme (no React re-render)
+      const isReef   = document.documentElement.getAttribute('data-theme') === 'shallow-reef'
+      const targetY  = H * (isReef ? cfg.reefYFrac : cfg.baseYFrac)
+      p.baseY       += (targetY - p.baseY) * 0.03
+
       const pathY = p.baseY + Math.sin(p.t * cfg.freq) * cfg.amplitude
 
       // Flee
