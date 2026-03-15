@@ -3,7 +3,7 @@
 // Only visible at depth > 0.35 (OceanDepthContext sets --particle-opacity).
 import { useMemo } from 'react'
 
-const PARTICLE_COUNT = 20
+const PARTICLE_COUNT = 35
 
 export function MarineSnow() {
   const particles = useMemo(() =>

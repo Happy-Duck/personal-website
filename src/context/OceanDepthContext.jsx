@@ -73,6 +73,7 @@ export function OceanDepthProvider({ children }) {
     root.style.setProperty('--ocean-bg-color', interpolateOceanColor(0))
     root.style.setProperty('--text-primary',   interpolateTextPrimary(0))
     root.style.setProperty('--text-stroke',    interpolateTextStroke(0))
+    root.style.setProperty('--plankton-opacity','0.5')
     root.style.setProperty('--ambient-glow',   '0')
     root.style.setProperty('--particle-opacity','0')
     root.style.setProperty('--beach-op',       '1')
@@ -102,8 +103,12 @@ export function OceanDepthProvider({ children }) {
           const ambientGlow    = d < 0.5 ? d * 2 : 2 - d * 2
           root.style.setProperty('--ambient-glow',   Math.max(0, ambientGlow).toFixed(3))
 
-          const particleOp = d < 0.35 ? 0 : Math.min(0.6, (d - 0.35) / 0.2 * 0.6)
+          const particleOp = d < 0.35 ? 0 : Math.min(0.7, (d - 0.35) / 0.2 * 0.7)
           root.style.setProperty('--particle-opacity', particleOp.toFixed(3))
+
+          // Plankton: visible at surface, fades out by d=0.30
+          const planktonOp = d < 0.05 ? 0.5 : d < 0.30 ? 0.5 * (1 - (d - 0.05) / 0.25) : 0
+          root.style.setProperty('--plankton-opacity', planktonOp.toFixed(3))
 
           const beachOp = d < 0.10 ? 1 : d < 0.20 ? 1 - (d - 0.10) / 0.10 : 0
           root.style.setProperty('--beach-op', beachOp.toFixed(3))

@@ -320,6 +320,33 @@ html::-webkit-scrollbar { display: none; }
   50%  { transform: translateY(50vh)  translateX(12px);}
   to   { transform: translateY(105vh) translateX(-4px);}
 }
+
+/* ── Plankton — CSS-only, shallow-zone particles ─────────────────────── */
+.plankton-wrap {
+  position:      fixed;
+  inset:         0;
+  z-index:       4;
+  pointer-events: none;
+  overflow:      hidden;
+  opacity:       var(--plankton-opacity, 0);
+  transition:    opacity 0.8s ease;
+}
+
+.plankton-particle {
+  position:        absolute;
+  bottom:          -10px;
+  border-radius:   50%;
+  animation-name:  plankton-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes plankton-rise {
+  from { transform: translateY(0)      translateX(0);   }
+  50%  { transform: translateY(-50vh)  translateX(8px); }
+  to   { transform: translateY(-105vh) translateX(-6px);}
+}
+
 /* Toggle pill */
 .toggle-pill {
   border-color:     var(--toggle-border);

@@ -1,4 +1,5 @@
 import { MarineSnow    } from './components/MarineSnow'
+import { Plankton      } from './components/Plankton'
 import { WaterSurface  } from './components/WaterSurface'
 import { CreatureLayer } from './components/creatures/CreatureLayer'
 import { DepthGauge    } from './components/DepthGauge'
@@ -28,6 +29,9 @@ export default function App() {
 
         {/* Sea creatures — depth-zone aware */}
         <CreatureLayer />
+
+        {/* Plankton — CSS-only, visible near surface (depth < 0.30) */}
+        <Plankton />
 
         {/* Marine snow — CSS-only, fades in at depth > 0.35 */}
         <MarineSnow />
