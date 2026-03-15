@@ -4,20 +4,16 @@ import { useLanyard } from '../hooks/useLanyard'
 
 // ── Data ───────────────────────────────────────────────────────────────
 
-const BIO = [
-  'CS student at UIUC — expected Dec 2027, 4.0 GPA.',
-  'Passionate about game development, VR/XR, and building things people actually interact with.',
-  'Published a game on Steam that ended up in classrooms across three states (Pelagos).',
-  'Currently building VR experiences for the European Space Agency.',
+const LOG_ENTRIES = [
+  'Published Pelagos on Steam — 30k+ downloads, adopted by schools across three states.',
+  'Building VR modules for ESA\'s Comet Interceptor Mission at the Immersive Learning Lab.',
+  'Game dev, VR/XR, and building things people actually interact with.',
   'Outside of code: fly fishing, game jams, and exploring what games can do as a medium.',
 ]
 
-const CURRENTLY = [
-  { key: 'at',       value: 'UIUC, Champaign IL'             },
-  { key: 'building', value: 'ESA Comet Interceptor VR module' },
-]
-
-const FALLBACK = 'Probably fishing or in class'
+// UIUC coordinates
+const COORDS = '40.1020° N, 88.2272° W'
+const LOCATION = 'Urbana, IL'
 
 // ── Typewriter hook ────────────────────────────────────────────────────
 
@@ -40,7 +36,7 @@ function useTypewriter(lines) {
       }
       i++
       setDisplayed(full.slice(0, i).split('\n'))
-      const variance = (Math.random() - 0.5) * 20 // ±10ms
+      const variance = (Math.random() - 0.5) * 20
       setTimeout(tick, 40 + variance)
     }
     tick()
@@ -61,17 +57,7 @@ const headerItem = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
-const currStagger = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-}
-
-const currRow = {
-  hidden: { opacity: 0, y: 10 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-}
-
-// ── Discord presence card ──────────────────────────────────────────────
+// ── Discord presence ───────────────────────────────────────────────────
 
 function resolveActivityImage(activity) {
   if (!activity) return null
@@ -116,58 +102,52 @@ function useAppIcon(appId) {
   return iconUrl
 }
 
-function PresenceCard() {
+function LivePresence() {
   const { activities, spotify, loading, error } = useLanyard()
   const activity = activities?.find(a => a.type !== 4) || null
 
   let thumb = null
   let line  = null
+  let sub   = null
 
   if (!loading && !error) {
     if (spotify) {
-      line  = `Listening to ${spotify.song} by ${spotify.artist}`
+      line  = spotify.song
+      sub   = `by ${spotify.artist}`
       thumb = spotify.album_art_url
     } else if (activity) {
-      line  = `Playing ${activity.name}`
+      line  = activity.name
       thumb = resolveActivityImage(activity)
     }
   }
 
-  // Fallback: fetch app icon from Discord API when activity has no assets
   const needsAppIcon = !thumb && activity?.application_id
   const appIcon = useAppIcon(needsAppIcon ? activity.application_id : null)
   if (!thumb && appIcon) thumb = appIcon
 
-  const showFallback = error || (!loading && !line)
+  // Nothing active → render nothing
+  if (loading || error || !line) return null
 
   return (
-    <div className="presence-card">
-      {thumb && (
-        <img
-          src={thumb}
-          alt=""
-          className="presence-thumb"
-          loading="lazy"
-        />
-      )}
-
-      <div className="presence-content">
-        {loading ? (
-          <span className="presence-shimmer" />
-        ) : (
-          <span className="presence-line">
-            {showFallback ? FALLBACK : line}
-          </span>
+    <div className="log-presence">
+      <span className="log-presence-label">live transmission //</span>
+      <div className="log-presence-content">
+        {thumb && (
+          <img src={thumb} alt="" className="log-presence-thumb" loading="lazy" />
         )}
+        <div className="log-presence-text">
+          <span className="log-presence-main">{line}</span>
+          {sub && <span className="log-presence-sub">{sub}</span>}
+        </div>
       </div>
     </div>
   )
 }
 
-// ── Typewriter bio section ─────────────────────────────────────────────
+// ── Typewriter log entries ─────────────────────────────────────────────
 
-function TypewriterBio() {
-  const { displayed, done, start } = useTypewriter(BIO)
+function TypewriterLog() {
+  const { displayed, done, start } = useTypewriter(LOG_ENTRIES)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -188,20 +168,19 @@ function TypewriterBio() {
   }, [start])
 
   return (
-    <ul ref={ref} className="about-entries">
+    <div ref={ref} className="log-entries">
       {displayed.map((line, i) => (
-        <li key={i} className="about-entry">
-          <span className="about-bullet" aria-hidden="true">◦</span>
+        <p key={i} className="log-entry">
+          <span className="log-prompt" aria-hidden="true">&gt;</span>
           <span>
             {line}
-            {/* Blinking cursor on the last line while typing */}
             {!done && i === displayed.length - 1 && (
               <span className="typewriter-cursor" aria-hidden="true">|</span>
             )}
           </span>
-        </li>
+        </p>
       ))}
-    </ul>
+    </div>
   )
 }
 
@@ -221,54 +200,39 @@ export function About() {
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <motion.p variants={headerItem} className="section-eyebrow font-mono text-xs tracking-[0.25em] uppercase mb-2">
-          05 / About
-        </motion.p>
         <motion.h2 variants={headerItem} className="section-heading font-black text-4xl sm:text-5xl tracking-tight leading-none mb-4">
           About
         </motion.h2>
         <motion.div variants={headerItem} className="section-rule h-px w-full" />
       </motion.div>
 
-      {/* Field-notes card */}
+      {/* Captain's log card */}
       <motion.div
-        className="about-card"
+        className="log-card"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: '-60px' }}
       >
+        {/* Header bar */}
+        <div className="log-header">
+          <div className="log-header-left">
+            <span className="log-title">Captain's Log</span>
+            <span className="log-id">UIUC — CS '27 — 4.0 GPA</span>
+          </div>
+          <div className="log-header-right">
+            <span className="log-coords">{COORDS}</span>
+            <span className="log-location">{LOCATION}</span>
+          </div>
+        </div>
 
-        {/* ── Main notes — typewriter ── */}
-        <p className="about-section-label">Field Notes</p>
-        <div className="about-divider" />
-        <TypewriterBio />
+        <div className="log-divider" />
 
-        {/* ── Currently ── */}
-        <div className="about-divider about-divider--spaced" />
+        {/* Log entries — typewriter */}
+        <TypewriterLog />
 
-        <p className="about-section-label">Currently</p>
-
-        <motion.dl
-          className="about-currently"
-          variants={currStagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-40px' }}
-        >
-          {CURRENTLY.map(({ key, value }) => (
-            <motion.div key={key} className="about-curr-row" variants={currRow}>
-              <dt className="about-curr-key">{key}</dt>
-              <span className="about-curr-sep" aria-hidden="true">·</span>
-              <dd className="about-curr-val">{value}</dd>
-            </motion.div>
-          ))}
-        </motion.dl>
-
-        {/* ── Live presence ── */}
-        <div className="about-divider about-divider--spaced" />
-        <p className="about-section-label">Right Now</p>
-        <PresenceCard />
+        {/* Live Discord presence — only shows when active */}
+        <LivePresence />
 
       </motion.div>
     </section>

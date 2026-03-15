@@ -198,9 +198,6 @@ export function Projects() {
         whileInView="show"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <motion.p variants={headerItem} className="section-eyebrow font-mono text-xs tracking-[0.25em] uppercase mb-2">
-          04 / Projects
-        </motion.p>
         <motion.h2 variants={headerItem} className="section-heading font-black text-4xl sm:text-5xl tracking-tight leading-none mb-4">
           Work
         </motion.h2>

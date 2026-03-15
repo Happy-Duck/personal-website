@@ -69,12 +69,10 @@ export function OceanDepthProvider({ children }) {
     root.style.setProperty('--ambient-glow',   '0')
     root.style.setProperty('--particle-opacity','0')
     root.style.setProperty('--beach-op',       '1')
-    root.style.setProperty('--gauge-opacity',  '0')
+    root.style.setProperty('--gauge-opacity',  '1')
 
     const onScroll = () => { dirtyRef.current = true }
     window.addEventListener('scroll', onScroll, { passive: true })
-
-    let gaugeTimer = null
 
     const loop = (now) => {
       // ── Depth update (scroll-dirty) ──────────────────────────────
@@ -114,12 +112,8 @@ export function OceanDepthProvider({ children }) {
             root.setAttribute('data-theme', 'deep-sea')
           }
 
-          // Show gauge while scrolling, hide after 1.8s of inactivity
+          // Gauge always visible
           root.style.setProperty('--gauge-opacity', '1')
-          clearTimeout(gaugeTimer)
-          gaugeTimer = setTimeout(() => {
-            root.style.setProperty('--gauge-opacity', '0')
-          }, 1800)
         }
 
         // Throttle React state to ~10fps for UI
@@ -152,7 +146,6 @@ export function OceanDepthProvider({ children }) {
 
     return () => {
       cancelAnimationFrame(frameRef.current)
-      clearTimeout(gaugeTimer)
       window.removeEventListener('scroll', onScroll)
     }
   }, [])

@@ -10,7 +10,7 @@ export function DepthGauge() {
   return (
     <div
       className="depth-gauge"
-      style={{ opacity: 'var(--gauge-opacity, 0)' }}
+      style={{ opacity: 1 }}
       aria-hidden="true"
     >
       {/* Zone name */}

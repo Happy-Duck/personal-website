@@ -94,19 +94,10 @@ export function Hero() {
         {/* Roles */}
         <motion.p
           variants={fadeUp}
-          className="hero-subtitle font-light tracking-[0.18em] uppercase select-none
+          className="hero-subtitle font-bold tracking-[0.18em] uppercase select-none
                      text-[clamp(0.65rem,1.8vw,0.9rem)]"
         >
           CS&nbsp;Student&nbsp;@&nbsp;UIUC&ensp;&middot;&ensp;Game&nbsp;Developer&ensp;&middot;&ensp;VR&nbsp;Engineer
-        </motion.p>
-
-        {/* Tagline */}
-        <motion.p
-          variants={fadeUp}
-          className="hero-tagline font-light italic leading-relaxed max-w-lg
-                     text-[clamp(0.85rem,2.2vw,1.15rem)]"
-        >
-          I make things that move. Some of them are even intentional.
         </motion.p>
 
       </div>
