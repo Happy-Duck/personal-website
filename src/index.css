@@ -272,6 +272,8 @@ html::-webkit-scrollbar { display: none; }
 
 .site-title {
   color: var(--text-primary);
+  -webkit-text-stroke: 1.5px var(--text-stroke);
+  paint-order: stroke fill;
   text-shadow: var(--text-shadow);
   transition: text-shadow var(--theme-dur) var(--theme-ease);
 }

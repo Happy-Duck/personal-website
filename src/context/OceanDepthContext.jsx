@@ -28,6 +28,12 @@ function interpolateTextPrimary(d) {
   return `rgb(${Math.round(lerp(0x1e,0xe8,t))},${Math.round(lerp(0x3a,0xf4,t))},${Math.round(lerp(0x3a,0xf8,t))})`
 }
 
+function interpolateTextStroke(d) {
+  // Inverse of text — light at surface, dark at depth
+  const t = Math.min(1, d / 0.3)
+  return `rgb(${Math.round(lerp(0xd0,0x08,t))},${Math.round(lerp(0xf0,0x18,t))},${Math.round(lerp(0xe8,0x20,t))})`
+}
+
 // Zone→likely culprit for perf warnings
 const ZONE_CULPRIT = {
   SUNLIT:   'ReefFish / SeaTurtle',
@@ -66,6 +72,7 @@ export function OceanDepthProvider({ children }) {
     // Initialize CSS vars synchronously (may already be set by index.html script)
     root.style.setProperty('--ocean-bg-color', interpolateOceanColor(0))
     root.style.setProperty('--text-primary',   interpolateTextPrimary(0))
+    root.style.setProperty('--text-stroke',    interpolateTextStroke(0))
     root.style.setProperty('--ambient-glow',   '0')
     root.style.setProperty('--particle-opacity','0')
     root.style.setProperty('--beach-op',       '1')
@@ -90,6 +97,7 @@ export function OceanDepthProvider({ children }) {
           root.style.setProperty('--ocean-depth-progress', d.toFixed(4))
           root.style.setProperty('--ocean-bg-color',       interpolateOceanColor(d))
           root.style.setProperty('--text-primary',         interpolateTextPrimary(d))
+          root.style.setProperty('--text-stroke',          interpolateTextStroke(d))
 
           const ambientGlow    = d < 0.5 ? d * 2 : 2 - d * 2
           root.style.setProperty('--ambient-glow',   Math.max(0, ambientGlow).toFixed(3))
