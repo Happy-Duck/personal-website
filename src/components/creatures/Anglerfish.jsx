@@ -87,8 +87,8 @@ export function Anglerfish() {
         {/* Lure glow — adjust top/right to reposition */}
         <div className="angler-lure" style={{
           position: 'absolute',
-          top: '50%',
-          right: '0%',
+          top: '40%',
+          right: '5%',
           width: 0,
           height: 0,
           boxShadow: '0 0 22px 14px rgba(80,210,255,0.45), 0 0 50px 28px rgba(60,160,255,0.2)',
