@@ -9,8 +9,8 @@ const W = 100, H = 138
 const DEPTH_RANGE = { enter: 0.15, exit: 0.37 }
 
 const CONFIGS = [
-  { yFrac: 0.35, speedMul: 1.0, sinAmp: 45, startOffset: 0.2 },
-  { yFrac: 0.55, speedMul: 0.75, sinAmp: 35, startOffset: 0.7 },
+  { yFrac: 0.28, speedMul: 1.0, sinAmp: 45, startOffset: 0.15, dartOffset: 0 },
+  { yFrac: 0.62, speedMul: 0.75, sinAmp: 35, startOffset: 0.70, dartOffset: 67 },
 ]
 
 function SingleSquid({ cfg, idx, peers }) {
@@ -25,7 +25,7 @@ function SingleSquid({ cfg, idx, peers }) {
     speedBoost: 0,
     dodgeY: 0,
     dartPhase: 0,       // 0 = glide, 1 = dart
-    dartTimer: 0,
+    dartTimer: cfg.dartOffset,
   })
 
   useEffect(() => {

@@ -6,9 +6,9 @@ import { useCreatureAI } from '../../hooks/useCreatureAI'
 const W = 48, H = 44
 
 const CONFIGS = [
-  { centerYFrac: 0.18, speed: 0.60, amplitude: 32, freq: 0.008, dir:  1, scale: 1.00 },
-  { centerYFrac: 0.30, speed: 0.42, amplitude: 22, freq: 0.010, dir: -1, scale: 0.85 },
-  { centerYFrac: 0.24, speed: 0.55, amplitude: 38, freq: 0.006, dir:  1, scale: 1.10 },
+  { centerYFrac: 0.15, speed: 0.60, amplitude: 32, freq: 0.008, dir:  1, scale: 1.00 },
+  { centerYFrac: 0.50, speed: 0.42, amplitude: 22, freq: 0.010, dir: -1, scale: 0.85 },
+  { centerYFrac: 0.32, speed: 0.55, amplitude: 38, freq: 0.006, dir:  1, scale: 1.10 },
 ]
 
 const DEPTH_RANGE = { enter: 0.00, exit: 0.16 }
