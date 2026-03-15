@@ -6,7 +6,8 @@
       "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
       "Bash(npx gh-pages:*)",
       "WebFetch(domain:discord.com)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npx vite:*)"
     ]
   }
 }

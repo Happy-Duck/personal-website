@@ -59,7 +59,7 @@ const SIGNALS = [
   {
     id:    'resume',
     label: 'Resume',
-    href:  '/resume.pdf',
+    href:  '/Rishi Garhyan Resume.pdf',
     Icon:  ResumeIcon,
     delay: 0.3,
   },
