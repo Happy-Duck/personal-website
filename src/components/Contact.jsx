@@ -1,6 +1,15 @@
 import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { GithubOriginal, LinkedinOriginal } from 'devicons-react'
+import { GithubOriginal, LinkedinPlain } from 'devicons-react'
+
+// Wrapper to force fill color on icons that don't accept a color prop
+function ForcedColorIcon({ Icon, size }) {
+  return (
+    <span className="forced-icon-color">
+      <Icon size={size} />
+    </span>
+  )
+}
 
 // ── Icons ──────────────────────────────────────────────────────────────
 
@@ -46,14 +55,14 @@ const SIGNALS = [
     id:    'linkedin',
     label: 'LinkedIn',
     href:  'https://linkedin.com/in/rishi-garhyan',
-    Icon:  () => <LinkedinOriginal size="22px" color="currentColor" />,
+    Icon:  () => <LinkedinPlain size="22px" color="currentColor" />,
     delay: 0.1,
   },
   {
     id:    'github',
     label: 'GitHub',
     href:  'https://github.com/Happy-Duck',
-    Icon:  () => <GithubOriginal size="21px" color="currentColor" />,
+    Icon:  () => <ForcedColorIcon Icon={GithubOriginal} size="21px" />,
     delay: 0.2,
   },
   {

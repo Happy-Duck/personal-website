@@ -2,6 +2,15 @@ import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { GithubOriginal } from 'devicons-react'
 
+// Wrapper to force fill color on icons that don't accept a color prop
+function ForcedColorIcon({ Icon, size }) {
+  return (
+    <span className="forced-icon-color">
+      <Icon size={size} />
+    </span>
+  )
+}
+
 // ── Data ───────────────────────────────────────────────────────────────
 
 const PROJECTS = [
@@ -41,7 +50,7 @@ const PROJECTS = [
 
 function SteamIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658a3.387 3.387 0 011.912-.585c.064 0 .127.003.19.007l2.862-4.148v-.058a4.533 4.533 0 014.528-4.528 4.533 4.533 0 014.528 4.528 4.534 4.534 0 01-4.528 4.529h-.105l-4.082 2.913c0 .052.004.104.004.157a3.39 3.39 0 01-3.39 3.393 3.406 3.406 0 01-3.327-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 12-5.373 12-12S18.606 0 11.979 0zM7.54 18.21l-1.473-.61a2.542 2.542 0 004.578-.87 2.543 2.543 0 00-2.54-2.541c-.168 0-.333.017-.494.049l1.523.63a1.87 1.87 0 01-1.594 3.342zm8.406-7.79a3.023 3.023 0 01-3.02-3.019 3.023 3.023 0 013.02-3.02 3.023 3.023 0 013.02 3.02 3.023 3.023 0 01-3.02 3.02z" />
     </svg>
   )
@@ -49,7 +58,7 @@ function SteamIcon() {
 
 function ItchIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.06 2.436-2.34 0 1.28 1.04 2.34 2.37 2.34 1.33 0 2.28-1.06 2.28-2.34 0 1.28 1.1 2.34 2.43 2.34h.17c1.33 0 2.43-1.06 2.43-2.34 0 1.28.95 2.34 2.28 2.34 1.33 0 2.37-1.06 2.37-2.34 0 1.28 1.1 2.34 2.43 2.34 1.11 0 2.33-1.15 2.33-2.45V4.95c-.02-.62-2.08-2.99-3.13-3.612C18.886.96 14.165.867 12 .867c-2.17 0-6.89.093-8.87.47zm7.38 7.6c-.36.64-1.07 1.098-1.92 1.098-.86 0-1.58-.46-1.93-1.1-.36.64-1.18 1.1-2.03 1.1-.39 0-.74-.1-1.06-.26v7.78c0 2.1.43 2.76.95 3.27.56.54 2.4 1.83 6.42 1.83 4.04 0 5.87-1.3 6.43-1.83.52-.51.95-1.17.95-3.27v-7.78c-.32.16-.68.26-1.07.26-.85 0-1.67-.46-2.03-1.1-.35.64-1.07 1.1-1.93 1.1-.85 0-1.56-.46-1.92-1.1zm-1.6 4.26c.78-.08 1.64.42 2.11 1.07.47-.65 1.33-1.15 2.11-1.07 1.14.12 2.2 1.23 2.22 3.2 0 2.87-2.5 5.09-4.33 6.17-1.83-1.08-4.33-3.3-4.33-6.17.02-1.97 1.08-3.08 2.22-3.2z" />
     </svg>
   )
@@ -57,7 +66,7 @@ function ItchIcon() {
 
 function ExternalLinkIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
       strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
       <polyline points="15 3 21 3 21 9" />
@@ -69,7 +78,7 @@ function ExternalLinkIcon() {
 function linkIcon(url) {
   if (url.includes('steampowered.com')) return { Icon: SteamIcon, label: 'Steam' }
   if (url.includes('itch.io'))          return { Icon: ItchIcon,  label: 'itch.io' }
-  if (url.includes('github.com'))       return { Icon: () => <GithubOriginal size="15px" color="currentColor" />, label: 'GitHub' }
+  if (url.includes('github.com'))       return { Icon: () => <ForcedColorIcon Icon={GithubOriginal} size="24px" />, label: 'GitHub' }
   return { Icon: ExternalLinkIcon, label: 'Link' }
 }
 

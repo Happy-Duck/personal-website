@@ -672,6 +672,19 @@ html::-webkit-scrollbar { display: none; }
   position: relative;
 }
 
+/* Force fill color on icons that have hardcoded brand colors */
+.forced-icon-color svg,
+.forced-icon-color svg path,
+.forced-icon-color svg circle,
+.forced-icon-color svg rect,
+.forced-icon-color svg polygon {
+  fill: currentColor !important;
+}
+.forced-icon-color {
+  display:  inline-flex;
+  color:    inherit;
+}
+
 /* Icon box — replaces gem orbs with devicons */
 .skill-icon-box {
   position:        relative;

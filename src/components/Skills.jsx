@@ -4,12 +4,21 @@ import {
   CsharpPlain,
   JavaPlain,
   PythonPlain,
-  UnityOriginal,
+  UnityPlain,
   UnrealengineOriginal,
   BlenderOriginal,
   DjangoPlain,
-  MysqlOriginal,
+  AzuresqldatabasePlain,
 } from 'devicons-react'
+
+// Wrapper to force fill color on icons that don't accept a color prop
+function ForcedColorIcon({ Icon, size }) {
+  return (
+    <span className="forced-icon-color">
+      <Icon size={size} />
+    </span>
+  )
+}
 
 // ── Data ───────────────────────────────────────────────────────────────
 
@@ -17,20 +26,20 @@ const GROUPS = [
   {
     label: 'Languages',
     items: [
-      { name: 'C++',    Icon: CplusplusPlain,       tooltip: 'Systems & engine-level code' },
-      { name: 'C#',     Icon: CsharpPlain,           tooltip: 'Used in Pelagos & VR Lab' },
-      { name: 'Java',   Icon: JavaPlain,             tooltip: 'Algorithms & coursework' },
-      { name: 'Python', Icon: PythonPlain,           tooltip: 'Computer vision research' },
+      { name: 'C++',    render: (s) => <CplusplusPlain size={s} color="currentColor" />,       tooltip: 'Systems & engine-level code' },
+      { name: 'C#',     render: (s) => <CsharpPlain size={s} color="currentColor" />,           tooltip: 'Used in Pelagos & VR Lab' },
+      { name: 'Java',   render: (s) => <JavaPlain size={s} color="currentColor" />,             tooltip: 'Algorithms & coursework' },
+      { name: 'Python', render: (s) => <PythonPlain size={s} color="currentColor" />,           tooltip: 'Computer vision research' },
     ],
   },
   {
     label: 'Tools & Frameworks',
     items: [
-      { name: 'Unity',          Icon: UnityOriginal,          tooltip: 'Steam-published game' },
-      { name: 'Unreal Engine',  Icon: UnrealengineOriginal,   tooltip: 'C++ game engine' },
-      { name: 'Blender',        Icon: BlenderOriginal,        tooltip: '3D modeling for VR Lab' },
-      { name: 'Django',         Icon: DjangoPlain,            tooltip: 'Web backend framework' },
-      { name: 'SQL',            Icon: MysqlOriginal,          tooltip: 'Database queries & schema' },
+      { name: 'Unity',          render: (s) => <UnityPlain size={s} color="currentColor" />,                tooltip: 'Steam-published game' },
+      { name: 'Unreal Engine',  render: (s) => <ForcedColorIcon Icon={UnrealengineOriginal} size={s} />,    tooltip: 'C++ game engine' },
+      { name: 'Blender',        render: (s) => <ForcedColorIcon Icon={BlenderOriginal} size={s} />,         tooltip: '3D modeling for VR Lab' },
+      { name: 'Django',         render: (s) => <DjangoPlain size={s} color="currentColor" />,               tooltip: 'Web backend framework' },
+      { name: 'SQL',            render: (s) => <AzuresqldatabasePlain size={s} color="currentColor" />,     tooltip: 'Database queries & schema' },
     ],
   },
 ]
@@ -68,7 +77,7 @@ function SkillItem({ item }) {
           whileHover={{ y: -10, scale: 1.1 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          <item.Icon size="48px" color="currentColor" />
+          {item.render('48px')}
         </motion.div>
 
         <div className="skill-tooltip" role="tooltip">
