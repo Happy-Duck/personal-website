@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 350, H = 175
-const DEPTH_RANGE = { enter: 0.58, exit: 0.88 }
+const DEPTH_RANGE = { enter: 0.58, exit: 1.02 }
 const TRAVERSE_SPEED = 0.5
 const PAUSE_FRAMES   = 180  // ~3s at 60fps
 
@@ -89,8 +89,9 @@ export function GiantSquid() {
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
+      const scrollOffset = window.scrollY * 0.12
       const nx = p.x
-      const ny = Math.max(20, Math.min(VH - 20, p.y + p.dodgeY))
+      const ny = Math.max(-H, Math.min(VH + H, p.y + p.dodgeY - scrollOffset))
       const flip = p.dir === 1 ? '' : ' scaleX(-1)'
 
       el.style.transform = `translate(${nx - W / 2}px, ${ny - H / 2}px)${flip}`

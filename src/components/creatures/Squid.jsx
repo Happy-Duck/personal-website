@@ -99,8 +99,9 @@ function SingleSquid({ cfg, idx, peers }) {
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
+      const scrollOffset = window.scrollY * 0.12
       const nx = p.x
-      const ny = Math.max(20, Math.min(VH - 20, pathY + p.dodgeY))
+      const ny = Math.max(-H, Math.min(VH + H, pathY + p.dodgeY - scrollOffset))
 
       if (peers) {
         peers.current[idx] = { x: nx, y: ny }

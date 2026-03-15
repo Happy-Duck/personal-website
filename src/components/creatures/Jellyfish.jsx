@@ -87,8 +87,9 @@ function SingleJelly({ cfg, idx, peers }) {
         }
       }
 
+      const scrollOffset = window.scrollY * 0.12
       const nx = Math.max(sw / 2, Math.min(VW - sw / 2, p.x + p.dodgeX))
-      const ny = p.y
+      const ny = p.y - scrollOffset
 
       if (peers) {
         peers.current[idx] = { x: nx, y: ny }

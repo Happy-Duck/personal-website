@@ -1,4 +1,4 @@
-// ── Snail Fish — Hadal Zone (0.82 → 1.00) ────────────────────────────
+// ── Snail Fish — Deep Abyssal Zone (0.78 → 1.02) ─────────────────────
 // Deepest known fish. Ghostly, translucent, barely moves.
 // Easter egg for ocean biology enthusiasts.
 import { useEffect, useRef } from 'react'
@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 200, H = 67
-const DEPTH_RANGE = { enter: 0.83, exit: 1.02 }
+const DEPTH_RANGE = { enter: 0.78, exit: 1.02 }
 
 export function SnailFish() {
   const wrapperRef = useRef(null)
@@ -38,7 +38,9 @@ export function SnailFish() {
 
       if (p.x > VW + W) { p.x = -W; p.y = VH * (0.5 + Math.random() * 0.3) }
 
-      el.style.transform = `translate(${p.x - W / 2}px, ${p.y - H / 2}px)`
+      const scrollOffset = window.scrollY * 0.12
+      const ny = p.y - scrollOffset
+      el.style.transform = `translate(${p.x - W / 2}px, ${ny - H / 2}px)`
       el.style.opacity   = opacity.toFixed(3)
     })
 

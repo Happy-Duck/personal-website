@@ -104,8 +104,9 @@ export function useCreatureAI({
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
+      const scrollOffset = window.scrollY * 0.12
       const newX = p.pathX
-      const newY = Math.max(20, Math.min(H - 20, pathY + p.dodgeY))
+      const newY = Math.max(-H_SVG, Math.min(H + H_SVG, pathY + p.dodgeY - scrollOffset))
 
       // Write position for peer repulsion
       if (peers) {

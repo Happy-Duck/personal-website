@@ -67,8 +67,9 @@ export function Anglerfish() {
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-100, Math.min(100, p.dodgeY))
 
+      const scrollOffset = window.scrollY * 0.12
       const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x))
-      const ny = Math.max(20, Math.min(VH - 20, p.y + p.dodgeY))
+      const ny = Math.max(-H, Math.min(VH + H, p.y + p.dodgeY - scrollOffset))
 
       el.style.transform = `translate(${nx - W / 2}px, ${ny - H / 2}px)`
       el.style.opacity   = opacity.toFixed(3)
