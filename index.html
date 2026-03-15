@@ -2,15 +2,64 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rishi Garhyan — CS @ UIUC | XR Engineer | Game Developer</title>
+
+    <!-- SEO -->
+    <meta name="description" content="Rishi Garhyan — CS student at UIUC, XR engineer, and game developer. Portfolio showcasing projects, experience, and skills." />
+    <meta name="author" content="Rishi Garhyan" />
+    <link rel="canonical" href="https://happy-duck.github.io/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rishi Garhyan — CS @ UIUC | XR Engineer | Game Developer" />
+    <meta property="og:description" content="Portfolio of Rishi Garhyan — CS student at UIUC, XR engineer, and game developer." />
+    <meta property="og:url" content="https://happy-duck.github.io/" />
+    <meta property="og:image" content="https://happy-duck.github.io/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Rishi Garhyan" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rishi Garhyan — CS @ UIUC | XR Engineer | Game Developer" />
+    <meta name="twitter:description" content="Portfolio of Rishi Garhyan — CS student at UIUC, XR engineer, and game developer." />
+    <meta name="twitter:image" content="https://happy-duck.github.io/og-image.png" />
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rishi Garhyan</title>
-    <!-- Caveat: handwritten accent for field-notes labels -->
+
+    <!-- Manifest & Theme -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#48b8b0" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rishi Garhyan",
+      "url": "https://happy-duck.github.io",
+      "jobTitle": "CS Student / XR Engineer / Game Developer",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "University of Illinois Urbana-Champaign"
+      },
+      "sameAs": [
+        "https://linkedin.com/in/rishi-garhyan",
+        "https://github.com/Happy-Duck"
+      ],
+      "email": "garhyan2@illinois.edu"
+    }
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
     <!-- Set depth defaults before paint — depth 0 = surface = shallow-reef -->
     <script>
       var r = document.documentElement;
@@ -24,6 +73,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Rishi Garhyan</h1>
+      <p>CS Student at UIUC · XR Engineer · Game Developer</p>
+      <p>Portfolio showcasing projects in game development, XR engineering, and computer science.</p>
+      <p>Contact: garhyan2@illinois.edu</p>
+      <p><a href="https://linkedin.com/in/rishi-garhyan">LinkedIn</a> · <a href="https://github.com/Happy-Duck">GitHub</a></p>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
