@@ -1157,7 +1157,7 @@ html::-webkit-scrollbar { display: none; }
 
 .footer-wrap {
   width:      100%;
-  overflow:   hidden;
+  overflow:   clip;
   position:   relative;
   padding-top: 50px;
 }

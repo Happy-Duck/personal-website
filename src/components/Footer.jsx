@@ -85,7 +85,7 @@ function Crab() {
     /* outer: position  |  inner: flip  |  img: crab gif */
     <div
       ref={outerRef}
-      style={{ position: 'absolute', bottom: '14px', left: 0, willChange: 'transform' }}
+      style={{ position: 'absolute', bottom: '14px', left: 0, willChange: 'transform', pointerEvents: 'none' }}
     >
       <div ref={innerRef} style={{ transformOrigin: `${CRAB_W / 2}px ${CRAB_H / 2}px` }}>
         <img
