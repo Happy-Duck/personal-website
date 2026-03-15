@@ -21,17 +21,8 @@ function Crab() {
     const floorEl = outer.parentElement
     let floorW    = floorEl ? floorEl.clientWidth : window.innerWidth
 
-    // Cache floor's document-relative top so we never call getBoundingClientRect
-    // in scroll handlers (which forces layout and can cause scroll jitter).
-    let floorDocTop = floorEl
-      ? floorEl.getBoundingClientRect().top + window.scrollY
-      : 0
-
     const onResize = () => {
       floorW = floorEl ? floorEl.clientWidth : window.innerWidth
-      floorDocTop = floorEl
-        ? floorEl.getBoundingClientRect().top + window.scrollY
-        : 0
     }
     window.addEventListener('resize', onResize, { passive: true })
 
@@ -44,9 +35,11 @@ function Crab() {
     const tick = () => {
       const mouse = mouseRef.current
 
-      // Crab centre in screen space (no getBoundingClientRect — pure math)
+      // Crab centre in screen space — read floor position live each frame
+      // (safe in rAF; jitter was fixed by overflow:clip + pointerEvents:none)
+      const floorRect = floorEl ? floorEl.getBoundingClientRect() : { top: 0 }
       const cx = x + CRAB_W / 2
-      const cy = (floorDocTop - window.scrollY) + 40
+      const cy = floorRect.top + 40
 
       // Flee
       const dx   = cx - mouse.x
