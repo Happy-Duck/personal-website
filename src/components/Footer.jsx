@@ -21,19 +21,19 @@ function Crab() {
     const floorEl = outer.parentElement
     let floorW    = floorEl ? floorEl.clientWidth : window.innerWidth
 
+    // Cache floor's document-relative top so we never call getBoundingClientRect
+    // in scroll handlers (which forces layout and can cause scroll jitter).
+    let floorDocTop = floorEl
+      ? floorEl.getBoundingClientRect().top + window.scrollY
+      : 0
+
     const onResize = () => {
       floorW = floorEl ? floorEl.clientWidth : window.innerWidth
+      floorDocTop = floorEl
+        ? floorEl.getBoundingClientRect().top + window.scrollY
+        : 0
     }
     window.addEventListener('resize', onResize, { passive: true })
-
-    // Track floor's top-of-viewport Y so we can compute flee distance
-    // without triggering layout in the hot rAF loop.
-    let floorScreenY = floorEl ? floorEl.getBoundingClientRect().top : 0
-    const onScroll = () => {
-      floorScreenY = floorEl ? floorEl.getBoundingClientRect().top : 0
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll,  { passive: true })
 
     let x       = floorW * 0.4    // start 40% from left
     let vx      = 0.38            // slow rightward drift
@@ -44,9 +44,9 @@ function Crab() {
     const tick = () => {
       const mouse = mouseRef.current
 
-      // Crab centre in screen space
+      // Crab centre in screen space (no getBoundingClientRect — pure math)
       const cx = x + CRAB_W / 2
-      const cy = floorScreenY + 40   // approximate mid-height in floor zone
+      const cy = (floorDocTop - window.scrollY) + 40
 
       // Flee
       const dx   = cx - mouse.x
@@ -78,8 +78,6 @@ function Crab() {
     return () => {
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', onResize)
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
     }
   }, [mouseRef])
 
