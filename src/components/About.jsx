@@ -98,7 +98,8 @@ function useAppIcon(appId) {
 }
 
 function PresenceCard() {
-  const { activity, spotify, loading, error } = useLanyard()
+  const { activities, spotify, loading, error } = useLanyard()
+  const activity = activities?.find(a => a.type !== 4) || null
 
   let thumb = null
   let line  = null

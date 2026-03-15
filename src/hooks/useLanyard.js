@@ -10,11 +10,20 @@ const WS_URL     = 'wss://api.lanyard.rest/socket'
 
 function parsePresence(data) {
   if (!data) return null
+
+  const activities = data.activities || []
+
   return {
-    status:       data.discord_status || 'offline',
-    activity:     data.activities?.find(a => a.type === 0) || null,   // type 0 = Playing
-    spotify:      data.spotify || null,
-    customStatus: data.activities?.find(a => a.type === 4) || null,   // type 4 = Custom
+    status: data.discord_status || 'offline',
+    activities,
+    activity:
+      activities.find(a =>
+        a.type !== 4 &&
+        a.name &&
+        a.name !== 'Custom Status'
+      ) || null,
+    spotify: data.spotify || null,
+    customStatus: activities.find(a => a.type === 4) || null,
   }
 }
 
@@ -22,27 +31,29 @@ export function useLanyard() {
   const [presence, setPresence] = useState(null)
   const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState(false)
-  const wsRef     = useRef(null)
+  const wsRef = useRef(null)
   const heartbeat = useRef(null)
 
   useEffect(() => {
     let cancelled = false
 
-    // ── Initial REST fetch ──────────────────────────────────────────
     fetch(REST_URL)
       .then(r => r.json())
       .then(json => {
         if (cancelled) return
         if (json.success) {
           setPresence(parsePresence(json.data))
+          setError(false)
         }
         setLoading(false)
       })
       .catch(() => {
-        if (!cancelled) { setError(true); setLoading(false) }
+        if (!cancelled) {
+          setError(true)
+          setLoading(false)
+        }
       })
 
-    // ── WebSocket for live updates ──────────────────────────────────
     function connect() {
       if (cancelled) return
 
@@ -52,17 +63,14 @@ export function useLanyard() {
       ws.onmessage = (event) => {
         const msg = JSON.parse(event.data)
 
-        // op 1: Hello — start heartbeat, send init
         if (msg.op === 1) {
           const interval = msg.d.heartbeat_interval
 
-          // Send subscribe
           ws.send(JSON.stringify({
             op: 2,
             d: { subscribe_to_id: DISCORD_ID },
           }))
 
-          // Heartbeat loop
           clearInterval(heartbeat.current)
           heartbeat.current = setInterval(() => {
             if (ws.readyState === WebSocket.OPEN) {
@@ -71,11 +79,11 @@ export function useLanyard() {
           }, interval)
         }
 
-        // op 0: Event (INIT_STATE or PRESENCE_UPDATE)
         if (msg.op === 0 && msg.d) {
           if (!cancelled) {
             setPresence(parsePresence(msg.d))
             setLoading(false)
+            setError(false)
           }
         }
       }
@@ -86,7 +94,6 @@ export function useLanyard() {
 
       ws.onclose = () => {
         clearInterval(heartbeat.current)
-        // Reconnect after 5s unless unmounted
         if (!cancelled) setTimeout(connect, 5000)
       }
     }
@@ -97,7 +104,7 @@ export function useLanyard() {
       cancelled = true
       clearInterval(heartbeat.current)
       if (wsRef.current) {
-        wsRef.current.onclose = null  // prevent reconnect on intentional close
+        wsRef.current.onclose = null
         wsRef.current.close()
       }
     }
@@ -105,6 +112,7 @@ export function useLanyard() {
 
   return {
     status:       presence?.status       ?? 'offline',
+    activities:   presence?.activities   ?? [],
     activity:     presence?.activity     ?? null,
     spotify:      presence?.spotify      ?? null,
     customStatus: presence?.customStatus ?? null,
