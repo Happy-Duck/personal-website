@@ -8,7 +8,7 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 .selectable, code, pre, kbd { user-select: text; -webkit-user-select: text; }
 
 /* Hide scrollbar — depth gauge is enough */
-html { scrollbar-width: none; }
+html { scrollbar-width: none; overscroll-behavior: none; overflow-anchor: none; }
 html::-webkit-scrollbar { display: none; }
 
 /* ═══════════════════════════════════════════════════════════════════
