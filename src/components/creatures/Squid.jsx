@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 100, H = 138
-const DEPTH_RANGE = { enter: 0.15, exit: 0.37 }
+const DEPTH_RANGE = { enter: 0.12, exit: 0.45 }
 
 const CONFIGS = [
   { yFrac: 0.28, speedMul: 1.0, sinAmp: 45, startOffset: 0.15, dartOffset: 0 },
