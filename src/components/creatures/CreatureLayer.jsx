@@ -33,8 +33,8 @@ export function CreatureLayer() {
       <DeepSeaFish />
 
       {/* Abyssal Zone (0.55–0.90) */}
-      <GiantSquid />
       <AbyssalJellyfish />
+      <GiantSquid />
 
       {/* Hadal Zone (0.82–1.00) */}
       <SnailFish />

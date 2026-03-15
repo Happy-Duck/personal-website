@@ -7,7 +7,7 @@ import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 350, H = 175
 const DEPTH_RANGE = { enter: 0.58, exit: 0.88 }
-const TRAVERSE_SPEED = 0.9
+const TRAVERSE_SPEED = 0.5
 const PAUSE_FRAMES   = 180  // ~3s at 60fps
 
 export function GiantSquid() {
@@ -39,9 +39,9 @@ export function GiantSquid() {
       const VH = window.innerHeight
       const p = s.current
 
-      // Initialize off-screen left
+      // Initialize just barely off-screen left
       if (p.x === null) {
-        p.x   = -W - 20
+        p.x   = -W / 2
         p.y   = VH * 0.55
         p.dir = 1
       }
