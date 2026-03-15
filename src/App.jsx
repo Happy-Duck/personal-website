@@ -1,56 +1,52 @@
-import { MarineSnow } from './components/MarineSnow'
-import { BeachScene } from './components/BeachScene'
-import { ThemeToggle } from './components/ThemeToggle'
+import { MarineSnow    } from './components/MarineSnow'
+import { BeachScene    } from './components/BeachScene'
 import { CreatureLayer } from './components/creatures/CreatureLayer'
-import { Hero } from './components/Hero'
-import { Experience } from './components/Experience'
-import { Skills } from './components/Skills'
-import { Projects } from './components/Projects'
-import { About } from './components/About'
-import { Contact } from './components/Contact'
-import { Footer } from './components/Footer'
+import { DepthGauge    } from './components/DepthGauge'
+import { Hero          } from './components/Hero'
+import { Experience    } from './components/Experience'
+import { Skills        } from './components/Skills'
+import { Projects      } from './components/Projects'
+import { About         } from './components/About'
+import { Contact       } from './components/Contact'
+import { Footer        } from './components/Footer'
 
 export default function App() {
   return (
     <>
-    <div className="theme-bg relative overflow-hidden">
+      {/* ── Fixed backdrop layers (z 0–4) ─────────────────────────── */}
+      {/* Smooth color-interpolated background */}
+      <div className="ocean-backdrop" aria-hidden="true" />
 
-      {/* Background effects */}
-      <MarineSnow />
-      <BeachScene />
+      <div className="relative overflow-hidden">
 
-      {/* Depth overlay — two persistent divs, opacity cross-fades via CSS var */}
-      <div className="overlay-deep" />
-      <div className="overlay-reef" />
+        {/* Beach scene — only visible near surface (depth < 0.20) */}
+        <BeachScene />
 
-      {/* Sea creatures — behind all UI */}
-      <CreatureLayer />
+        {/* Depth overlay gradients */}
+        <div className="overlay-deep" />
+        <div className="overlay-reef" />
 
-      {/* Toggle */}
-      <ThemeToggle />
+        {/* Sea creatures — depth-zone aware */}
+        <CreatureLayer />
 
-      {/* Hero */}
-      <Hero />
+        {/* Marine snow — CSS-only, fades in at depth > 0.35 */}
+        <MarineSnow />
 
-      {/* Experience */}
-      <Experience />
+        {/* Depth gauge — right edge, scroll-triggered */}
+        <DepthGauge />
 
-      {/* Skills */}
-      <Skills />
+        {/* ── Page content (z 10) ────────────────────────────────── */}
+        <Hero />
+        <Experience />
+        <Skills />
+        <Projects />
+        <About />
+        <Contact />
 
-      {/* Projects */}
-      <Projects />
+      </div>
 
-      {/* About */}
-      <About />
-
-      {/* Contact */}
-      <Contact />
-
-    </div>
-
-    {/* Footer — outside theme-bg so it can style the ocean floor independently */}
-    <Footer />
+      {/* Footer — outside content div so ocean floor styles independently */}
+      <Footer />
     </>
   )
 }

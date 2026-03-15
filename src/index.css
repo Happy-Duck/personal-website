@@ -11,6 +11,15 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 :root {
   --theme-dur:  0.72s;
   --theme-ease: ease;
+
+  /* ── Ocean depth system — set by OceanDepthContext JS each rAF ── */
+  --ocean-bg-color:    #b8e8e0;
+  --text-primary:      rgb(30,58,58);
+  --ambient-glow:      0;
+  --particle-opacity:  0;
+  --gauge-opacity:     0;
+  --beach-op:          1;
+  --vent-op:           0;
 }
 
 :root[data-theme="deep-sea"] {
@@ -222,9 +231,19 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
    THEMED ELEMENTS — CSS transitions, no JS per frame
    ═══════════════════════════════════════════════════════════════════ */
 
+/* Ocean backdrop — full-screen fixed div, color driven by JS interpolation */
+.ocean-backdrop {
+  position:         fixed;
+  inset:            0;
+  z-index:          0;
+  background-color: var(--ocean-bg-color);
+  transition:       background-color 0.25s ease-out;
+  pointer-events:   none;
+}
+
+/* Content wrapper — transparent; ocean-backdrop provides color */
 .theme-bg {
-  background-color: var(--bg);
-  transition: background-color var(--theme-dur) var(--theme-ease);
+  background-color: transparent;
 }
 
 .site-title {
@@ -252,10 +271,30 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   opacity: var(--overlay-reef-op);
 }
 
-/* Background effects */
-.marine-snow {
-  opacity: var(--marine-snow-op);
-  transition: opacity var(--theme-dur) var(--theme-ease);
+/* ── Marine snow — CSS-only, 20 divs ─────────────────────────────────── */
+.marine-snow-wrap {
+  position:      fixed;
+  inset:         0;
+  z-index:       4;
+  pointer-events: none;
+  overflow:      hidden;
+  opacity:       var(--particle-opacity, 0);
+  transition:    opacity 0.8s ease;
+}
+
+.snow-particle {
+  position:        absolute;
+  top:             -10px;
+  border-radius:   50%;
+  animation-name:  snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snow-fall {
+  from { transform: translateY(0)     translateX(0);   }
+  50%  { transform: translateY(50vh)  translateX(12px);}
+  to   { transform: translateY(105vh) translateX(-4px);}
 }
 /* Toggle pill */
 .toggle-pill {
@@ -450,7 +489,7 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   z-index:        1;
   pointer-events: none;
   opacity:        var(--beach-op);
-  transition:     opacity var(--theme-dur) var(--theme-ease);
+  /* No transition — JS drives --beach-op directly each rAF frame */
 }
 
 /* Sky: warm late-afternoon, blue → peach → golden at horizon */
@@ -1046,4 +1085,104 @@ html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
   filter:     var(--crab-filter);
   transition: filter var(--theme-dur) var(--theme-ease);
   cursor:     pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DEPTH GAUGE
+   ═══════════════════════════════════════════════════════════════════ */
+
+.depth-gauge {
+  position:        fixed;
+  right:           20px;
+  top:             50%;
+  transform:       translateY(-50%);
+  z-index:         50;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             8px;
+  pointer-events:  none;
+  transition:      opacity 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .depth-gauge { display: none; }
+}
+
+.depth-gauge-track {
+  width:         2px;
+  height:        140px;
+  background:    rgba(255,255,255,0.15);
+  border-radius: 1px;
+  position:      relative;
+  overflow:      visible;
+}
+
+.depth-gauge-marker {
+  position:      absolute;
+  left:          50%;
+  transform:     translateX(-50%);
+  width:         9px;
+  height:        9px;
+  border-radius: 50%;
+  background:    rgba(255,255,255,0.90);
+  box-shadow:    0 0 8px rgba(0,220,255,0.70), 0 0 2px white;
+  transition:    top 0.15s ease-out;
+}
+
+.depth-gauge-zone {
+  font-family:    monospace;
+  font-size:      9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color:          rgba(255,255,255,0.65);
+  white-space:    nowrap;
+  writing-mode:   horizontal-tb;
+}
+
+.depth-gauge-meters {
+  font-family:    monospace;
+  font-size:      10px;
+  color:          rgba(255,255,255,0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CREATURE ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Bioluminescent stripe / dot pulse */
+@keyframes bio-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1.00; }
+}
+.bio-pulse {
+  animation: bio-pulse 2.4s ease-in-out infinite;
+}
+
+/* Jellyfish / squid tentacle gentle sway */
+@keyframes jelly-tentacle-sway {
+  0%, 100% { transform: skewX(0deg);   }
+  33%       { transform: skewX(4deg);  }
+  66%       { transform: skewX(-3deg); }
+}
+.jelly-tentacle {
+  animation: jelly-tentacle-sway 3.2s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+/* Anglerfish lure pulse — cyan → white */
+@keyframes lure-pulse {
+  0%, 100% { fill: #00ffee; }
+  50%       { fill: #ffffff; }
+}
+.lure-pulse {
+  animation: lure-pulse 1.6s ease-in-out infinite;
+}
+
+/* Hydrothermal vent particle rise */
+@keyframes vent-rise {
+  0%   { transform: translateY(0)     scale(1);    opacity: 0.85; }
+  60%  { transform: translateY(-60px) scale(1.3);  opacity: 0.50; }
+  100% { transform: translateY(-120px) scale(0.6); opacity: 0;    }
 }
