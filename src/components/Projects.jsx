@@ -169,6 +169,7 @@ function ProjectCard({ project, delay }) {
               className="card-link-btn"
             >
               <Icon />
+              <span className="card-link-label">{label}</span>
             </a>
           )}
         </div>
