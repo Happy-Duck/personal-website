@@ -16,7 +16,7 @@ function ForcedColorIcon({ Icon, size }) {
 const PROJECTS = [
   {
     title:       'Pelagos: A Marine Adventure',
-    description: 'A narrative-driven marine exploration game built entirely in Unity. Self-published on Steam and downloaded 30k+ times. Later adopted by schools across three states as an interactive environmental science teaching tool.',
+    description: 'A narrative-driven marine exploration game built entirely in Unity. Self-published on Steam and downloaded 30k+ times. Adopted by local schools as an interactive environmental science teaching tool.',
     stack:       ['Unity', 'C#', 'Steam', 'Steamworks SDK'],
     link:        'https://store.steampowered.com/app/2645390/Pelagos_A_Marine_Adventure',
   },
@@ -29,13 +29,13 @@ const PROJECTS = [
   {
     title:       'SportsBot',
     description: 'Discord bot delivering live scores, player stats, and schedule alerts through a clean slash-command interface backed by REST sports APIs.',
-    stack:       ['Python', 'discord.py', 'REST API'],
+    stack:       ['Python', 'discord.py', 'REST APIs'],
     link:        'https://github.com/Happy-Duck/DiscordSportsBot',
   },
   {
     title:       'Tide Toss',
-    description: 'Physics-based local multiplayer game built in 48 hours for a game jam. Features wave simulation and realistic buoyancy mechanics.',
-    stack:       ['Unity', 'C#', 'Physics2D'],
+    description: 'Physics-based "Tosser" game built in 48 hours for a game jam. Combination of 2D art, 3D physics, and 1D gameplay',
+    stack:       ['Unity', 'C#', 'Espresso'],
     link:        'https://happy-ducky.itch.io/tide-toss',
   },
   {
@@ -209,7 +209,7 @@ export function Projects() {
         viewport={{ once: true, margin: '-80px' }}
       >
         <motion.h2 variants={headerItem} className="section-heading font-black text-4xl sm:text-5xl tracking-tight leading-none mb-4">
-          Work
+          Projects
         </motion.h2>
         <motion.div variants={headerItem} className="section-rule h-px w-full" />
       </motion.div>
