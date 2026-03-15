@@ -5,10 +5,11 @@ import { useLanyard } from '../hooks/useLanyard'
 // ── Data ───────────────────────────────────────────────────────────────
 
 const LOG_ENTRIES = [
-  'Published Pelagos on Steam — 30k+ downloads, adopted by schools across three states.',
-  'Building VR modules for ESA\'s Comet Interceptor Mission at the Immersive Learning Lab.',
-  'Game dev, VR/XR, and building things people actually interact with.',
-  'Outside of code: fly fishing, game jams, and exploring what games can do as a medium.',
+  "I'm just a man trying to make cool stuff: games, simulations, the occasional VR experience for a space agency.",
+  "I love all kinds of games. Zelda is an all-time favorite, Minecraft is timeless.",
+  "Musical theater nerd: catching every touring production I ever can",
+  "Cooking enthusiast: my favorite thing to cook is something I've never cooked before",
+  'Avid fly fisherman: fished the Wisconsin Driftless, the Appalachians in Virginia. Current catch count: 2',
 ]
 
 // UIUC coordinates
