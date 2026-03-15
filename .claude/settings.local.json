@@ -7,7 +7,9 @@
       "Bash(npx gh-pages:*)",
       "WebFetch(domain:discord.com)",
       "Bash(npm install:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
