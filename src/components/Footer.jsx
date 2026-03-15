@@ -3,8 +3,8 @@ import { useMouse } from '../context/MouseContext'
 
 // ── Dimensions ─────────────────────────────────────────────────────────
 
-const CRAB_W = 64
-const CRAB_H = 64
+const CRAB_W = 96
+const CRAB_H = 96
 
 // ── Crab movement ──────────────────────────────────────────────────────
 
