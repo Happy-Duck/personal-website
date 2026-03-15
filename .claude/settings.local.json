@@ -4,7 +4,8 @@
       "Bash(export PATH=\"$PATH:/c/Program Files/nodejs\")",
       "Bash(npm run:*)",
       "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
-      "Bash(npx gh-pages:*)"
+      "Bash(npx gh-pages:*)",
+      "WebFetch(domain:discord.com)"
     ]
   }
 }

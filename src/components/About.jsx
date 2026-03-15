@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useLanyard } from '../hooks/useLanyard'
 
@@ -56,7 +57,6 @@ function resolveActivityImage(activity) {
   if (!activity) return null
   const assets = activity.assets
   const appId  = activity.application_id
-  // Try large_image first, then small_image
   const img = assets?.large_image || assets?.small_image
   if (!img) return null
   if (img.startsWith('mp:external/'))
@@ -66,8 +66,39 @@ function resolveActivityImage(activity) {
   return null
 }
 
+// Cache app icon hashes so we don't re-fetch for the same app
+const appIconCache = {}
+
+function useAppIcon(appId) {
+  const [iconUrl, setIconUrl] = useState(null)
+
+  useEffect(() => {
+    if (!appId) { setIconUrl(null); return }
+
+    if (appIconCache[appId]) {
+      setIconUrl(appIconCache[appId])
+      return
+    }
+
+    let cancelled = false
+    fetch(`https://discord.com/api/v9/applications/${appId}/rpc`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (cancelled || !data?.icon) return
+        const url = `https://cdn.discordapp.com/app-icons/${appId}/${data.icon}.png`
+        appIconCache[appId] = url
+        setIconUrl(url)
+      })
+      .catch(() => {})
+
+    return () => { cancelled = true }
+  }, [appId])
+
+  return iconUrl
+}
+
 function PresenceCard() {
-  const { activity, spotify, customStatus, loading, error } = useLanyard()
+  const { activity, spotify, loading, error } = useLanyard()
 
   let thumb = null
   let line  = null
@@ -81,6 +112,11 @@ function PresenceCard() {
       thumb = resolveActivityImage(activity)
     }
   }
+
+  // Fallback: fetch app icon from Discord API when activity has no assets
+  const needsAppIcon = !thumb && activity?.application_id
+  const appIcon = useAppIcon(needsAppIcon ? activity.application_id : null)
+  if (!thumb && appIcon) thumb = appIcon
 
   const showFallback = error || (!loading && !line)
 
@@ -104,9 +140,6 @@ function PresenceCard() {
           </span>
         )}
 
-        {!loading && customStatus?.state && (
-          <p className="presence-custom">{customStatus.state}</p>
-        )}
       </div>
     </div>
   )
