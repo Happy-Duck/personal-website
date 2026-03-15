@@ -3,7 +3,7 @@
 // Opacity driven by --plankton-opacity CSS var set in OceanDepthContext.
 import { useMemo } from 'react'
 
-const PARTICLE_COUNT = 28
+const PARTICLE_COUNT = 30
 
 export function Plankton() {
   const particles = useMemo(() =>
@@ -12,15 +12,15 @@ export function Plankton() {
       return {
         id:       i,
         left:     Math.random() * 100,
-        size:     Math.random() * 2.0 + 0.5,
+        size:     Math.random() * 3.0 + 1.5,
         duration: Math.random() * 11 + 7,
         delay:    -(Math.random() * 18),
-        opacity:  Math.random() * 0.35 + 0.15,
+        opacity:  Math.random() * 0.4 + 0.35,
         color:    shade < 0.4
-          ? `rgba(80,200,100,`    // green
+          ? `rgba(60,220,80,`     // bright green
           : shade < 0.7
-          ? `rgba(120,210,80,`    // yellow-green
-          : `rgba(160,220,120,`,  // light green
+          ? `rgba(100,230,60,`    // yellow-green
+          : `rgba(140,240,100,`,  // light green
       }
     })
   , [])
