@@ -56,7 +56,7 @@ function ScrollBubble() {
           }}
         />
       </div>
-      <span className="hero-scroll-label text-[9px] font-mono tracking-[0.28em] uppercase select-none">
+      <span className="hero-scroll-label text-[clamp(0.5rem,0.45rem+0.12vw,0.625rem)] font-mono tracking-[0.28em] uppercase select-none">
         scroll
       </span>
     </div>
@@ -106,7 +106,7 @@ export function Hero() {
           className="hero-tagline font-light italic leading-relaxed max-w-lg
                      text-[clamp(0.85rem,2.2vw,1.15rem)]"
         >
-          Diving into hard problems. Surfacing with games, simulations, and the occasional miracle.
+          I make things that move. Some of them are even intentional.
         </motion.p>
 
       </div>

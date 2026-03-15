@@ -1,52 +1,43 @@
 import { useRef } from 'react'
 import { motion } from 'framer-motion'
+import { GithubOriginal } from 'devicons-react'
 
 // ── Data ───────────────────────────────────────────────────────────────
 
-const FEATURED = {
-  title:       'Pelagos: A Marine Adventure',
-  description: 'A narrative-driven marine exploration game built entirely in Unity. Self-published on Steam and downloaded 30k+ times. Later adopted by schools across three states as an interactive environmental science teaching tool.',
-  stack:       ['Unity', 'C#', 'Steam', 'Steamworks SDK'],
-  stats:       ['30k+ downloads', 'Used in schools'],
-  link:      'https://store.steampowered.com/app/2645390/Pelagos_A_Marine_Adventure',
-}
-
 const PROJECTS = [
+  {
+    title:       'Pelagos: A Marine Adventure',
+    description: 'A narrative-driven marine exploration game built entirely in Unity. Self-published on Steam and downloaded 30k+ times. Later adopted by schools across three states as an interactive environmental science teaching tool.',
+    stack:       ['Unity', 'C#', 'Steam', 'Steamworks SDK'],
+    link:        'https://store.steampowered.com/app/2645390/Pelagos_A_Marine_Adventure',
+  },
   {
     title:       'Flarp',
     description: "A puzzle Metroidvania built around wind mechanics and momentum-based traversal. Developed with UIUC's ACM GameBuilders club.",
     stack:       ['GameMaker Studio', 'GML'],
-    link:      'https://orangepainting.itch.io/flarp',
+    link:        'https://orangepainting.itch.io/flarp',
   },
   {
     title:       'SportsBot',
     description: 'Discord bot delivering live scores, player stats, and schedule alerts through a clean slash-command interface backed by REST sports APIs.',
     stack:       ['Python', 'discord.py', 'REST API'],
-    link:      'https://github.com/Happy-Duck/DiscordSportsBot',
+    link:        'https://github.com/Happy-Duck/DiscordSportsBot',
   },
   {
     title:       'Tide Toss',
     description: 'Physics-based local multiplayer game built in 48 hours for a game jam. Features wave simulation and realistic buoyancy mechanics.',
     stack:       ['Unity', 'C#', 'Physics2D'],
-    link:      'https://happy-ducky.itch.io/tide-toss',
+    link:        'https://happy-ducky.itch.io/tide-toss',
   },
   {
     title:       'Computer Vision Research',
     description: 'Benchmark comparison of Faster R-CNN (Detectron2) against YOLOv8 for real-time object detection on the COCO dataset. Analysed accuracy–latency tradeoffs.',
     stack:       ['Python', 'Detectron2', 'YOLOv8', 'COCO'],
-    link:      '#',
+    link:        '#',
   },
 ]
 
 // ── Icons ──────────────────────────────────────────────────────────────
-
-function GitHubIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-    </svg>
-  )
-}
 
 function SteamIcon() {
   return (
@@ -78,7 +69,7 @@ function ExternalLinkIcon() {
 function linkIcon(url) {
   if (url.includes('steampowered.com')) return { Icon: SteamIcon, label: 'Steam' }
   if (url.includes('itch.io'))          return { Icon: ItchIcon,  label: 'itch.io' }
-  if (url.includes('github.com'))       return { Icon: GitHubIcon, label: 'GitHub' }
+  if (url.includes('github.com'))       return { Icon: () => <GithubOriginal size="15px" color="currentColor" />, label: 'GitHub' }
   return { Icon: ExternalLinkIcon, label: 'Link' }
 }
 
@@ -104,10 +95,8 @@ const headerItem = {
 }
 
 // ── Parallax card shell ────────────────────────────────────────────────
-// Framer Motion handles scroll-in; direct DOM sets transform on mouse-move
-// so the two never conflict (outer motion.div vs inner plain div).
 
-function ParallaxCard({ children, featured = false, delay = 0 }) {
+function ParallaxCard({ children, delay = 0 }) {
   const innerRef = useRef(null)
 
   const onMouseMove = (e) => {
@@ -116,7 +105,7 @@ function ParallaxCard({ children, featured = false, delay = 0 }) {
     const rect = el.getBoundingClientRect()
     const dx   = (e.clientX - rect.left  - rect.width  / 2) / (rect.width  / 2)
     const dy   = (e.clientY - rect.top   - rect.height / 2) / (rect.height / 2)
-    const maxR = featured ? 3 : 4.5
+    const maxR = 4.5
     el.style.transform  = `perspective(900px) rotateX(${-dy * maxR}deg) rotateY(${dx * maxR}deg) translateY(-7px)`
     el.style.transition = 'transform 0.07s linear, box-shadow 0.07s linear'
   }
@@ -138,70 +127,13 @@ function ParallaxCard({ children, featured = false, delay = 0 }) {
     >
       <div
         ref={innerRef}
-        className={`project-card h-full${featured ? ' project-card--featured' : ''}`}
+        className="project-card h-full"
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
       >
         {children}
       </div>
     </motion.div>
-  )
-}
-
-// ── Featured card ──────────────────────────────────────────────────────
-
-function FeaturedCard({ project }) {
-  const { Icon, label } = linkIcon(project.link)
-  return (
-    <ParallaxCard featured>
-      {/* All content sits above the ::before shimmer via z-index */}
-      <div className="relative z-10 flex flex-col gap-4 h-full">
-
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="card-badge inline-flex items-center self-start px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-widest uppercase">
-              ✦ Featured
-            </span>
-            <h3 className="card-title font-bold leading-tight text-xl sm:text-2xl">
-              {project.title}
-            </h3>
-          </div>
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={label}
-            className="card-link mt-0.5 shrink-0 hover:scale-110 transition-transform duration-150"
-          >
-            <Icon />
-          </a>
-        </div>
-
-        {/* Description */}
-        <p className="card-body text-sm sm:text-base leading-relaxed">
-          {project.description}
-        </p>
-
-        {/* Stats */}
-        <div className="flex flex-wrap gap-x-5 gap-y-1">
-          {project.stats.map(s => (
-            <span key={s} className="card-stat text-xs font-mono tracking-wide">
-              ◈ {s}
-            </span>
-          ))}
-        </div>
-
-        {/* Stack pills */}
-        <div className="flex flex-wrap gap-2 mt-auto pt-2">
-          {project.stack.map(t => (
-            <span key={t} className="card-pill px-2.5 py-0.5 rounded-full text-[11px] font-mono">
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-    </ParallaxCard>
   )
 }
 
@@ -225,7 +157,7 @@ function ProjectCard({ project, delay }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="card-link mt-0.5 shrink-0 hover:scale-110 transition-transform duration-150"
+              className="card-link-btn"
             >
               <Icon />
             </a>
@@ -240,7 +172,7 @@ function ProjectCard({ project, delay }) {
         {/* Stack pills */}
         <div className="flex flex-wrap gap-1.5 mt-auto pt-1">
           {project.stack.map(t => (
-            <span key={t} className="card-pill px-2 py-0.5 rounded-full text-[11px] font-mono">
+            <span key={t} className="card-pill px-2 py-0.5 rounded-full text-[clamp(0.625rem,0.55rem+0.2vw,0.75rem)] font-mono">
               {t}
             </span>
           ))}
@@ -275,12 +207,7 @@ export function Projects() {
         <motion.div variants={headerItem} className="section-rule h-px w-full" />
       </motion.div>
 
-      {/* Featured */}
-      <div className="mb-5">
-        <FeaturedCard project={FEATURED} />
-      </div>
-
-      {/* Standard grid */}
+      {/* Project grid */}
       <div className="grid sm:grid-cols-2 gap-5">
         {PROJECTS.map((p, i) => (
           <ProjectCard key={p.title} project={p} delay={i * 0.07} />

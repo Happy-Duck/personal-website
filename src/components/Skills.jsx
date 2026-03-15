@@ -1,81 +1,36 @@
 import { motion } from 'framer-motion'
+import {
+  CplusplusPlain,
+  CsharpPlain,
+  JavaPlain,
+  PythonPlain,
+  UnityOriginal,
+  UnrealengineOriginal,
+  BlenderOriginal,
+  DjangoPlain,
+  MysqlOriginal,
+} from 'devicons-react'
 
 // ── Data ───────────────────────────────────────────────────────────────
-// type: 'orb' | 'shell' | 'stone'
-// grad: [highlight, base]  —  fed into radial-gradient inline style
 
 const GROUPS = [
   {
     label: 'Languages',
     items: [
-      {
-        name:    'C++',
-        type:    'orb',
-        grad:    ['#7dd3fc', '#2563eb'],
-        glow:    'rgba(80,160,255,0.55)',
-        tooltip: 'Systems & engine-level code',
-      },
-      {
-        name:    'C#',
-        type:    'shell',
-        grad:    ['#c084fc', '#7c3aed'],
-        glow:    'rgba(168,100,255,0.52)',
-        tooltip: 'Used in Pelagos & VR Lab',
-      },
-      {
-        name:    'Java',
-        type:    'stone',
-        grad:    ['#fbbf24', '#ea580c'],
-        glow:    'rgba(250,160,50,0.50)',
-        tooltip: 'Algorithms & coursework',
-      },
-      {
-        name:    'Python',
-        type:    'orb',
-        grad:    ['#4ade80', '#059669'],
-        glow:    'rgba(50,210,130,0.52)',
-        tooltip: 'Computer vision research',
-      },
+      { name: 'C++',    Icon: CplusplusPlain,       tooltip: 'Systems & engine-level code' },
+      { name: 'C#',     Icon: CsharpPlain,           tooltip: 'Used in Pelagos & VR Lab' },
+      { name: 'Java',   Icon: JavaPlain,             tooltip: 'Algorithms & coursework' },
+      { name: 'Python', Icon: PythonPlain,           tooltip: 'Computer vision research' },
     ],
   },
   {
     label: 'Tools & Frameworks',
     items: [
-      {
-        name:    'Unity',
-        type:    'shell',
-        grad:    ['#e2e8f0', '#64748b'],
-        glow:    'rgba(148,163,184,0.55)',
-        tooltip: 'Steam-published game',
-      },
-      {
-        name:    'Unreal Engine',
-        type:    'orb',
-        grad:    ['#f87171', '#b91c1c'],
-        glow:    'rgba(220,60,60,0.55)',
-        tooltip: 'C++ game engine',
-      },
-      {
-        name:    'Blender',
-        type:    'stone',
-        grad:    ['#fb923c', '#c2410c'],
-        glow:    'rgba(245,120,50,0.55)',
-        tooltip: '3D modeling for VR Lab',
-      },
-      {
-        name:    'Django',
-        type:    'shell',
-        grad:    ['#4ade80', '#15803d'],
-        glow:    'rgba(50,180,80,0.52)',
-        tooltip: 'Web backend framework',
-      },
-      {
-        name:    'SQL',
-        type:    'stone',
-        grad:    ['#cbd5e1', '#7ea5c8'],
-        glow:    'rgba(140,175,210,0.45)',
-        tooltip: 'Database queries & schema',
-      },
+      { name: 'Unity',          Icon: UnityOriginal,          tooltip: 'Steam-published game' },
+      { name: 'Unreal Engine',  Icon: UnrealengineOriginal,   tooltip: 'C++ game engine' },
+      { name: 'Blender',        Icon: BlenderOriginal,        tooltip: '3D modeling for VR Lab' },
+      { name: 'Django',         Icon: DjangoPlain,            tooltip: 'Web backend framework' },
+      { name: 'SQL',            Icon: MysqlOriginal,          tooltip: 'Database queries & schema' },
     ],
   },
 ]
@@ -107,22 +62,15 @@ const gemVariant = {
 function SkillItem({ item }) {
   return (
     <motion.div className="skill-item-wrap" variants={gemVariant}>
-      {/* Outer wrapper holds tooltip above the gem */}
       <div className="skill-gem-outer">
         <motion.div
-          className={`skill-gem skill-gem--${item.type}`}
-          style={{
-            background: `radial-gradient(circle at 34% 28%, ${item.grad[0]}, ${item.grad[1]})`,
-            boxShadow:  `0 0 20px ${item.glow}, 0 4px 14px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.28)`,
-          }}
+          className="skill-icon-box"
           whileHover={{ y: -10, scale: 1.1 }}
           transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         >
-          {/* Light-catch highlight — 3D illusion */}
-          <div className="skill-gem-shine" />
+          <item.Icon size="48px" color="currentColor" />
         </motion.div>
 
-        {/* Tooltip — sits above the gem via CSS, independent of transform */}
         <div className="skill-tooltip" role="tooltip">
           {item.tooltip}
           <div className="skill-tooltip-arrow" />

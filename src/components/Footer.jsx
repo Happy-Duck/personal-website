@@ -169,11 +169,9 @@ export function Footer() {
   return (
     <footer className="footer-wrap" style={{ zIndex: 10, position: 'relative' }}>
 
-      {/* Hydrothermal vent — sits on top of the ocean floor */}
-      <HydrothermalVent />
-
-      {/* Ocean floor — sandy/rocky texture, crab + credits live here */}
+      {/* Ocean floor — sandy/rocky texture, crab + credits + vent live here */}
       <div className="footer-floor">
+        <HydrothermalVent />
         <Crab />
         <span className="footer-credit-text font-mono text-xs tracking-[0.18em]">
           Built by Rishi Garhyan&ensp;·&ensp;{year}

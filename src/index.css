@@ -3,6 +3,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { margin: 0; padding: 0; width: 100%; min-height: 100%; }
 
+/* Non-selectable by default — email and code snippets opt back in */
+*, *::before, *::after { user-select: none; -webkit-user-select: none; }
+.selectable, code, pre, kbd { user-select: text; -webkit-user-select: text; }
+
 /* Hide scrollbar — depth gauge is enough */
 html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
@@ -40,7 +44,7 @@ html::-webkit-scrollbar { display: none; }
   --section-eyebrow:     rgba(0,212,255,0.45);
   --section-heading:     rgba(168,216,240,0.92);
   --section-rule:        rgba(0,212,255,0.18);
-  --card-bg:             rgba(2,12,38,0.60);
+  --card-bg:             rgba(2,12,38,0.78);
   --card-border:         rgba(0,212,255,0.13);
   --card-border-hover:   rgba(0,212,255,0.38);
   --card-shadow:         0 4px 28px rgba(0,0,0,0.55);
@@ -151,7 +155,7 @@ html::-webkit-scrollbar { display: none; }
   --section-eyebrow:     rgba(10,60,100,0.55);
   --section-heading:     rgba(5,28,50,0.92);
   --section-rule:        rgba(0,100,160,0.20);
-  --card-bg:             rgba(255,245,218,0.28);
+  --card-bg:             rgba(255,245,218,0.72);
   --card-border:         rgba(0,120,180,0.18);
   --card-border-hover:   rgba(255,110,60,0.45);
   --card-shadow:         0 4px 28px rgba(0,60,100,0.18);
@@ -427,6 +431,23 @@ html::-webkit-scrollbar { display: none; }
 }
 .card-link:hover { color: var(--card-link-hover); }
 
+/* Link button — 44x44 minimum tap target */
+.card-link-btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  min-width:       44px;
+  min-height:      44px;
+  flex-shrink:     0;
+  color:           var(--card-link);
+  transition:      color 0.2s ease, transform 0.15s ease;
+  border-radius:   8px;
+}
+.card-link-btn:hover {
+  color:     var(--card-link-hover);
+  transform: scale(1.1);
+}
+
 .card-pill {
   background:   var(--pill-bg);
   border:       1px solid var(--pill-border);
@@ -454,31 +475,6 @@ html::-webkit-scrollbar { display: none; }
   border-color: var(--card-border-hover);
 }
 
-/* Featured card shimmer sweep */
-@keyframes shimmer-pass {
-  0%        { transform: translateX(-130%) skewX(-18deg); opacity: 0;   }
-  6%        { opacity: 1; }
-  48%, 100% { transform: translateX(160%)  skewX(-18deg); opacity: 0;   }
-}
-
-.project-card--featured::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 0%,
-    var(--shimmer) 45%,
-    var(--shimmer) 55%,
-    transparent 100%
-  );
-  animation: shimmer-pass 5s ease-in-out infinite;
-  animation-delay: 2s;
-  pointer-events: none;
-  z-index: 0;
-  border-radius: inherit;
-  transition: background var(--theme-dur) var(--theme-ease);
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    JELLYFISH BELL PULSE
@@ -673,36 +669,21 @@ html::-webkit-scrollbar { display: none; }
   position: relative;
 }
 
-/* Base gem — shared across all three types */
-.skill-gem {
-  position:  relative;
-  width:     72px;
-  height:    72px;
-  /* shape variants override this */
-  border-radius: 50%;
-  overflow:  visible; /* tooltip escapes */
-}
-
-/* Shape variants */
-.skill-gem--orb   { border-radius: 50%; }
-.skill-gem--shell { border-radius: 62% 38% 68% 32% / 38% 58% 42% 62%; }
-.skill-gem--stone { border-radius: 46% 54% 40% 60% / 58% 42% 58% 42%; }
-
-/* White light-catch in upper-left — fakes a 3D glassy surface */
-.skill-gem-shine {
-  position:      absolute;
-  top:           14%;
-  left:          16%;
-  width:         36%;
-  height:        36%;
-  border-radius: 50%;
-  background:    radial-gradient(circle, rgba(255,255,255,0.70) 0%, transparent 70%);
-  pointer-events: none;
+/* Icon box — replaces gem orbs with devicons */
+.skill-icon-box {
+  position:        relative;
+  width:           48px;
+  height:          48px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  color:           var(--skill-label);
+  transition:      color var(--theme-dur) var(--theme-ease);
 }
 
 /* Skill name label */
 .skill-label {
-  font-size:      11px;
+  font-size:      clamp(0.625rem, 0.55rem + 0.2vw, 0.75rem);
   font-family:    ui-monospace, monospace;
   letter-spacing: 0.06em;
   white-space:    nowrap;
@@ -721,10 +702,10 @@ html::-webkit-scrollbar { display: none; }
   white-space:    nowrap;
   background:     var(--skill-tooltip-bg);
   color:          var(--skill-tooltip-text);
-  font-size:      11px;
+  font-size:      clamp(0.625rem, 0.55rem + 0.2vw, 0.75rem);
   font-family:    ui-monospace, monospace;
   letter-spacing: 0.04em;
-  padding:        5px 10px;
+  padding:        0.3rem 0.6rem;
   border-radius:  6px;
   z-index:        50;
   transition:
@@ -771,7 +752,7 @@ html::-webkit-scrollbar { display: none; }
   border:          1px solid var(--about-card-border);
   box-shadow:      var(--about-card-shadow);
   border-radius:   16px;
-  padding:         2rem 2.25rem 2rem;
+  padding:         clamp(1.25rem, 1rem + 2vw, 2rem) clamp(1rem, 0.75rem + 2.5vw, 2.25rem);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition:
@@ -836,6 +817,19 @@ html::-webkit-scrollbar { display: none; }
   transition:  color var(--theme-dur) var(--theme-ease);
 }
 
+/* Typewriter cursor */
+.typewriter-cursor {
+  display:       inline-block;
+  margin-left:   1px;
+  color:         var(--about-bullet);
+  animation:     cursor-blink 0.7s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 /* Currently section */
 .about-currently {
   display:        flex;
@@ -894,7 +888,7 @@ html::-webkit-scrollbar { display: none; }
   transition: color var(--theme-dur) var(--theme-ease);
 }
 
-/* Each contact node is an <a> — flex column, centred */
+/* Each contact node — flex column, centred, min 44x44 tap target */
 .signal-node {
   display:         flex;
   flex-direction:  column;
@@ -902,6 +896,23 @@ html::-webkit-scrollbar { display: none; }
   gap:             10px;
   text-decoration: none;
   cursor:          pointer;
+  min-width:       44px;
+  min-height:      44px;
+  position:        relative;
+  border:          none;
+  background:      none;
+  padding:         0;
+  font:            inherit;
+}
+
+.signal-copied {
+  position:       absolute;
+  bottom:         -1.5rem;
+  font-size:      0.7rem;
+  font-family:    ui-monospace, monospace;
+  letter-spacing: 0.08em;
+  color:          var(--signal-label);
+  white-space:    nowrap;
 }
 
 /* Outer ping ring — expands and fades like sonar */
@@ -918,6 +929,8 @@ html::-webkit-scrollbar { display: none; }
 .signal-node--email    { color: var(--signal-email-glow); }
 .signal-node--linkedin { color: var(--signal-li-glow);    animation-delay: 0.9s; }
 .signal-node--github   { color: var(--signal-gh-glow);    animation-delay: 1.8s; }
+.signal-node--resume   { color: var(--signal-email-glow); animation-delay: 2.7s; }
+.signal-node--resume .signal-ring { animation-delay: 2.7s; }
 
 /* Offset the ping timing per node */
 .signal-node--linkedin .signal-ring { animation-delay: 0.9s; }
@@ -931,8 +944,8 @@ html::-webkit-scrollbar { display: none; }
 /* Glowing orb */
 .signal-orb {
   position:       relative;
-  width:          82px;
-  height:         82px;
+  width:          clamp(64px, 10vw, 82px);
+  height:         clamp(64px, 10vw, 82px);
   border-radius:  50%;
   display:        flex;
   align-items:    center;
@@ -962,7 +975,7 @@ html::-webkit-scrollbar { display: none; }
 }
 
 .signal-label {
-  font-size:      0.8rem;
+  font-size:      clamp(0.7rem, 0.65rem + 0.15vw, 0.85rem);
   font-weight:    600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -971,14 +984,16 @@ html::-webkit-scrollbar { display: none; }
 }
 
 .signal-sublabel {
-  font-size:        0.72rem;
+  font-size:        clamp(0.625rem, 0.58rem + 0.12vw, 0.75rem);
   font-family:      ui-monospace, monospace;
   letter-spacing:   0.04em;
   text-align:       center;
-  word-break:       break-all;   /* prevent long emails/URLs overflowing on mobile */
+  word-break:       break-all;
   max-width:        88px;
   color:            var(--signal-sublabel);
   transition:       color var(--theme-dur) var(--theme-ease);
+  /* only shown when explicitly used */
+  display:          none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -996,7 +1011,7 @@ html::-webkit-scrollbar { display: none; }
   position:   relative;
   height:     110px;
   width:      100%;
-  overflow:   hidden;
+  overflow:   visible;
   background: linear-gradient(to bottom, var(--floor-top) 0%, var(--floor-bg) 100%);
   background-image:
     repeating-linear-gradient(
@@ -1011,10 +1026,10 @@ html::-webkit-scrollbar { display: none; }
   transition: background var(--theme-dur) var(--theme-ease);
 }
 
-/* Hydrothermal vent — anchored above the ocean floor */
+/* Hydrothermal vent — base sits on the floor surface, chimney rises above */
 .hydrothermal-vent {
   position:       absolute;
-  bottom:         100px;
+  bottom:         calc(100% - 10px);
   left:           22%;
   z-index:        1;
   pointer-events: none;
@@ -1106,7 +1121,7 @@ html::-webkit-scrollbar { display: none; }
 
 .depth-gauge-zone {
   font-family:    monospace;
-  font-size:      9px;
+  font-size:      clamp(0.5rem, 0.45rem + 0.15vw, 0.625rem);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color:          rgba(255,255,255,0.65);
@@ -1116,7 +1131,7 @@ html::-webkit-scrollbar { display: none; }
 
 .depth-gauge-meters {
   font-family:    monospace;
-  font-size:      10px;
+  font-size:      clamp(0.5625rem, 0.5rem + 0.15vw, 0.6875rem);
   color:          rgba(255,255,255,0.45);
   font-variant-numeric: tabular-nums;
 }

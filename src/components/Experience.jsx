@@ -89,7 +89,7 @@ function EntryCard({ entry, fromLeft = false }) {
       transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, margin: '-80px' }}
     >
-      <span className="exp-period font-mono text-[11px] tracking-[0.2em] uppercase">
+      <span className="exp-period font-mono text-[clamp(0.625rem,0.55rem+0.2vw,0.75rem)] tracking-[0.2em] uppercase">
         {entry.period}
       </span>
       <h3 className="exp-role font-bold text-base sm:text-lg leading-snug mt-2">
@@ -103,7 +103,7 @@ function EntryCard({ entry, fromLeft = false }) {
       </p>
       <div className="flex flex-wrap gap-1.5">
         {entry.stack.map(t => (
-          <span key={t} className="card-pill px-2 py-0.5 rounded-full text-[11px] font-mono">
+          <span key={t} className="card-pill px-2 py-0.5 rounded-full text-[clamp(0.625rem,0.55rem+0.2vw,0.75rem)] font-mono">
             {t}
           </span>
         ))}

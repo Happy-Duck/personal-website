@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { useLanyard } from '../hooks/useLanyard'
 
 // ── Data ───────────────────────────────────────────────────────────────
 
-const NOTES = [
+const BIO = [
   'CS student at UIUC — expected Dec 2027, 4.0 GPA.',
   'Passionate about game development, VR/XR, and building things people actually interact with.',
   'Published a game on Steam that ended up in classrooms across three states (Pelagos).',
@@ -19,6 +19,36 @@ const CURRENTLY = [
 
 const FALLBACK = 'Probably fishing or in class'
 
+// ── Typewriter hook ────────────────────────────────────────────────────
+
+function useTypewriter(lines) {
+  const [displayed, setDisplayed] = useState([])
+  const [done, setDone]           = useState(false)
+  const started = useRef(false)
+
+  const start = useCallback(() => {
+    if (started.current) return
+    started.current = true
+
+    const full = lines.join('\n')
+    let i = 0
+
+    function tick() {
+      if (i >= full.length) {
+        setDone(true)
+        return
+      }
+      i++
+      setDisplayed(full.slice(0, i).split('\n'))
+      const variance = (Math.random() - 0.5) * 20 // ±10ms
+      setTimeout(tick, 40 + variance)
+    }
+    tick()
+  }, [lines])
+
+  return { displayed, done, start }
+}
+
 // ── Animation variants ─────────────────────────────────────────────────
 
 const headerStagger = {
@@ -29,16 +59,6 @@ const headerStagger = {
 const headerItem = {
   hidden: { opacity: 0, y: 16 },
   show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-}
-
-const noteStagger = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
-}
-
-const noteLine = {
-  hidden: { opacity: 0, x: -14 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 }
 
 const currStagger = {
@@ -66,7 +86,6 @@ function resolveActivityImage(activity) {
   return null
 }
 
-// Cache app icon hashes so we don't re-fetch for the same app
 const appIconCache = {}
 
 function useAppIcon(appId) {
@@ -140,9 +159,49 @@ function PresenceCard() {
             {showFallback ? FALLBACK : line}
           </span>
         )}
-
       </div>
     </div>
+  )
+}
+
+// ── Typewriter bio section ─────────────────────────────────────────────
+
+function TypewriterBio() {
+  const { displayed, done, start } = useTypewriter(BIO)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          start()
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.2 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [start])
+
+  return (
+    <ul ref={ref} className="about-entries">
+      {displayed.map((line, i) => (
+        <li key={i} className="about-entry">
+          <span className="about-bullet" aria-hidden="true">◦</span>
+          <span>
+            {line}
+            {/* Blinking cursor on the last line while typing */}
+            {!done && i === displayed.length - 1 && (
+              <span className="typewriter-cursor" aria-hidden="true">|</span>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
   )
 }
 
@@ -180,24 +239,10 @@ export function About() {
         viewport={{ once: true, margin: '-60px' }}
       >
 
-        {/* ── Main notes ── */}
+        {/* ── Main notes — typewriter ── */}
         <p className="about-section-label">Field Notes</p>
         <div className="about-divider" />
-
-        <motion.ul
-          className="about-entries"
-          variants={noteStagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-40px' }}
-        >
-          {NOTES.map(note => (
-            <motion.li key={note} className="about-entry" variants={noteLine}>
-              <span className="about-bullet" aria-hidden="true">◦</span>
-              <span>{note}</span>
-            </motion.li>
-          ))}
-        </motion.ul>
+        <TypewriterBio />
 
         {/* ── Currently ── */}
         <div className="about-divider about-divider--spaced" />

@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion'
+import { useState, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { GithubOriginal, LinkedinOriginal } from 'devicons-react'
 
 // ── Icons ──────────────────────────────────────────────────────────────
 
@@ -14,50 +16,52 @@ function EmailIcon() {
   )
 }
 
-function LinkedInIcon() {
+function ResumeIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4V9h4v1.5A6 6 0 0116 8z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  )
-}
-
-function GitHubIcon() {
-  return (
-    <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="16" y1="13" x2="8" y2="13" />
+      <line x1="16" y1="17" x2="8" y2="17" />
+      <polyline points="10 9 9 9 8 9" />
     </svg>
   )
 }
 
 // ── Data ───────────────────────────────────────────────────────────────
 
+const EMAIL = 'garhyan2@illinois.edu'
+
 const SIGNALS = [
   {
-    id:       'email',
-    label:    'Email',
-    sublabel: 'garhyan2@illinois.edu',
-    href:     'mailto:garhyan2@illinois.edu',
-    Icon:     EmailIcon,
-    delay:    0,
+    id:    'email',
+    label: 'Email',
+    Icon:  EmailIcon,
+    delay: 0,
   },
   {
-    id:       'linkedin',
-    label:    'LinkedIn',
-    sublabel: 'linkedin.com/in/rishi-garhyan',
-    href:     'https://linkedin.com/in/rishi-garhyan',
-    Icon:     LinkedInIcon,
-    delay:    0.1,
+    id:    'linkedin',
+    label: 'LinkedIn',
+    href:  'https://linkedin.com/in/rishi-garhyan',
+    Icon:  () => <LinkedinOriginal size="22px" color="currentColor" />,
+    delay: 0.1,
   },
   {
-    id:       'github',
-    label:    'GitHub',
-    sublabel: 'github.com/Happy-Duck',
-    href:     'https://github.com/Happy-Duck',
-    Icon:     GitHubIcon,
-    delay:    0.2,
+    id:    'github',
+    label: 'GitHub',
+    href:  'https://github.com/Happy-Duck',
+    Icon:  () => <GithubOriginal size="21px" color="currentColor" />,
+    delay: 0.2,
+  },
+  {
+    id:    'resume',
+    label: 'Resume',
+    href:  '/resume.pdf',
+    Icon:  ResumeIcon,
+    delay: 0.3,
   },
 ]
 
@@ -76,27 +80,64 @@ const headerItem = {
 // ── Signal node ────────────────────────────────────────────────────────
 
 function SignalNode({ signal }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleClick = useCallback((e) => {
+    if (signal.id !== 'email') return
+    e.preventDefault()
+    navigator.clipboard.writeText(EMAIL).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    })
+  }, [signal.id])
+
+  const isEmail  = signal.id === 'email'
+  const isResume = signal.id === 'resume'
+
+  const Tag = isEmail ? 'button' : motion.a
+  const props = isEmail
+    ? { type: 'button', onClick: handleClick }
+    : {
+        href: signal.href,
+        target: isResume ? '_self' : '_blank',
+        rel: 'noopener noreferrer',
+        download: isResume ? true : undefined,
+      }
+
   return (
-    <motion.a
-      href={signal.href}
-      target={signal.id !== 'email' ? '_blank' : undefined}
-      rel="noopener noreferrer"
+    <Tag
       className={`signal-node signal-node--${signal.id}`}
-      initial={{ opacity: 0, y: 36 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: signal.delay }}
-      viewport={{ once: true, margin: '-60px' }}
-      whileHover={{ y: -6 }}
+      {...(isEmail ? {} : {
+        initial: { opacity: 0, y: 36 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: signal.delay },
+        viewport: { once: true, margin: '-60px' },
+        whileHover: { y: -6 },
+      })}
+      {...props}
     >
-      {/* Glowing orb — ping ring lives inside so it inherits position context */}
       <div className={`signal-orb signal-orb--${signal.id}`}>
         <div className="signal-ring" aria-hidden="true" />
         <signal.Icon />
       </div>
 
       <span className="signal-label">{signal.label}</span>
-      <span className="signal-sublabel">{signal.sublabel}</span>
-    </motion.a>
+
+      {/* Copy confirmation for email */}
+      <AnimatePresence>
+        {copied && (
+          <motion.span
+            className="signal-copied"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            Copied!
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </Tag>
   )
 }
 
@@ -124,17 +165,6 @@ export function Contact() {
         </motion.h2>
         <motion.div variants={headerItem} className="section-rule h-px w-full" />
       </motion.div>
-
-      {/* Subhead */}
-      <motion.p
-        className="signal-intro text-center mb-14 font-mono text-sm tracking-[0.18em] uppercase"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        viewport={{ once: true }}
-      >
-        — signal detected —
-      </motion.p>
 
       {/* Signal nodes */}
       <div className="flex flex-wrap justify-center gap-8 sm:gap-14">
