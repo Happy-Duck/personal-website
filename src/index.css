@@ -1061,30 +1061,34 @@ html::-webkit-scrollbar { display: none; }
   white-space:    nowrap;
 }
 
-/* Outer ping ring — expands and fades like sonar */
+/* Outer ping ring — sequential sonar sweep across all 4 nodes.
+   Total cycle = 8s, each node pings during its 2s window. */
 .signal-ring {
-  position:      absolute;
-  inset:         -6px;
-  border-radius: 50%;
-  border:        1.5px solid currentColor;
-  opacity:       0;
+  position:       absolute;
+  inset:          -6px;
+  border-radius:  50%;
+  border:         1.5px solid currentColor;
+  opacity:        0;
   pointer-events: none;
-  animation:     signal-ping 2.8s ease-out infinite;
+  animation:      signal-ping 8s ease-out infinite;
 }
 
 .signal-node--email    { color: var(--signal-email-glow); }
-.signal-node--linkedin { color: var(--signal-li-glow);    animation-delay: 0.9s; }
-.signal-node--github   { color: var(--signal-gh-glow);    animation-delay: 1.8s; }
-.signal-node--resume   { color: var(--signal-email-glow); animation-delay: 2.7s; }
-.signal-node--resume .signal-ring { animation-delay: 2.7s; }
+.signal-node--linkedin { color: var(--signal-li-glow); }
+.signal-node--github   { color: var(--signal-gh-glow); }
+.signal-node--resume   { color: var(--signal-email-glow); }
 
-/* Offset the ping timing per node */
-.signal-node--linkedin .signal-ring { animation-delay: 0.9s; }
-.signal-node--github   .signal-ring { animation-delay: 1.8s; }
+/* Stagger each node's ping + breathe by 2s */
+.signal-node--email    .signal-ring { animation-delay: 0s; }
+.signal-node--linkedin .signal-ring { animation-delay: 2s; }
+.signal-node--github   .signal-ring { animation-delay: 4s; }
+.signal-node--resume   .signal-ring { animation-delay: 6s; }
 
+/* Ping only during the first 15% of the 8s cycle (~1.2s), idle the rest */
 @keyframes signal-ping {
-  0%   { transform: scale(0.85); opacity: 0.7; }
-  100% { transform: scale(1.7);  opacity: 0; }
+  0%    { transform: scale(0.85); opacity: 0.6; }
+  15%   { transform: scale(1.7);  opacity: 0; }
+  100%  { transform: scale(1.7);  opacity: 0; }
 }
 
 /* Glowing orb */
@@ -1100,19 +1104,23 @@ html::-webkit-scrollbar { display: none; }
   border:         1px solid var(--signal-border);
   color:          var(--icon-color);
   box-shadow:     0 0 22px currentColor, 0 4px 16px rgba(0,0,0,0.35);
-  animation:      signal-breathe 3s ease-in-out infinite;
+  animation:      signal-breathe 8s ease-in-out infinite;
   transition:
     background   var(--theme-dur) var(--theme-ease),
     border-color var(--theme-dur) var(--theme-ease),
     color        var(--theme-dur) var(--theme-ease);
 }
 
-.signal-node--linkedin .signal-orb { animation-delay: 0.9s; }
-.signal-node--github   .signal-orb { animation-delay: 1.8s; }
+.signal-node--email    .signal-orb { animation-delay: 0s; }
+.signal-node--linkedin .signal-orb { animation-delay: 2s; }
+.signal-node--github   .signal-orb { animation-delay: 4s; }
+.signal-node--resume   .signal-orb { animation-delay: 6s; }
 
+/* Breathe glow only during this node's 2s window */
 @keyframes signal-breathe {
-  0%, 100% { box-shadow: 0 0 18px currentColor, 0 4px 16px rgba(0,0,0,0.30); }
-  50%       { box-shadow: 0 0 34px currentColor, 0 4px 22px rgba(0,0,0,0.38); }
+  0%        { box-shadow: 0 0 18px currentColor, 0 4px 16px rgba(0,0,0,0.30); }
+  12.5%     { box-shadow: 0 0 34px currentColor, 0 4px 22px rgba(0,0,0,0.38); }
+  25%, 100% { box-shadow: 0 0 18px currentColor, 0 4px 16px rgba(0,0,0,0.30); }
 }
 
 /* Hover: intensify glow */
