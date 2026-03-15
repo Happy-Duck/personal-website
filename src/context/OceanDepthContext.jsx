@@ -39,8 +39,7 @@ const ZONE_CULPRIT = {
   SUNLIT:   'ReefFish / SeaTurtle',
   TWILIGHT: 'Jellyfish / Squid',
   MIDNIGHT: 'Anglerfish / DeepSeaFish',
-  ABYSSAL:  'GiantSquid / AbyssalJellyfish',
-  HADAL:    'SnailFish',
+  ABYSSAL:  'GiantSquid / AbyssalJellyfish / SnailFish',
 }
 
 // ── Context ────────────────────────────────────────────────────────────
@@ -103,24 +102,24 @@ export function OceanDepthProvider({ children }) {
           const ambientGlow    = d < 0.5 ? d * 2 : 2 - d * 2
           root.style.setProperty('--ambient-glow',   Math.max(0, ambientGlow).toFixed(3))
 
-          const particleOp = d < 0.35 ? 0 : Math.min(0.7, (d - 0.35) / 0.2 * 0.7)
+          const particleOp = d < 0.45 ? 0 : Math.min(0.7, (d - 0.45) / 0.2 * 0.7)
           root.style.setProperty('--particle-opacity', particleOp.toFixed(3))
 
-          // Plankton: visible at surface, fades out by d=0.30
-          const planktonOp = d < 0.05 ? 0.8 : d < 0.30 ? 0.8 * (1 - (d - 0.05) / 0.25) : 0
+          // Plankton: visible at surface, fades out by d=0.40
+          const planktonOp = d < 0.05 ? 0.8 : d < 0.40 ? 0.8 * (1 - (d - 0.05) / 0.35) : 0
           root.style.setProperty('--plankton-opacity', planktonOp.toFixed(3))
 
-          const beachOp = d < 0.10 ? 1 : d < 0.20 ? 1 - (d - 0.10) / 0.10 : 0
+          const beachOp = d < 0.12 ? 1 : d < 0.25 ? 1 - (d - 0.12) / 0.13 : 0
           root.style.setProperty('--beach-op', beachOp.toFixed(3))
 
-          const ventOp = d < 0.78 ? 0 : Math.min(1, (d - 0.78) / 0.08)
+          const ventOp = d < 0.82 ? 0 : Math.min(1, (d - 0.82) / 0.08)
           root.style.setProperty('--vent-op', ventOp.toFixed(3))
 
           // Update data-theme for section content styling (hysteresis)
-          if (d < 0.25 && themeRef.current !== 'shallow-reef') {
+          if (d < 0.30 && themeRef.current !== 'shallow-reef') {
             themeRef.current = 'shallow-reef'
             root.setAttribute('data-theme', 'shallow-reef')
-          } else if (d > 0.35 && themeRef.current !== 'deep-sea') {
+          } else if (d > 0.40 && themeRef.current !== 'deep-sea') {
             themeRef.current = 'deep-sea'
             root.setAttribute('data-theme', 'deep-sea')
           }

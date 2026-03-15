@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 130, H = 182
-const DEPTH_RANGE = { enter: 0.60, exit: 1.02 }
+const DEPTH_RANGE = { enter: 0.68, exit: 1.02 }
 
 export function AbyssalJellyfish() {
   const wrapperRef = useRef(null)
@@ -62,7 +62,8 @@ export function AbyssalJellyfish() {
       p.dodgeX *= 0.96
       p.dodgeX = Math.max(-80, Math.min(80, p.dodgeX))
 
-      const scrollOffset = window.scrollY * 0.12
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x + p.dodgeX))
       const ny = p.y - scrollOffset
 

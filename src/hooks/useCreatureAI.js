@@ -104,7 +104,9 @@ export function useCreatureAI({
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
-      const scrollOffset = window.scrollY * 0.12
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const enterScrollY = depthRange.enter * maxScroll
+      const scrollOffset = Math.max(0, window.scrollY - enterScrollY) * 0.15
       const newX = p.pathX
       const newY = Math.max(-H_SVG, Math.min(H + H_SVG, pathY + p.dodgeY - scrollOffset))
 

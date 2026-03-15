@@ -1,5 +1,5 @@
 // ── CreatureLayer — all creatures, fixed, full-screen ─────────────────
-// Ordered by zone depth: sunlit → hadal
+// Ordered by zone depth: sunlit → abyssal
 import { ReefFish         } from './ReefFish'
 import { SeaTurtle        } from './SeaTurtle'
 import { Jellyfish        } from './Jellyfish'
@@ -35,8 +35,6 @@ export function CreatureLayer() {
       {/* Abyssal Zone (0.55–0.90) */}
       <AbyssalJellyfish />
       <GiantSquid />
-
-      {/* Hadal Zone (0.82–1.00) */}
       <SnailFish />
     </div>
   )

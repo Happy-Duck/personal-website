@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 100, H = 138
-const DEPTH_RANGE = { enter: 0.12, exit: 0.45 }
+const DEPTH_RANGE = { enter: 0.18, exit: 0.55 }
 
 const CONFIGS = [
   { yFrac: 0.28, speedMul: 1.0, sinAmp: 45, startOffset: 0.15, dartOffset: 0 },
@@ -99,7 +99,8 @@ function SingleSquid({ cfg, idx, peers }) {
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
-      const scrollOffset = window.scrollY * 0.12
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = p.x
       const ny = Math.max(-H, Math.min(VH + H, pathY + p.dodgeY - scrollOffset))
 

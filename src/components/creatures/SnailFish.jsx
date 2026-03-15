@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 200, H = 67
-const DEPTH_RANGE = { enter: 0.78, exit: 1.02 }
+const DEPTH_RANGE = { enter: 0.82, exit: 1.02 }
 
 export function SnailFish() {
   const wrapperRef = useRef(null)
@@ -38,7 +38,8 @@ export function SnailFish() {
 
       if (p.x > VW + W) { p.x = -W; p.y = VH * (0.5 + Math.random() * 0.3) }
 
-      const scrollOffset = window.scrollY * 0.12
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const ny = p.y - scrollOffset
       el.style.transform = `translate(${p.x - W / 2}px, ${ny - H / 2}px)`
       el.style.opacity   = opacity.toFixed(3)

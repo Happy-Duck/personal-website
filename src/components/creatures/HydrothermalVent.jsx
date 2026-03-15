@@ -1,4 +1,4 @@
-// ── Hydrothermal Vent — Hadal Zone ────────────────────────────────────
+// ── Hydrothermal Vent — Deep Abyssal Zone ─────────────────────────────
 // Static chimney at bottom of viewport. CSS particle plume rising.
 // Only visible when depth > 0.80.
 import { useMemo } from 'react'

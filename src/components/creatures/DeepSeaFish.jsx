@@ -10,7 +10,7 @@ const CONFIGS = [
   { centerYFrac: 0.70, speed: 0.40, amplitude: 28, freq: 0.009, dir: -1 },
 ]
 
-const DEPTH_RANGE = { enter: 0.30, exit: 0.62 }
+const DEPTH_RANGE = { enter: 0.42, exit: 0.75 }
 
 function SingleDeepFish({ cfg, idx, peers }) {
   const { wrapperRef } = useCreatureAI({

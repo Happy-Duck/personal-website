@@ -8,7 +8,7 @@ import { Experience    } from './components/Experience'
 import { Skills        } from './components/Skills'
 import { Projects      } from './components/Projects'
 import { About         } from './components/About'
-import { Contact       } from './components/Contact'
+import { ContactSidebar } from './components/ContactSidebar'
 import { Footer        } from './components/Footer'
 
 export default function App() {
@@ -17,6 +17,9 @@ export default function App() {
       {/* ── Fixed backdrop layers (z 0–4) ─────────────────────────── */}
       {/* Smooth color-interpolated background */}
       <div className="ocean-backdrop" aria-hidden="true" />
+
+      {/* Contact sidebar — persistent left edge */}
+      <ContactSidebar />
 
       <div className="relative overflow-hidden">
 
@@ -45,7 +48,6 @@ export default function App() {
         <Experience />
         <Skills />
         <About />
-        <Contact />
 
       </div>
 
