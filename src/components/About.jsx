@@ -15,34 +15,94 @@ const LOG_ENTRIES = [
 
 const LOCATION = 'Urbana, IL'
 
-// ── Typewriter hook ────────────────────────────────────────────────────
+// ── Rotating typewriter hook ─────────────────────────────────────────
 
-function useTypewriter(lines) {
-  const [displayed, setDisplayed] = useState([])
-  const [done, setDone]           = useState(false)
-  const started = useRef(false)
+function useRotatingTypewriter(lines, pauseMs = 4000) {
+  const [entries, setEntries]       = useState([])
+  const [typingIdx, setTypingIdx]   = useState(-1)
+  const [typingLen, setTypingLen]   = useState(0)
+  const [phase, setPhase]           = useState('idle') // idle | typing | paused
+  const started   = useRef(false)
+  const timeoutRef = useRef(null)
+  const idRef     = useRef(0)
+
+  useEffect(() => () => clearTimeout(timeoutRef.current), [])
 
   const start = useCallback(() => {
     if (started.current) return
     started.current = true
 
-    const full = lines.join('\n')
-    let i = 0
+    // Build initial entries with unique ids
+    const initial = lines.map(text => ({ text, id: idRef.current++ }))
+    let built = []
+    let lineIdx = 0
 
-    function tick() {
-      if (i >= full.length) {
-        setDone(true)
+    // Type each line sequentially during initial burst
+    function typeNextLine() {
+      if (lineIdx >= initial.length) {
+        // All lines typed — enter cycling pause
+        setPhase('paused')
+        timeoutRef.current = setTimeout(cycle, pauseMs)
         return
       }
-      i++
-      setDisplayed(full.slice(0, i).split('\n'))
-      const variance = (Math.random() - 0.5) * 20
-      setTimeout(tick, 40 + variance)
-    }
-    tick()
-  }, [lines])
 
-  return { displayed, done, start }
+      const entry = initial[lineIdx]
+      built = [...built, entry]
+      setEntries(built)
+      setTypingIdx(built.length - 1)
+      setPhase('typing')
+
+      let charIdx = 0
+      function tick() {
+        if (charIdx >= entry.text.length) {
+          setTypingIdx(-1)
+          lineIdx++
+          typeNextLine()
+          return
+        }
+        charIdx++
+        setTypingLen(charIdx)
+        const variance = (Math.random() - 0.5) * 20
+        timeoutRef.current = setTimeout(tick, 40 + variance)
+      }
+      tick()
+    }
+
+    // Cycle: remove top, re-type it at bottom
+    function cycle() {
+      setEntries(prev => {
+        const removed = prev[0]
+        const rest = prev.slice(1)
+        const newEntry = { text: removed.text, id: idRef.current++ }
+        const next = [...rest, newEntry]
+
+        // Start typing the new bottom entry
+        setTypingIdx(next.length - 1)
+        setPhase('typing')
+        let charIdx = 0
+
+        function tick() {
+          if (charIdx >= newEntry.text.length) {
+            setTypingIdx(-1)
+            setPhase('paused')
+            timeoutRef.current = setTimeout(cycle, pauseMs)
+            return
+          }
+          charIdx++
+          setTypingLen(charIdx)
+          const variance = (Math.random() - 0.5) * 20
+          timeoutRef.current = setTimeout(tick, 40 + variance)
+        }
+        tick()
+
+        return next
+      })
+    }
+
+    typeNextLine()
+  }, [lines, pauseMs])
+
+  return { entries, typingIdx, typingLen, phase, start }
 }
 
 // ── Discord presence ───────────────────────────────────────────────────
@@ -165,7 +225,7 @@ function LivePresence() {
 // ── Typewriter log entries ─────────────────────────────────────────────
 
 function TypewriterLog() {
-  const { displayed, done, start } = useTypewriter(LOG_ENTRIES)
+  const { entries, typingIdx, typingLen, phase, start } = useRotatingTypewriter(LOG_ENTRIES)
   const ref = useRef(null)
 
   useEffect(() => {
@@ -187,12 +247,13 @@ function TypewriterLog() {
 
   return (
     <div ref={ref} className="log-entries">
-      {displayed.map((line, i) => (
-        <p key={i} className="log-entry">
+      {entries.map((entry, i) => (
+        <p key={entry.id} className="log-entry">
           <span className="log-prompt" aria-hidden="true">&gt;</span>
           <span>
-            {line}
-            {!done && i === displayed.length - 1 && (
+            {i === typingIdx ? entry.text.slice(0, typingLen) : entry.text}
+            {((i === typingIdx && phase === 'typing') ||
+              (phase === 'paused' && i === entries.length - 1)) && (
               <span className="typewriter-cursor" aria-hidden="true">|</span>
             )}
           </span>
