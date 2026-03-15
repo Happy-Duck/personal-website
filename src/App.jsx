@@ -37,9 +37,9 @@ export default function App() {
 
         {/* ── Page content (z 10) ────────────────────────────────── */}
         <Hero />
+        <Projects />
         <Experience />
         <Skills />
-        <Projects />
         <About />
         <Contact />
 

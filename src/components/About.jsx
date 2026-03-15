@@ -6,14 +6,13 @@ import { useLanyard } from '../hooks/useLanyard'
 
 const LOG_ENTRIES = [
   "I'm just a man trying to make cool stuff: games, simulations, the occasional VR experience for a space agency.",
-  "I love all kinds of games. Zelda is an all-time favorite, Minecraft is timeless.",
+  "Gamer at heart: Zelda is an all-time favorite, Minecraft is timeless.",
   "Musical theater nerd: catching every touring production I ever can",
   "Cooking enthusiast: my favorite thing to cook is something I've never cooked before",
   'Avid fly fisherman: fished the Wisconsin Driftless, the Appalachians in Virginia. Current catch count: 2',
+  'TTRPG Player: if I use the name, then Wizards of the Coast™ might get me',
 ]
 
-// UIUC coordinates
-const COORDS = '40.1020° N, 88.2272° W'
 const LOCATION = 'Urbana, IL'
 
 // ── Typewriter hook ────────────────────────────────────────────────────
@@ -44,18 +43,6 @@ function useTypewriter(lines) {
   }, [lines])
 
   return { displayed, done, start }
-}
-
-// ── Animation variants ─────────────────────────────────────────────────
-
-const headerStagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-}
-
-const headerItem = {
-  hidden: { opacity: 0, y: 16 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
 
 // ── Discord presence ───────────────────────────────────────────────────
@@ -223,21 +210,7 @@ export function About() {
       className="relative px-6 pb-28 pt-4 w-full max-w-5xl mx-auto"
       style={{ zIndex: 10 }}
     >
-      {/* Section header */}
-      <motion.div
-        className="mb-10"
-        variants={headerStagger}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: '-80px' }}
-      >
-        <motion.h2 variants={headerItem} className="section-heading font-black text-4xl sm:text-5xl tracking-tight leading-none mb-4">
-          About
-        </motion.h2>
-        <motion.div variants={headerItem} className="section-rule h-px w-full" />
-      </motion.div>
-
-      {/* Captain's log card */}
+      {/* Captain's log card — single unified console */}
       <motion.div
         className="log-card"
         initial={{ opacity: 0, y: 40 }}
@@ -245,16 +218,13 @@ export function About() {
         transition={{ duration: 0.78, ease: [0.22, 1, 0.36, 1] }}
         viewport={{ once: true, margin: '-60px' }}
       >
-        {/* Header bar */}
-        <div className="log-header">
-          <div className="log-header-left">
-            <span className="log-title">Captain's Log</span>
-            <span className="log-id">UIUC — CS '27 — 4.0 GPA</span>
-          </div>
-          <div className="log-header-right">
-            <span className="log-coords">{COORDS}</span>
-            <span className="log-location">{LOCATION}</span>
-          </div>
+        {/* Heading */}
+        <h2 className="log-title">Captain's Log</h2>
+
+        {/* Metadata block */}
+        <div className="log-meta">
+          <span className="log-meta-line">UIUC — CS '27 — 4.0 GPA</span>
+          <span className="log-meta-line">40°06'N 88°13'W — {LOCATION}</span>
         </div>
 
         <div className="log-divider" />
