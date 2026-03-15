@@ -1164,7 +1164,7 @@ html::-webkit-scrollbar { display: none; }
 /* Sandy / rocky floor texture */
 .footer-floor {
   position:   relative;
-  height:     110px;
+  height:     70px;
   width:      100%;
   overflow:   visible;
   background: linear-gradient(to bottom, var(--floor-top) 0%, var(--floor-bg) 100%);
