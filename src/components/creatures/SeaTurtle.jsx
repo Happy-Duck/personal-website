@@ -4,7 +4,7 @@ import { useCreatureAI } from '../../hooks/useCreatureAI'
 
 const W = 250, H = 155
 
-const DEPTH_RANGE = { enter: 0.00, exit: 0.14 }
+const DEPTH_RANGE = { enter: 0.00, exit: 0.28 }
 
 export function SeaTurtle() {
   const { wrapperRef } = useCreatureAI({

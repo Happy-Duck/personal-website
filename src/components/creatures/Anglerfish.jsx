@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 225, H = 170
-const DEPTH_RANGE = { enter: 0.33, exit: 0.62 }
+const DEPTH_RANGE = { enter: 0.45, exit: 0.75 }
 
 export function Anglerfish() {
   const wrapperRef = useRef(null)
@@ -67,8 +67,10 @@ export function Anglerfish() {
       p.dodgeY *= 0.97
       p.dodgeY = Math.max(-100, Math.min(100, p.dodgeY))
 
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x))
-      const ny = Math.max(20, Math.min(VH - 20, p.y + p.dodgeY))
+      const ny = Math.max(-H, Math.min(VH + H, p.y + p.dodgeY - scrollOffset))
 
       el.style.transform = `translate(${nx - W / 2}px, ${ny - H / 2}px)`
       el.style.opacity   = opacity.toFixed(3)

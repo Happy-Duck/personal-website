@@ -129,6 +129,9 @@ html::-webkit-scrollbar { display: none; }
   --signal-email-glow:   rgba(0,212,255,0.55);
   --signal-li-glow:      rgba(100,160,255,0.52);
   --signal-gh-glow:      rgba(160,120,255,0.52);
+  /* Sidebar */
+  --sidebar-bg:          rgba(2,10,34,0.55);
+  --sidebar-border:      rgba(0,212,255,0.10);
   /* Footer */
   --floor-bg:            #03091e;
   --floor-top:           #06122e;
@@ -234,9 +237,12 @@ html::-webkit-scrollbar { display: none; }
   --signal-icon:         rgba(180,60,10,0.85);
   --signal-label:        rgba(5,28,15,0.92);
   --signal-sublabel:     rgba(0,100,50,0.62);
-  --signal-email-glow:   rgba(255,140,60,0.55);
-  --signal-li-glow:      rgba(255,100,40,0.50);
-  --signal-gh-glow:      rgba(200,70,20,0.50);
+  --signal-email-glow:   rgba(255,160,80,0.80);
+  --signal-li-glow:      rgba(255,120,50,0.75);
+  --signal-gh-glow:      rgba(220,90,30,0.75);
+  /* Sidebar */
+  --sidebar-bg:          rgba(0,20,15,0.45);
+  --sidebar-border:      rgba(0,60,40,0.15);
   /* Footer */
   --floor-bg:            #c4a052;
   --floor-top:           #d4b468;
@@ -1149,6 +1155,149 @@ html::-webkit-scrollbar { display: none; }
   transition:       color var(--theme-dur) var(--theme-ease);
   /* only shown when explicitly used */
   display:          none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CONTACT SIDEBAR — persistent left edge
+   ═══════════════════════════════════════════════════════════════════ */
+
+.contact-sidebar {
+  position:        fixed;
+  left:            0;
+  top:             50%;
+  transform:       translateY(-50%);
+  z-index:         50;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             6px;
+  padding:         12px 8px;
+  border-radius:   0 12px 12px 0;
+  background:      var(--sidebar-bg, rgba(0, 0, 0, 0.25));
+  backdrop-filter:  blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border:          1px solid var(--sidebar-border, rgba(255, 255, 255, 0.06));
+  border-left:     none;
+  transition:
+    background   var(--theme-dur) var(--theme-ease),
+    border-color var(--theme-dur) var(--theme-ease);
+}
+
+.sidebar-node {
+  position:        relative;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  cursor:          pointer;
+  text-decoration: none;
+  border:          none;
+  background:      none;
+  padding:         4px;
+  font:            inherit;
+}
+
+.sidebar-orb {
+  position:        relative;
+  width:           48px;
+  height:          48px;
+  border-radius:   50%;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  background:      var(--signal-bg);
+  border:          1px solid var(--signal-border);
+  color:           var(--icon-color);
+  box-shadow:      0 0 14px currentColor, 0 2px 8px rgba(0,0,0,0.30);
+  animation:       signal-breathe 8s ease-in-out infinite;
+  transition:
+    background   var(--theme-dur) var(--theme-ease),
+    border-color var(--theme-dur) var(--theme-ease),
+    color        var(--theme-dur) var(--theme-ease),
+    transform    0.2s ease;
+}
+
+.sidebar-node:hover .sidebar-orb {
+  box-shadow: 0 0 28px currentColor, 0 4px 16px rgba(0,0,0,0.35);
+  transform:  scale(1.12);
+}
+
+/* Stagger breathe + ping — same order as original Contact section */
+.signal-node--email    .sidebar-orb { animation-delay: 0s; }
+.signal-node--linkedin .sidebar-orb { animation-delay: 2s; }
+.signal-node--github   .sidebar-orb { animation-delay: 4s; }
+.signal-node--resume   .sidebar-orb { animation-delay: 6s; }
+
+.signal-node--email    .signal-ring { animation-delay: 0s; }
+.signal-node--linkedin .signal-ring { animation-delay: 2s; }
+.signal-node--github   .signal-ring { animation-delay: 4s; }
+.signal-node--resume   .signal-ring { animation-delay: 6s; }
+
+/* Tooltip — appears on hover to the right of the orb */
+.sidebar-tooltip {
+  position:        absolute;
+  left:            calc(100% + 10px);
+  top:             50%;
+  transform:       translateY(-50%);
+  font-size:       0.7rem;
+  font-weight:     600;
+  letter-spacing:  0.1em;
+  text-transform:  uppercase;
+  color:           var(--signal-label);
+  white-space:     nowrap;
+  pointer-events:  none;
+  opacity:         0;
+  transition:      opacity 0.2s ease;
+  background:      rgba(0, 0, 0, 0.5);
+  backdrop-filter:  blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding:         4px 10px;
+  border-radius:   6px;
+}
+
+.sidebar-tooltip--visible {
+  opacity:    1;
+}
+
+.sidebar-node:hover .sidebar-tooltip {
+  opacity: 1;
+}
+
+/* Shallow-reef: sidebar orbs + tooltips need extra contrast */
+:root[data-theme="shallow-reef"] .sidebar-orb {
+  background:   rgba(0, 30, 20, 0.55);
+  border-color: rgba(0, 80, 50, 0.30);
+}
+
+:root[data-theme="shallow-reef"] .sidebar-tooltip {
+  background:   rgba(0, 20, 15, 0.65);
+  color:        rgba(220, 240, 230, 0.92);
+}
+
+/* Mobile: smaller, bottom-left corner, horizontal */
+@media (max-width: 640px) {
+  .contact-sidebar {
+    top:            auto;
+    bottom:         12px;
+    left:           50%;
+    transform:      translateX(-50%);
+    flex-direction: row;
+    border-radius:  12px;
+    border:         1px solid rgba(255, 255, 255, 0.06);
+    padding:        8px 12px;
+    gap:            4px;
+  }
+
+  .sidebar-orb {
+    width:  42px;
+    height: 42px;
+  }
+
+  .sidebar-tooltip {
+    left:      50%;
+    top:       auto;
+    bottom:    calc(100% + 8px);
+    transform: translateX(-50%);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

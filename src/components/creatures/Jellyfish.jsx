@@ -6,7 +6,7 @@ import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
 const W = 120, H = 170
-const DEPTH_RANGE = { enter: 0.13, exit: 0.36 }
+const DEPTH_RANGE = { enter: 0.15, exit: 0.55 }
 
 const CONFIGS = [
   { xFrac: 0.20, yFrac: 0.40, scale: 1.0, driftSpeed: 0.22 },
@@ -87,8 +87,10 @@ function SingleJelly({ cfg, idx, peers }) {
         }
       }
 
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
       const nx = Math.max(sw / 2, Math.min(VW - sw / 2, p.x + p.dodgeX))
-      const ny = p.y
+      const ny = p.y - scrollOffset
 
       if (peers) {
         peers.current[idx] = { x: nx, y: ny }
