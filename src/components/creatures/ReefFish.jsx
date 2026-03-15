@@ -1,5 +1,6 @@
 // ── Reef Fish — Sunlit Zone (0.0 → 0.20) ─────────────────────────────
 // Small tropical clownfish. 3 instances at different lanes.
+import { useRef } from 'react'
 import { useCreatureAI } from '../../hooks/useCreatureAI'
 
 const W = 48, H = 44
@@ -12,7 +13,7 @@ const CONFIGS = [
 
 const DEPTH_RANGE = { enter: 0.00, exit: 0.16 }
 
-function SingleFish({ cfg, idx }) {
+function SingleFish({ cfg, idx, peers }) {
   const { wrapperRef } = useCreatureAI({
     W_SVG: W * cfg.scale, H_SVG: H * cfg.scale,
     centerYFrac: cfg.centerYFrac,
@@ -22,6 +23,8 @@ function SingleFish({ cfg, idx }) {
     dir:         cfg.dir,
     depthRange:  DEPTH_RANGE,
     fleeRadius:  110,
+    peers,
+    peerIndex:   idx,
   })
 
   return (
@@ -38,9 +41,10 @@ function SingleFish({ cfg, idx }) {
 }
 
 export function ReefFish() {
+  const peers = useRef(CONFIGS.map(() => null))
   return (
     <>
-      {CONFIGS.map((cfg, i) => <SingleFish key={i} cfg={cfg} idx={i} />)}
+      {CONFIGS.map((cfg, i) => <SingleFish key={i} cfg={cfg} idx={i} peers={peers} />)}
     </>
   )
 }

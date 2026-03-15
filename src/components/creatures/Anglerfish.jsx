@@ -16,11 +16,13 @@ export function Anglerfish() {
   const s = useRef({
     x: null, y: null,
     t: 0,
-    fleeX: 0, fleeY: 0,
-    fleeing: false,
+    speedBoost: 0,
+    dodgeY: 0,
   })
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+
     const unsubscribe = subscribe((depth) => {
       const opacity = creatureOpacity(depth, DEPTH_RANGE)
       const el = wrapperRef.current
@@ -42,24 +44,31 @@ export function Anglerfish() {
       const targetX = VW * 0.35 + Math.sin(p.t * 0.003) * 120
       const targetY = VH * 0.52 + Math.sin(p.t * 0.005) * 60
 
-      // Slow flee — large creature, not skittish
-      const mx = mouseRef.current.x, my = mouseRef.current.y
-      const dx = p.x - mx, dy = p.y - my
-      const dist = Math.hypot(dx, dy)
-      const hyst = p.fleeing ? 210 : 150
-
-      if (dist < 150 && dist > 0) {
-        p.fleeing = true
-        p.fleeX += (dx / dist) * 2.0
-        p.fleeY += (dy / dist) * 2.0
-      } else if (dist > hyst) { p.fleeing = false }
-      p.fleeX *= 0.97; p.fleeY *= 0.97
-
-      p.x += (targetX - p.x) * 0.008
+      p.x += (targetX - p.x) * 0.008 + p.speedBoost
       p.y += (targetY - p.y) * 0.008
 
-      const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x + p.fleeX))
-      const ny = Math.max(20, Math.min(VH - 20, p.y + p.fleeY))
+      // Mouse flee — gentle drift-away + vertical dodge
+      if (!isMobile) {
+        const mx = mouseRef.current.x, my = mouseRef.current.y
+        const dx = mx - p.x, dy = my - (p.y + p.dodgeY)
+        const dist = Math.hypot(dx, dy)
+
+        if (dist < 180 && dist > 0) {
+          const str = (180 - dist) / 180
+          // Drift away horizontally (away from cursor)
+          p.speedBoost += -(dx / dist) * str * 0.3
+          // Mild vertical dodge
+          p.dodgeY += -(dy / dist) * str * 1.5
+        }
+      }
+
+      p.speedBoost *= 0.96
+      p.speedBoost = Math.max(-3, Math.min(3, p.speedBoost))
+      p.dodgeY *= 0.97
+      p.dodgeY = Math.max(-100, Math.min(100, p.dodgeY))
+
+      const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x))
+      const ny = Math.max(20, Math.min(VH - 20, p.y + p.dodgeY))
 
       el.style.transform = `translate(${nx - W / 2}px, ${ny - H / 2}px)`
       el.style.opacity   = opacity.toFixed(3)

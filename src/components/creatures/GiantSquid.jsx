@@ -21,11 +21,13 @@ export function GiantSquid() {
     dir:     1,
     phase:   'traverse',  // 'traverse' | 'pause'
     pauseT:  0,
-    fleeX:   0, fleeY: 0,
-    fleeing: false,
+    speedBoost: 0,
+    dodgeY: 0,
   })
 
   useEffect(() => {
+    const isMobile = window.matchMedia('(pointer: coarse)').matches
+
     const unsubscribe = subscribe((depth) => {
       const opacity = creatureOpacity(depth, DEPTH_RANGE)
       const el = wrapperRef.current
@@ -45,7 +47,7 @@ export function GiantSquid() {
       }
 
       if (p.phase === 'traverse') {
-        p.x += TRAVERSE_SPEED * p.dir
+        p.x += (TRAVERSE_SPEED + p.speedBoost) * p.dir
         // Slow Y drift
         p.y += Math.sin(p.x * 0.005) * 0.3
 
@@ -68,20 +70,27 @@ export function GiantSquid() {
         if (p.pauseT > PAUSE_FRAMES) p.phase = 'traverse'
       }
 
-      // Gentle flee
-      const mx = mouseRef.current.x, my = mouseRef.current.y
-      const dx = p.x - mx, dy = p.y - my
-      const dist = Math.hypot(dx, dy)
-      const hyst = p.fleeing ? 220 : 160
-      if (dist < 160 && dist > 0) {
-        p.fleeing = true
-        p.fleeX += (dx / dist) * 1.5
-        p.fleeY += (dy / dist) * 1.5
-      } else if (dist > hyst) { p.fleeing = false }
-      p.fleeX *= 0.97; p.fleeY *= 0.97
+      // Mouse flee — speed burst + vertical dodge
+      if (!isMobile) {
+        const mx = mouseRef.current.x, my = mouseRef.current.y
+        const dx = mx - p.x, dy = my - (p.y + p.dodgeY)
+        const dist = Math.hypot(dx, dy)
 
-      const nx = p.x + p.fleeX
-      const ny = Math.max(20, Math.min(VH - 20, p.y + p.fleeY))
+        if (dist < 200 && dist > 0) {
+          const str = (200 - dist) / 200
+          // Speed burst in traverse direction
+          p.speedBoost = Math.max(p.speedBoost, str * TRAVERSE_SPEED * 5)
+          // Mild vertical dodge
+          p.dodgeY += -(dy / dist) * str * 2.0
+        }
+      }
+
+      p.speedBoost *= 0.94
+      p.dodgeY *= 0.97
+      p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
+
+      const nx = p.x
+      const ny = Math.max(20, Math.min(VH - 20, p.y + p.dodgeY))
       const flip = p.dir === 1 ? '' : ' scaleX(-1)'
 
       el.style.transform = `translate(${nx - W / 2}px, ${ny - H / 2}px)${flip}`

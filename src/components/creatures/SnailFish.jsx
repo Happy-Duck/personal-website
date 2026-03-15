@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 import { useOceanDepthContext } from '../../context/OceanDepthContext'
 import { creatureOpacity } from '../../constants/depthZones'
 
-const W = 90, H = 30
+const W = 200, H = 67
 const DEPTH_RANGE = { enter: 0.83, exit: 1.02 }
 
 export function SnailFish() {

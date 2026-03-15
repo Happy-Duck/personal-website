@@ -1,7 +1,6 @@
 // ── useCreatureAI — horizontal sinusoidal swimmer with mouse flee ─────
 // Subscribes to OceanDepthContext's single rAF loop.
 // Updates wrapperRef.current.style.transform (translate) directly.
-// Updates innerRef.current.style.transform (scaleX for facing) if provided.
 
 import { useEffect, useRef } from 'react'
 import { useMouse } from '../context/MouseContext'
@@ -16,11 +15,12 @@ export function useCreatureAI({
   amplitude   = 40,
   freq        = 0.007,
   dir         = 1,          // 1 = moves right, -1 = moves left
-  depthRange,               // { enter, peak, exit }
+  depthRange,               // { enter, exit }
   fleeRadius  = 130,
+  peers       = null,       // shared useRef([]) for peer repulsion
+  peerIndex   = 0,
 }) {
   const wrapperRef = useRef(null)
-  const innerRef   = useRef(null)
   const mouseRef   = useMouse()
   const { subscribe } = useOceanDepthContext()
   const isMobile   = useRef(false)
@@ -34,9 +34,8 @@ export function useCreatureAI({
       t:          Math.random() * 6000,
       pathRawX:   Math.random() * W,
       pathX:      Math.random() * W,
-      fleeX:      0,
-      fleeY:      0,
-      fleeing:    false,
+      speedBoost: 0,
+      dodgeY:     0,
       baseY:      H * centerYFrac,
     }
   }
@@ -60,57 +59,68 @@ export function useCreatureAI({
       const p = s.current
 
       p.t         += 1
-      p.pathRawX  += speed * dir
+      p.pathRawX  += (speed + p.speedBoost) * dir
+      p.speedBoost *= 0.94  // decay speed burst
       p.pathX      = ((p.pathRawX % W) + W) % W
 
       const pathY = p.baseY + Math.sin(p.t * freq) * amplitude
 
-      // Mouse flee
+      // Mouse flee — speed burst + mild vertical dodge
       if (!isMobile.current) {
         const mx   = mouseRef.current.x
         const my   = mouseRef.current.y
-        const cx   = p.pathX + p.fleeX
-        const cy   = pathY   + p.fleeY
+        const cx   = p.pathX
+        const cy   = pathY + p.dodgeY
         const dx   = mx - cx
         const dy   = my - cy
         const dist = Math.hypot(dx, dy)
-        const hyst = p.fleeing ? fleeRadius + 60 : fleeRadius
 
         if (dist < fleeRadius && dist > 0) {
-          p.fleeing = true
-          const str = ((fleeRadius - dist) / fleeRadius) * 3.5
-          // Lerp flee vector toward away-direction (lerp factor 0.18 when fleeing)
-          const targetFleeX = -(dx / dist) * str * 40
-          const targetFleeY = -(dy / dist) * str * 30
-          p.fleeX += (targetFleeX - p.fleeX) * 0.18
-          p.fleeY += (targetFleeY - p.fleeY) * 0.18
-        } else if (dist > hyst) {
-          p.fleeing = false
-          // Ease back to path (lerp factor 0.06)
-          p.fleeX += (0 - p.fleeX) * 0.06
-          p.fleeY += (0 - p.fleeY) * 0.06
+          const str = (fleeRadius - dist) / fleeRadius
+          // Speed burst — swim faster in current direction
+          p.speedBoost = Math.max(p.speedBoost, str * speed * 5)
+          // Mild vertical dodge away from cursor
+          p.dodgeY += -(dy / dist) * str * 2.0
         }
-
-        p.fleeX = Math.max(-220, Math.min(220, p.fleeX))
-        p.fleeY = Math.max(-160, Math.min(160, p.fleeY))
       }
 
-      const newX = p.pathX + p.fleeX
-      const newY = Math.max(20, Math.min(H - 20, pathY + p.fleeY))
+      // Peer repulsion — gentle vertical separation
+      if (peers) {
+        const cx = p.pathX, cy = pathY + p.dodgeY
+        for (let i = 0; i < peers.current.length; i++) {
+          if (i === peerIndex || !peers.current[i]) continue
+          const peer = peers.current[i]
+          const pdx = cx - peer.x, pdy = cy - peer.y
+          const pdist = Math.hypot(pdx, pdy)
+          const repelRadius = Math.max(W_SVG, H_SVG) * 1.8
+          if (pdist < repelRadius && pdist > 0) {
+            const force = (repelRadius - pdist) / repelRadius
+            p.dodgeY += (pdy / pdist) * force * 1.2
+          }
+        }
+      }
 
+      // Decay dodge and clamp
+      p.dodgeY *= 0.97
+      p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
+
+      const newX = p.pathX
+      const newY = Math.max(20, Math.min(H - 20, pathY + p.dodgeY))
+
+      // Write position for peer repulsion
+      if (peers) {
+        peers.current[peerIndex] = { x: newX, y: newY }
+      }
+
+      // Consistent centering for both directions
       el.style.transform = dir === 1
         ? `translate(${newX - W_SVG / 2}px, ${newY - H_SVG / 2}px)`
-        : `translate(${newX + W_SVG / 2}px, ${newY - H_SVG / 2}px) scaleX(-1)`
+        : `translate(${newX - W_SVG / 2}px, ${newY - H_SVG / 2}px) scaleX(-1)`
       el.style.opacity = opacity.toFixed(3)
-
-      // Inner flip for creatures that need separate scaleX (optional)
-      if (innerRef.current) {
-        innerRef.current.style.transform = `scaleX(${dir})`
-      }
     })
 
     return unsubscribe
-  }, [subscribe, depthRange, speed, dir, freq, amplitude, centerYFrac, fleeRadius, W_SVG, H_SVG])
+  }, [subscribe, depthRange, speed, dir, freq, amplitude, centerYFrac, fleeRadius, W_SVG, H_SVG, peers, peerIndex])
 
-  return { wrapperRef, innerRef }
+  return { wrapperRef }
 }
