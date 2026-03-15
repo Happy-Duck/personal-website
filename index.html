@@ -9,15 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Set theme before paint to avoid flash -->
+    <!-- Set depth defaults before paint — depth 0 = surface = shallow-reef -->
     <script>
-      document.documentElement.setAttribute(
-        'data-theme',
-        localStorage.getItem('ocean-theme') || 'deep-sea'
-      );
+      var r = document.documentElement;
+      r.setAttribute('data-theme', 'shallow-reef');
+      r.style.setProperty('--ocean-bg-color', '#b8e8e0');
+      r.style.setProperty('--beach-op', '1');
+      r.style.setProperty('--particle-opacity', '0');
+      r.style.setProperty('--ambient-glow', '0');
+      r.style.setProperty('--gauge-opacity', '0');
     </script>
-    <script type="module" crossorigin src="/personal-website/assets/index-DLaqHaz3.js"></script>
-    <link rel="stylesheet" crossorigin href="/personal-website/assets/index-BRryhI8v.css">
+    <script type="module" crossorigin src="/personal-website/assets/index-BvQzwxlL.js"></script>
+    <link rel="stylesheet" crossorigin href="/personal-website/assets/index-B-2oIxrB.css">
   </head>
   <body>
     <div id="root"></div>
