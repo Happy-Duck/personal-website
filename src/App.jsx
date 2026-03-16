@@ -9,6 +9,7 @@ import { Skills        } from './components/Skills'
 import { Projects      } from './components/Projects'
 import { About         } from './components/About'
 import { ContactSidebar } from './components/ContactSidebar'
+import { AmbientSound   } from './components/AmbientSound'
 import { Footer        } from './components/Footer'
 
 export default function App() {
@@ -20,6 +21,9 @@ export default function App() {
 
       {/* Contact sidebar — persistent left edge */}
       <ContactSidebar />
+
+      {/* Ambient ocean sound — top right toggle */}
+      <AmbientSound />
 
       <div className="relative overflow-hidden">
 
