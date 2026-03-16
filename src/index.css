@@ -1163,30 +1163,6 @@ html::-webkit-scrollbar { display: none; }
    CONTACT SIDEBAR — persistent left edge
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ── Ambient sound toggle ──────────────────────────────────────────── */
-.ambient-toggle {
-  position:        fixed;
-  top:             18px;
-  right:           18px;
-  z-index:         900;
-  width:           40px;
-  height:          40px;
-  border-radius:   50%;
-  border:          1px solid var(--sidebar-border, rgba(255,255,255,0.15));
-  background:      var(--sidebar-bg, rgba(8,24,48,0.45));
-  backdrop-filter:  blur(12px);
-  color:           rgba(255,255,255,0.8);
-  cursor:          pointer;
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
-  transition:      background 0.4s, border-color 0.4s, color 0.4s;
-}
-.ambient-toggle:hover {
-  background: rgba(255,255,255,0.12);
-  color:      #fff;
-}
-
 .contact-sidebar {
   position:        fixed;
   left:            0;
