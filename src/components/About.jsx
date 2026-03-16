@@ -177,6 +177,7 @@ function useElapsed(startTimestamp) {
 function LivePresence() {
   const { activities, spotify, loading, error } = useLanyard()
   const activity = activities?.find(a => a.type !== 4) || null
+  const fallbackTs = useRef(null)
 
   let thumb = null
   let line  = null
@@ -194,6 +195,17 @@ function LivePresence() {
       thumb = resolveActivityImage(activity)
       startTs = activity.timestamps?.start
     }
+  }
+
+  // Track when we first see an activity as fallback for missing timestamps
+  const activityKey = line || null
+  if (activityKey && !startTs) {
+    if (!fallbackTs.current || fallbackTs.current.key !== activityKey) {
+      fallbackTs.current = { key: activityKey, ts: Date.now() }
+    }
+    startTs = fallbackTs.current.ts
+  } else if (!activityKey) {
+    fallbackTs.current = null
   }
 
   const needsAppIcon = !thumb && activity?.application_id
