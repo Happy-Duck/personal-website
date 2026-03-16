@@ -40,7 +40,7 @@ export function AbyssalJellyfish() {
 
       // Parallax — compute early so reset uses rendered position
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
+      const scrollOffset = Math.min(VH * 0.35, Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15)
 
       // Drift upward very slowly
       p.y -= 0.16 + p.driftBoost

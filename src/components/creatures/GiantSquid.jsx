@@ -90,7 +90,7 @@ export function GiantSquid() {
       p.dodgeY = Math.max(-120, Math.min(120, p.dodgeY))
 
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
+      const scrollOffset = Math.min(VH * 0.35, Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15)
       const nx = p.x
       const ny = Math.max(-H, Math.min(VH + H, p.y + p.dodgeY - scrollOffset))
       const flip = p.dir === 1 ? '' : ' scaleX(-1)'

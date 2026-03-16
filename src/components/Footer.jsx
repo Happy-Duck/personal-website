@@ -37,9 +37,9 @@ function Crab() {
 
       // Crab centre in screen space — read floor position live each frame
       // (safe in rAF; jitter was fixed by overflow:clip + pointerEvents:none)
-      const floorRect = floorEl ? floorEl.getBoundingClientRect() : { top: 0 }
+      const floorRect = floorEl ? floorEl.getBoundingClientRect() : { top: 0, bottom: 0 }
       const cx = x + CRAB_W / 2
-      const cy = floorRect.top + 40
+      const cy = floorRect.bottom - 14 - CRAB_H / 2
 
       // Flee
       const dx   = cx - mouse.x

@@ -68,7 +68,7 @@ export function Anglerfish() {
       p.dodgeY = Math.max(-100, Math.min(100, p.dodgeY))
 
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const scrollOffset = Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15
+      const scrollOffset = Math.min(VH * 0.35, Math.max(0, window.scrollY - DEPTH_RANGE.enter * maxScroll) * 0.15)
       const nx = Math.max(W / 2, Math.min(VW - W / 2, p.x))
       const ny = Math.max(-H, Math.min(VH + H, p.y + p.dodgeY - scrollOffset))
 
