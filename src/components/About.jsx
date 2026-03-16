@@ -285,7 +285,7 @@ export function About() {
         {/* Metadata block */}
         <div className="log-meta">
           <span className="log-meta-line">UIUC — CS '27 — 4.0 GPA</span>
-          <span className="log-meta-line">40°06'N 88°13'W — {LOCATION}</span>
+          <span className="log-meta-line">40.1141°N 88.2249°W — {LOCATION}</span>
         </div>
 
         <div className="log-divider" />
